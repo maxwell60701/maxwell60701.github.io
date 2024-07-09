@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>maxwell60701 少寒风的Blog</title>
-    <link>http://localhost:62890/</link>
+    <link>http://localhost:64743/</link>
     <description>Recent content on maxwell60701 少寒风的Blog</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- 0.128.2</generator>
     <language>zh</language>
     <lastBuildDate>Sun, 14 Jan 2024 07:07:07 +0100</lastBuildDate>
-    <atom:link href="http://localhost:62890/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:64743/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>My First Post</title>
-      <link>http://localhost:62890/posts/my-first-post/</link>
+      <link>http://localhost:64743/posts/my-first-post/</link>
       <pubDate>Sun, 14 Jan 2024 07:07:07 +0100</pubDate>
-      <guid>http://localhost:62890/posts/my-first-post/</guid>
-      <description>Introduction This is bold text, and this is emphasized text.&#xA;Visit the Hugo website!</description>
+      <guid>http://localhost:64743/posts/my-first-post/</guid>
+      <description>Introduction This is bold text, and this is emphasized text.
+Visit the Hugo website!</description>
     </item>
   </channel>
 </rss>
