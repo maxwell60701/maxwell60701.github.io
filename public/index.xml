@@ -6,8 +6,20 @@
     <description>Recent content on maxwell60701 少寒风的Blog</description>
     <generator>Hugo -- 0.128.2</generator>
     <language>zh</language>
-    <lastBuildDate>Wed, 10 Jul 2024 10:56:25 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jul 2024 11:27:08 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker</title>
+      <link>http://localhost:1313/posts/docker/</link>
+      <pubDate>Wed, 10 Jul 2024 11:27:08 +0800</pubDate>
+      <guid>http://localhost:1313/posts/docker/</guid>
+      <description>Docker 心得 我对docker要比k8s熟的多,最近正好空，那就摸摸鱼吧
+Docker，英文翻译为码头工人，它的logo是一直鲸鱼搭载着好几个集装箱，从这些就能看出它的含义，它是方便工程师更快捷地打包和部署应用的 安装 windows:docker desktop linux:linux安装
+image 在 Docker 中，&amp;ldquo;image&amp;rdquo; 是一个不可变的文件系统快照，其中包含应用程序及其所有依赖项。它相当于一个模板，用来创建 Docker 容器
+可以这么说，你应用程序的发布包就是一个镜像
+构建镜像 构建镜像需要Dockerfile,示例
+# 基础镜像，用于构建 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env # 设置工作目录 WORKDIR /app # 复制 .csproj 文件并恢复依赖项 COPY *.csproj ./ RUN dotnet restore # 复制项目文件 COPY . ./ # 编译项目 RUN dotnet publish -c Release -o out # 基础镜像，用于运行 FROM mcr.microsoft.com/dotnet/aspnet:7.0 # 设置工作目录 WORKDIR /app # 复制编译好的文件到工作目录 COPY --from=build-env /app/out . # 设置容器启动时执行的命令 ENTRYPOINT [&amp;#34;dotnet&amp;#34;, &amp;#34;my-dotnet-app.</description>
+    </item>
     <item>
       <title>K8s</title>
       <link>http://localhost:1313/posts/k8s/</link>
