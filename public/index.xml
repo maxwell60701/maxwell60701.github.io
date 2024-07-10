@@ -6,8 +6,26 @@
     <description>Recent content on maxwell60701 少寒风的Blog</description>
     <generator>Hugo -- 0.128.2</generator>
     <language>zh</language>
-    <lastBuildDate>Wed, 10 Jul 2024 14:53:30 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jul 2024 15:36:33 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker 进阶</title>
+      <link>http://localhost:1313/posts/dockerimprove/</link>
+      <pubDate>Wed, 10 Jul 2024 15:36:33 +0800</pubDate>
+      <guid>http://localhost:1313/posts/dockerimprove/</guid>
+      <description>随笔写的，docker进阶教程
+现在docker desktop 越来越强大，功能越来越多，用它来学习docker是不二之选
+选择一个运行的容器，如图
+logs 可以查看容器的运行日志
+inspect 可以查看容器的所有配置参数，环境变量等
+bind mounts 查看绑定的volume或者Mounts
+exec 可以进入容器内部执行linux命令
+files 查看容器内部的文件，其实容器就是一台小型虚拟机，部署的文件被放在app文件夹下
+stats 查看docker容器当前状态
+docker scout 这是一个Docker大概20.x（不记得是哪个）版本后新出的指令，可以检查你的镜像,并给出修改建议
+这次有点奇怪,docker desktop上出不了结果，算了，就用命令行把
+docker scout cves &amp;lt;image_name&amp;gt;</description>
+    </item>
     <item>
       <title>关于上家单位</title>
       <link>http://localhost:1313/posts/job/</link>
