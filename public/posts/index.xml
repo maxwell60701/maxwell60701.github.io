@@ -6,14 +6,22 @@
     <description>Recent content in Posts on maxwell60701 少寒风的Blog</description>
     <generator>Hugo -- 0.128.2</generator>
     <language>zh</language>
-    <lastBuildDate>Wed, 10 Jul 2024 09:52:42 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jul 2024 10:56:25 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>K8s</title>
+      <link>http://localhost:1313/posts/k8s/</link>
+      <pubDate>Wed, 10 Jul 2024 10:56:25 +0800</pubDate>
+      <guid>http://localhost:1313/posts/k8s/</guid>
+      <description>K8s部署 </description>
+    </item>
     <item>
       <title>冒险岛V083 docker部署</title>
       <link>http://localhost:1313/posts/maplestorydocker/</link>
       <pubDate>Wed, 10 Jul 2024 09:52:42 +0800</pubDate>
       <guid>http://localhost:1313/posts/maplestorydocker/</guid>
-      <description>gitee地址 </description>
+      <description>gitee地址请点击 B站被封，只能转移到外网
+点击查看视频教程</description>
     </item>
     <item>
       <title>Stablediffusion</title>
@@ -34,7 +42,7 @@
       <link>http://localhost:1313/posts/my-first-post/</link>
       <pubDate>Sun, 14 Jan 2024 07:07:07 +0800</pubDate>
       <guid>http://localhost:1313/posts/my-first-post/</guid>
-      <description>Introduction 今天很开心，这是hugo部署的
+      <description>简介 今天很开心，这是hugo部署的
 Visit the Hugo website!</description>
     </item>
   </channel>
