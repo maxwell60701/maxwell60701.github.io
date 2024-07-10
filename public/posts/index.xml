@@ -2,17 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on maxwell60701 少寒风的Blog</title>
-    <link>http://localhost:1313/posts/</link>
+    <link>http://localhost:56790/posts/</link>
     <description>Recent content in Posts on maxwell60701 少寒风的Blog</description>
     <generator>Hugo -- 0.128.2</generator>
     <language>zh</language>
-    <lastBuildDate>Wed, 10 Jul 2024 15:36:33 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 Jul 2024 16:09:19 +0800</lastBuildDate>
+    <atom:link href="http://localhost:56790/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>工作学习心得</title>
+      <link>http://localhost:56790/posts/mind/</link>
+      <pubDate>Wed, 10 Jul 2024 16:09:19 +0800</pubDate>
+      <guid>http://localhost:56790/posts/mind/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Docker 进阶</title>
-      <link>http://localhost:1313/posts/dockerimprove/</link>
+      <link>http://localhost:56790/posts/dockerimprove/</link>
       <pubDate>Wed, 10 Jul 2024 15:36:33 +0800</pubDate>
-      <guid>http://localhost:1313/posts/dockerimprove/</guid>
+      <guid>http://localhost:56790/posts/dockerimprove/</guid>
       <description>随笔写的，docker进阶教程
 现在docker desktop 越来越强大，功能越来越多，用它来学习docker是不二之选
 选择一个运行的容器，如图
@@ -20,13 +27,17 @@ logs 可以查看容器的运行日志
 inspect 可以查看容器的所有配置参数，环境变量等
 bind mounts 查看绑定的volume或者Mounts
 exec 可以进入容器内部执行linux命令
-files 查看容器内部的文件，其实容器就是一台小型虚拟机，部署的文件被放在app文件夹下</description>
+files 查看容器内部的文件，其实容器就是一台小型虚拟机，部署的文件被放在app文件夹下
+stats 查看docker容器当前状态
+docker scout 这是一个Docker大概20.x（不记得是哪个）版本后新出的指令，可以检查你的镜像,并给出修改建议
+这次有点奇怪,docker desktop上出不了结果，算了，就用命令行把
+docker scout cves &amp;lt;image_name&amp;gt;</description>
     </item>
     <item>
       <title>关于上家单位</title>
-      <link>http://localhost:1313/posts/job/</link>
+      <link>http://localhost:56790/posts/job/</link>
       <pubDate>Wed, 10 Jul 2024 14:53:30 +0800</pubDate>
-      <guid>http://localhost:1313/posts/job/</guid>
+      <guid>http://localhost:56790/posts/job/</guid>
       <description>离开上家两年多了，回顾下，整体上并不开心
 先说说好的地方吧
 代码提交流程还是规范的，刚来时候领导会给你做code review，每次提交都需要提pull request，我挺喜欢这样的流程
@@ -42,9 +53,9 @@ files 查看容器内部的文件，其实容器就是一台小型虚拟机，�
     </item>
     <item>
       <title>Docker</title>
-      <link>http://localhost:1313/posts/docker/</link>
+      <link>http://localhost:56790/posts/docker/</link>
       <pubDate>Wed, 10 Jul 2024 11:27:08 +0800</pubDate>
-      <guid>http://localhost:1313/posts/docker/</guid>
+      <guid>http://localhost:56790/posts/docker/</guid>
       <description>Docker 心得 我对docker要比k8s熟的多,最近正好空，那就摸摸鱼吧
 Docker，英文翻译为码头工人，它的logo是一头鲸鱼搭载着好几个集装箱，从这些就能看出它的含义，它是方便工程师更快捷地打包和部署应用的 安装 windows:docker desktop linux:linux安装
 image 在 Docker 中，&amp;ldquo;image&amp;rdquo; 是一个不可变的文件系统快照，其中包含应用程序及其所有依赖项。它相当于一个模板，用来创建 Docker 容器
@@ -54,9 +65,9 @@ image 在 Docker 中，&amp;ldquo;image&amp;rdquo; 是一个不可变的文件�
     </item>
     <item>
       <title>K8s</title>
-      <link>http://localhost:1313/posts/k8s/</link>
+      <link>http://localhost:56790/posts/k8s/</link>
       <pubDate>Wed, 10 Jul 2024 10:56:25 +0800</pubDate>
-      <guid>http://localhost:1313/posts/k8s/</guid>
+      <guid>http://localhost:56790/posts/k8s/</guid>
       <description>K8s部署 最近公司上了k8s, 我只学了点皮毛,如能学好如虎添翼
 前期准备 个人认为，学习K8S前必须掌握docker相关知识，否则学起来很困难
 linux上安装k8s 教程
@@ -66,31 +77,31 @@ apiVersion: v1 kind: Service metadata: name: my-service spec: selector: app: MyA
     </item>
     <item>
       <title>冒险岛V083 docker部署</title>
-      <link>http://localhost:1313/posts/maplestorydocker/</link>
+      <link>http://localhost:56790/posts/maplestorydocker/</link>
       <pubDate>Wed, 10 Jul 2024 09:52:42 +0800</pubDate>
-      <guid>http://localhost:1313/posts/maplestorydocker/</guid>
+      <guid>http://localhost:56790/posts/maplestorydocker/</guid>
       <description>gitee地址请点击 B站被封，只能转移到外网
 点击查看视频教程</description>
     </item>
     <item>
       <title>Stablediffusion</title>
-      <link>http://localhost:1313/posts/stablediffusion/</link>
+      <link>http://localhost:56790/posts/stablediffusion/</link>
       <pubDate>Wed, 10 Jul 2024 09:35:19 +0800</pubDate>
-      <guid>http://localhost:1313/posts/stablediffusion/</guid>
+      <guid>http://localhost:56790/posts/stablediffusion/</guid>
       <description>我自己写了一个nuget包,用以调用stablediffusion的webapi StableDiffusion.AI.Core </description>
     </item>
     <item>
       <title>关于我的哔哩哔哩</title>
-      <link>http://localhost:1313/posts/bili/</link>
+      <link>http://localhost:56790/posts/bili/</link>
       <pubDate>Tue, 09 Jul 2024 17:37:06 +0800</pubDate>
-      <guid>http://localhost:1313/posts/bili/</guid>
+      <guid>http://localhost:56790/posts/bili/</guid>
       <description>简介 个人哔哩哔哩账号</description>
     </item>
     <item>
       <title>我的第一个博客</title>
-      <link>http://localhost:1313/posts/my-first-post/</link>
+      <link>http://localhost:56790/posts/my-first-post/</link>
       <pubDate>Sun, 14 Jan 2024 07:07:07 +0800</pubDate>
-      <guid>http://localhost:1313/posts/my-first-post/</guid>
+      <guid>http://localhost:56790/posts/my-first-post/</guid>
       <description>简介 今天很开心，这是hugo部署的
 Visit the Hugo website!</description>
     </item>

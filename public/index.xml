@@ -2,17 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>maxwell60701 少寒风的Blog</title>
-    <link>http://localhost:1313/</link>
+    <link>http://localhost:56790/</link>
     <description>Recent content on maxwell60701 少寒风的Blog</description>
     <generator>Hugo -- 0.128.2</generator>
     <language>zh</language>
-    <lastBuildDate>Wed, 10 Jul 2024 15:36:33 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 Jul 2024 16:09:19 +0800</lastBuildDate>
+    <atom:link href="http://localhost:56790/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>别用百度</title>
+      <link>http://localhost:56790/posts/mind/</link>
+      <pubDate>Wed, 10 Jul 2024 16:09:19 +0800</pubDate>
+      <guid>http://localhost:56790/posts/mind/</guid>
+      <description>工作正好满10年了，说下个人学习心得
+尽量别用百度,CSDN 我发现有许多工作多年的老程序员还是喜欢百度，这个真的是大忌，百度的质量大家有目共睹，直接上图
+搜索docker，用百度看看出来的什么
+再用必应国际版搜索
+哪个是真正的docker教程，结果一目了然
+百度给你的要么是广告，要么是CSDN，CSDN里面的东西大部分也都是抄过来的，抄也抄不全
+csdn的docker教程举例
+看完他的文章，你会部署docker吗
+而必应和谷歌，给你指向的，就是docker的官网，里面有最全的官方教程
+docker官方文档
+很多刚入门的程序员第一步就走错了，我当时也是一样，学习的途径不正确，路只会越走越糊涂。
+有同学说，官方文档全是英文啊，看不懂。我只是二本英语只过了四级，不懂的翻译一下，记一下，并不难。当然，我工作后经常阅读努力学习，现在英文肯定要比大学那时候好
+而且，我发现一个窍门，同样一篇文章，如果全部翻译成了中文再阅读，理解的东西可能只有英文原版的百分之七十左右。翻译成了中文再去阅读，反而不知道说的是什么。所以尽量阅读英文原版，不要整段整段地翻译
+所以如果你要学习docker，也别看我的教程，先去官网参照官方文档学习
+总结 这是个人的小心得，也可以算是总纲。据我了解，百度的程序员也不用百度，不只计算机领域，科研领域的人应该也都知道，查资料都用谷歌学术</description>
+    </item>
     <item>
       <title>Docker 进阶</title>
-      <link>http://localhost:1313/posts/dockerimprove/</link>
+      <link>http://localhost:56790/posts/dockerimprove/</link>
       <pubDate>Wed, 10 Jul 2024 15:36:33 +0800</pubDate>
-      <guid>http://localhost:1313/posts/dockerimprove/</guid>
+      <guid>http://localhost:56790/posts/dockerimprove/</guid>
       <description>随笔写的，docker进阶教程
 现在docker desktop 越来越强大，功能越来越多，用它来学习docker是不二之选
 选择一个运行的容器，如图
@@ -28,9 +49,9 @@ docker scout cves &amp;lt;image_name&amp;gt;</description>
     </item>
     <item>
       <title>关于上家单位</title>
-      <link>http://localhost:1313/posts/job/</link>
+      <link>http://localhost:56790/posts/job/</link>
       <pubDate>Wed, 10 Jul 2024 14:53:30 +0800</pubDate>
-      <guid>http://localhost:1313/posts/job/</guid>
+      <guid>http://localhost:56790/posts/job/</guid>
       <description>离开上家两年多了，回顾下，整体上并不开心
 先说说好的地方吧
 代码提交流程还是规范的，刚来时候领导会给你做code review，每次提交都需要提pull request，我挺喜欢这样的流程
@@ -46,9 +67,9 @@ docker scout cves &amp;lt;image_name&amp;gt;</description>
     </item>
     <item>
       <title>Docker</title>
-      <link>http://localhost:1313/posts/docker/</link>
+      <link>http://localhost:56790/posts/docker/</link>
       <pubDate>Wed, 10 Jul 2024 11:27:08 +0800</pubDate>
-      <guid>http://localhost:1313/posts/docker/</guid>
+      <guid>http://localhost:56790/posts/docker/</guid>
       <description>Docker 心得 我对docker要比k8s熟的多,最近正好空，那就摸摸鱼吧
 Docker，英文翻译为码头工人，它的logo是一头鲸鱼搭载着好几个集装箱，从这些就能看出它的含义，它是方便工程师更快捷地打包和部署应用的 安装 windows:docker desktop linux:linux安装
 image 在 Docker 中，&amp;ldquo;image&amp;rdquo; 是一个不可变的文件系统快照，其中包含应用程序及其所有依赖项。它相当于一个模板，用来创建 Docker 容器
@@ -58,9 +79,9 @@ image 在 Docker 中，&amp;ldquo;image&amp;rdquo; 是一个不可变的文件�
     </item>
     <item>
       <title>K8s</title>
-      <link>http://localhost:1313/posts/k8s/</link>
+      <link>http://localhost:56790/posts/k8s/</link>
       <pubDate>Wed, 10 Jul 2024 10:56:25 +0800</pubDate>
-      <guid>http://localhost:1313/posts/k8s/</guid>
+      <guid>http://localhost:56790/posts/k8s/</guid>
       <description>K8s部署 最近公司上了k8s, 我只学了点皮毛,如能学好如虎添翼
 前期准备 个人认为，学习K8S前必须掌握docker相关知识，否则学起来很困难
 linux上安装k8s 教程
@@ -70,31 +91,31 @@ apiVersion: v1 kind: Service metadata: name: my-service spec: selector: app: MyA
     </item>
     <item>
       <title>冒险岛V083 docker部署</title>
-      <link>http://localhost:1313/posts/maplestorydocker/</link>
+      <link>http://localhost:56790/posts/maplestorydocker/</link>
       <pubDate>Wed, 10 Jul 2024 09:52:42 +0800</pubDate>
-      <guid>http://localhost:1313/posts/maplestorydocker/</guid>
+      <guid>http://localhost:56790/posts/maplestorydocker/</guid>
       <description>gitee地址请点击 B站被封，只能转移到外网
 点击查看视频教程</description>
     </item>
     <item>
       <title>Stablediffusion</title>
-      <link>http://localhost:1313/posts/stablediffusion/</link>
+      <link>http://localhost:56790/posts/stablediffusion/</link>
       <pubDate>Wed, 10 Jul 2024 09:35:19 +0800</pubDate>
-      <guid>http://localhost:1313/posts/stablediffusion/</guid>
+      <guid>http://localhost:56790/posts/stablediffusion/</guid>
       <description>我自己写了一个nuget包,用以调用stablediffusion的webapi StableDiffusion.AI.Core </description>
     </item>
     <item>
       <title>关于我的哔哩哔哩</title>
-      <link>http://localhost:1313/posts/bili/</link>
+      <link>http://localhost:56790/posts/bili/</link>
       <pubDate>Tue, 09 Jul 2024 17:37:06 +0800</pubDate>
-      <guid>http://localhost:1313/posts/bili/</guid>
+      <guid>http://localhost:56790/posts/bili/</guid>
       <description>简介 个人哔哩哔哩账号</description>
     </item>
     <item>
       <title>我的第一个博客</title>
-      <link>http://localhost:1313/posts/my-first-post/</link>
+      <link>http://localhost:56790/posts/my-first-post/</link>
       <pubDate>Sun, 14 Jan 2024 07:07:07 +0800</pubDate>
-      <guid>http://localhost:1313/posts/my-first-post/</guid>
+      <guid>http://localhost:56790/posts/my-first-post/</guid>
       <description>简介 今天很开心，这是hugo部署的
 Visit the Hugo website!</description>
     </item>
