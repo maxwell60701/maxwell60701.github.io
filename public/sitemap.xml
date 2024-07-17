@@ -2,41 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:56790/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2024-07-10T16:09:19+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:56790/posts/</loc>
+    <loc>http://localhost:1313/posts/</loc>
     <lastmod>2024-07-10T16:09:19+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:56790/posts/mind/</loc>
+    <loc>http://localhost:1313/posts/mind/</loc>
     <lastmod>2024-07-10T16:09:19+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:56790/posts/dockerimprove/</loc>
+    <loc>http://localhost:1313/posts/dockerimprove/</loc>
     <lastmod>2024-07-10T15:36:33+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:56790/posts/job/</loc>
+    <loc>http://localhost:1313/posts/job/</loc>
     <lastmod>2024-07-10T14:53:30+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:56790/posts/docker/</loc>
+    <loc>http://localhost:1313/posts/docker/</loc>
     <lastmod>2024-07-10T11:27:08+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:56790/posts/k8s/</loc>
+    <loc>http://localhost:1313/posts/k8s/</loc>
     <lastmod>2024-07-10T10:56:25+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:56790/posts/maplestorydocker/</loc>
+    <loc>http://localhost:1313/posts/maplestorydocker/</loc>
     <lastmod>2024-07-10T09:52:42+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:56790/posts/stablediffusion/</loc>
+    <loc>http://localhost:1313/posts/stablediffusion/</loc>
     <lastmod>2024-07-10T09:35:19+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:56790/posts/bili/</loc>
+    <loc>http://localhost:1313/posts/bili/</loc>
     <lastmod>2024-07-09T17:37:06+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:56790/posts/my-first-post/</loc>
+    <loc>http://localhost:1313/posts/my-first-post/</loc>
     <lastmod>2024-01-14T07:07:07+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:56790/categories/</loc>
+    <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>http://localhost:56790/tags/</loc>
+    <loc>http://localhost:1313/tags/</loc>
   </url>
 </urlset>
