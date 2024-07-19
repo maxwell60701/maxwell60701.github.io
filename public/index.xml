@@ -6,8 +6,23 @@
     <description>Recent content on maxwell60701 少寒风的Blog</description>
     <generator>Hugo -- 0.128.2</generator>
     <language>zh</language>
-    <lastBuildDate>Wed, 10 Jul 2024 16:09:19 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jul 2024 16:35:38 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用HuggingFace的模型来生成图像</title>
+      <link>http://localhost:1313/posts/stablediffusion-3/</link>
+      <pubDate>Fri, 19 Jul 2024 16:35:38 +0800</pubDate>
+      <guid>http://localhost:1313/posts/stablediffusion-3/</guid>
+      <description>Huggingface 地址
+这个网站类似于github,github托管的是代码，而它托管的是模型
+选择右侧use this model,或者看readme,可以得知它的用法
+示例如下
+import torch from diffusers import StableDiffusion3Pipeline pipe = StableDiffusion3Pipeline.from_pretrained(&amp;#34;stabilityai/stable-diffusion-3-medium-diffusers&amp;#34;, torch_dtype=torch.float16,token=&amp;#34;hf_xxxxxx&amp;#34;) pipe = pipe.to(&amp;#34;cuda&amp;#34;) image = pipe( &amp;#34;A cat holding a sign that says hello world&amp;#34;, negative_prompt=&amp;#34;&amp;#34;, num_inference_steps=28, guidance_scale=7.0, ).images[0] image 这个token是你在huggingface上生成的，权限为write
+刚开始运行有报错的话,按照错误提示去安装python的包
+当然，你的PC上得有独显才行，还有装一个CUDA的显卡驱动，我显卡是RTX3060，CUDA 11.6
+这个生成很慢，平均10分钟，可能跟本机显卡有关
+这个模型我感觉整体上没有他们在线的api调用的那个模型好，不过也凑合能用</description>
+    </item>
     <item>
       <title>别用百度</title>
       <link>http://localhost:1313/posts/mind/</link>
