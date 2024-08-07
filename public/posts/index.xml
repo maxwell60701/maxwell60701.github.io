@@ -6,8 +6,15 @@
     <description>Recent content in Posts on maxwell60701 少寒风的Blog</description>
     <generator>Hugo -- 0.128.2</generator>
     <language>zh</language>
-    <lastBuildDate>Fri, 19 Jul 2024 16:35:38 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 07 Aug 2024 14:53:30 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>最近忙</title>
+      <link>http://localhost:1313/posts/job/</link>
+      <pubDate>Wed, 07 Aug 2024 14:53:30 +0800</pubDate>
+      <guid>http://localhost:1313/posts/job/</guid>
+      <description>最近单位事情多，等结束后，练习训练大模型，之前的文章删除了</description>
+    </item>
     <item>
       <title>使用HuggingFace的模型来生成图像</title>
       <link>http://localhost:1313/posts/stablediffusion-3/</link>
@@ -63,24 +70,6 @@ stats 查看docker容器当前状态
 docker scout 这是一个Docker大概20.x（不记得是哪个）版本后新出的指令，可以检查你的镜像,并给出修改建议
 这次有点奇怪,docker desktop上出不了结果，算了，就用命令行把
 docker scout cves &amp;lt;image_name&amp;gt;</description>
-    </item>
-    <item>
-      <title>关于上家单位</title>
-      <link>http://localhost:1313/posts/job/</link>
-      <pubDate>Wed, 10 Jul 2024 14:53:30 +0800</pubDate>
-      <guid>http://localhost:1313/posts/job/</guid>
-      <description>离开上家两年多了，回顾下，整体上并不开心
-先说说好的地方吧
-代码提交流程还是规范的，刚来时候领导会给你做code review，每次提交都需要提pull request，我挺喜欢这样的流程
-说说不喜欢的地方吧
-这家公司是做WPF的，我用下来不喜欢，比如界面上一个简单的条件判断，用vue，angular 很简单一个v-if 或者 ng-if 就搞定了，用wpf要写很繁琐的&amp;lt;trigger&amp;gt;或者&amp;lt;condition&amp;gt;,效率太低，这种低效语法很容易被遗忘。
-部门是基于.net framework 4.6的，那个时候.NET CORE 刚出到3.1，一年以后大概是20年，.NET 5 横空出世，将.NET CORE 和 .NET FRAMEWORK 合二为一,支持跨平台
-跨平台意味着.NET 可以在linux上，docker上部署，不再局限于windows，IIS，等同打通了任督二脉。如果.NET FRAMEWORK 是被圈养的老虎，那么.NET 5 之后就是野生的放养的猛虎。我可以更多地接触到docker，linux这样的东西。
-我感觉到这是一个契机。但是部门人不那么认为，或者说有同样想法的人早就离开了
-部门里有一位年轻的同事，我很欣赏他，他很爱学习新技术，水平也很高，我的这篇blog就是看了它的github，受到启发搭建出来的，非常感谢他，可惜和他在单位没有太多交流,他后来应该也是觉得单位没前途离开了。
-部门其实整体技术氛围并不好，没人讨论新技术，死气沉沉的，有一位年龄偏大的同事，用现在话说就是老油条，技术一般般，不思进取，完成本职工作没问题，但是空余时间没有感受到他在学习，有点躺平的感觉。据说之前部门领导让他单独带一队，他还不肯。
-可能每个人有自己的生活方式把，但是我肯定不能和这样的人共事。我见过70后的工程师，还在不断地学习呢
-综上原因我离开了这家单位，走的时候我和那位老油条还闹了点不愉快，最后部门领导出来解围了，感谢他最后时刻的仗义相助</description>
     </item>
     <item>
       <title>Docker</title>

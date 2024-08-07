@@ -3,10 +3,13 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2024-07-19T16:35:38+08:00</lastmod>
+    <lastmod>2024-08-07T14:53:30+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2024-07-19T16:35:38+08:00</lastmod>
+    <lastmod>2024-08-07T14:53:30+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/job/</loc>
+    <lastmod>2024-08-07T14:53:30+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/stablediffusion-3/</loc>
     <lastmod>2024-07-19T16:35:38+08:00</lastmod>
@@ -16,9 +19,6 @@
   </url><url>
     <loc>http://localhost:1313/posts/dockerimprove/</loc>
     <lastmod>2024-07-10T15:36:33+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/job/</loc>
-    <lastmod>2024-07-10T14:53:30+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/docker/</loc>
     <lastmod>2024-07-10T11:27:08+08:00</lastmod>
