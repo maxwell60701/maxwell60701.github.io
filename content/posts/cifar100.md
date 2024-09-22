@@ -4,7 +4,7 @@ date = 2024-09-22T10:36:31+08:00
 draft = false
 +++
 
-### 用CIFAR100数据集来训练图像分类
+### 用CIFAR100数据集来训练图像分类（未完待续）
 
 最近在学习如何进行图像分类和识别，比如给一张狗的图片，系统能够准确识别
 
@@ -16,7 +16,7 @@ CIFAR100是一个在线数据集，包含了100个分类，每个分类600张图
 
 ### 代码
 
-```
+```python
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -115,3 +115,7 @@ for epoch in range(epochs):
 torch.save(model.state_dict(), 'cifar100_resnet50_improved.pth')
 
 ```
+
+用此代码训练，准确率可达70%，我是RTX3060显卡，训练了2个小时
+
+未按待续。。。
