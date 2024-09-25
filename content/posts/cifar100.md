@@ -118,4 +118,4 @@ torch.save(model.state_dict(), 'cifar100_resnet50_improved.pth')
 
 用此代码训练，准确率可达70%，我是RTX3060显卡，训练了2个小时
 
-未按待续。。。
+未完待续。。。

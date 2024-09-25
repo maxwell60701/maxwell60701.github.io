@@ -111,6 +111,22 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">Cifar100
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>用CIFAR100数据集来训练图像分类（未完待续） 最近在学习如何进行图像分类和识别，比如给一张狗的图片，系统能够准确识别
+查下来目前初学者用的最多的是CIFAR10和CIFAR100，
+CIFAR100是一个在线数据集，包含了100个分类，每个分类600张图片，供咱们训练使用
+接下来直接上代码
+代码 import torch import torch.nn as nn import torch.optim as optim import torchvision import torchvision.transforms as transforms from torchvision import models # 定义数据预处理步骤 transform_train = transforms.Compose([ transforms.RandomCrop(32, padding=4), # 随机裁剪 transforms.RandomHorizontalFlip(), # 随机水平翻转 transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2), # 颜色增强 transforms.RandomRotation(15), # 随机旋转 transforms.ToTensor(), transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2761)) # 归一化 ]) transform_test = transforms.Compose([ transforms.ToTensor(), transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2761)) ]) # 加载 CIFAR-100 数据集 trainset = torchvision....</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-09-22 10:36:31 +0800 CST'>September 22, 2024</span></footer>
+  <a class="entry-link" aria-label="post link to Cifar100" href="http://localhost:1313/posts/cifar100/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">最近忙
     </h2>
   </header>
@@ -262,19 +278,12 @@ apiVersion: v1 kind: Service metadata: name: my-service spec: selector: app: MyA
   <footer class="entry-footer"><span title='2024-07-09 17:37:06 +0800 CST'>July 9, 2024</span></footer>
   <a class="entry-link" aria-label="post link to 关于我的哔哩哔哩" href="http://localhost:1313/posts/bili/"></a>
 </article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">我的第一个博客
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>简介 今天很开心，这是hugo部署的
-Visit the Hugo website!</p>
-  </div>
-  <footer class="entry-footer"><span title='2024-01-14 07:07:07 +0800 CST'>January 14, 2024</span></footer>
-  <a class="entry-link" aria-label="post link to 我的第一个博客" href="http://localhost:1313/posts/my-first-post/"></a>
-</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="next" href="http://localhost:1313/posts/page/2/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
     </main>
     
 <footer class="footer">

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>maxwell60701 少寒风的Blog</title>
     <link>http://localhost:1313/</link>
     <description>Recent content on maxwell60701 少寒风的Blog</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- 0.128.2</generator>
     <language>zh</language>
     <lastBuildDate>Sun, 22 Sep 2024 10:36:31 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
@@ -13,7 +13,11 @@
       <link>http://localhost:1313/posts/cifar100/</link>
       <pubDate>Sun, 22 Sep 2024 10:36:31 +0800</pubDate>
       <guid>http://localhost:1313/posts/cifar100/</guid>
-      <description>用CIFAR100数据集来训练图像分类（未完待续） 最近在学习如何进行图像分类和识别，比如给一张狗的图片，系统能够准确识别&#xA;查下来目前初学者用的最多的是CIFAR10和CIFAR100，&#xA;CIFAR100是一个在线数据集，包含了100个分类，每个分类600张图片，供咱们训练使用&#xA;接下来直接上代码&#xA;代码 import torch import torch.nn as nn import torch.optim as optim import torchvision import torchvision.transforms as transforms from torchvision import models # 定义数据预处理步骤 transform_train = transforms.Compose([ transforms.RandomCrop(32, padding=4), # 随机裁剪 transforms.RandomHorizontalFlip(), # 随机水平翻转 transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2), # 颜色增强 transforms.RandomRotation(15), # 随机旋转 transforms.ToTensor(), transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2761)) # 归一化 ]) transform_test = transforms.Compose([ transforms.ToTensor(), transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2761)) ]) # 加载 CIFAR-100 数据集 trainset = torchvision.</description>
+      <description>用CIFAR100数据集来训练图像分类（未完待续） 最近在学习如何进行图像分类和识别，比如给一张狗的图片，系统能够准确识别
+查下来目前初学者用的最多的是CIFAR10和CIFAR100，
+CIFAR100是一个在线数据集，包含了100个分类，每个分类600张图片，供咱们训练使用
+接下来直接上代码
+代码 import torch import torch.nn as nn import torch.optim as optim import torchvision import torchvision.transforms as transforms from torchvision import models # 定义数据预处理步骤 transform_train = transforms.Compose([ transforms.RandomCrop(32, padding=4), # 随机裁剪 transforms.RandomHorizontalFlip(), # 随机水平翻转 transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2), # 颜色增强 transforms.RandomRotation(15), # 随机旋转 transforms.ToTensor(), transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2761)) # 归一化 ]) transform_test = transforms.Compose([ transforms.ToTensor(), transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2761)) ]) # 加载 CIFAR-100 数据集 trainset = torchvision.</description>
     </item>
     <item>
       <title>最近忙</title>
@@ -27,42 +31,88 @@
       <link>http://localhost:1313/posts/stablediffusion-3/</link>
       <pubDate>Fri, 19 Jul 2024 16:35:38 +0800</pubDate>
       <guid>http://localhost:1313/posts/stablediffusion-3/</guid>
-      <description>Huggingface 地址&#xA;这个网站类似于github,github托管的是代码，而它托管的是模型&#xA;选择右侧use this model,或者看readme,可以得知它的用法&#xA;示例如下&#xA;import torch from diffusers import StableDiffusion3Pipeline pipe = StableDiffusion3Pipeline.from_pretrained(&amp;#34;stabilityai/stable-diffusion-3-medium-diffusers&amp;#34;, torch_dtype=torch.float16,token=&amp;#34;hf_xxxxxx&amp;#34;) pipe = pipe.to(&amp;#34;cuda&amp;#34;) image = pipe( &amp;#34;A cat holding a sign that says hello world&amp;#34;, negative_prompt=&amp;#34;&amp;#34;, num_inference_steps=28, guidance_scale=7.0, ).images[0] image 这个token是你在huggingface上生成的，权限为write&#xA;刚开始运行有报错的话,按照错误提示去安装python的包&#xA;当然，你的PC上得有独显才行，还有装一个CUDA的显卡驱动，我显卡是RTX3060，CUDA 11.6&#xA;这个生成很慢，平均10分钟，可能跟本机显卡有关&#xA;这个模型我感觉整体上没有他们在线的api调用的那个模型好，不过也凑合能用</description>
+      <description>Huggingface 地址
+这个网站类似于github,github托管的是代码，而它托管的是模型
+选择右侧use this model,或者看readme,可以得知它的用法
+示例如下
+import torch from diffusers import StableDiffusion3Pipeline pipe = StableDiffusion3Pipeline.from_pretrained(&amp;#34;stabilityai/stable-diffusion-3-medium-diffusers&amp;#34;, torch_dtype=torch.float16,token=&amp;#34;hf_xxxxxx&amp;#34;) pipe = pipe.to(&amp;#34;cuda&amp;#34;) image = pipe( &amp;#34;A cat holding a sign that says hello world&amp;#34;, negative_prompt=&amp;#34;&amp;#34;, num_inference_steps=28, guidance_scale=7.0, ).images[0] image 这个token是你在huggingface上生成的，权限为write
+刚开始运行有报错的话,按照错误提示去安装python的包
+当然，你的PC上得有独显才行，还有装一个CUDA的显卡驱动，我显卡是RTX3060，CUDA 11.6
+这个生成很慢，平均10分钟，可能跟本机显卡有关
+这个模型我感觉整体上没有他们在线的api调用的那个模型好，不过也凑合能用</description>
     </item>
     <item>
       <title>别用百度</title>
       <link>http://localhost:1313/posts/mind/</link>
       <pubDate>Wed, 10 Jul 2024 16:09:19 +0800</pubDate>
       <guid>http://localhost:1313/posts/mind/</guid>
-      <description>工作正好满10年了，说下个人学习心得&#xA;尽量别用百度,CSDN 我发现有许多工作多年的老程序员还是喜欢百度，这个真的是大忌，百度的质量大家有目共睹，直接上图&#xA;搜索docker，用百度看看出来的什么&#xA;再用必应国际版搜索&#xA;哪个是真正的docker教程，结果一目了然&#xA;百度给你的要么是广告，要么是CSDN，CSDN里面的东西大部分也都是抄过来的，抄也抄不全&#xA;csdn的docker教程举例&#xA;看完他的文章，你会部署docker吗&#xA;而必应和谷歌，给你指向的，就是docker的官网，里面有最全的官方教程&#xA;docker官方文档&#xA;很多刚入门的程序员第一步就走错了，我当时也是一样，学习的途径不正确，路只会越走越糊涂。&#xA;有同学说，官方文档全是英文啊，看不懂。我只是二本英语只过了四级，不懂的翻译一下，记一下，并不难。当然，我工作后经常阅读努力学习，现在英文肯定要比大学那时候好&#xA;而且，我发现一个窍门，同样一篇文章，如果全部翻译成了中文再阅读，理解的东西可能只有英文原版的百分之七十左右。翻译成了中文再去阅读，反而不知道说的是什么。所以尽量阅读英文原版，不要整段整段地翻译&#xA;所以如果你要学习docker，也别看我的教程，先去官网参照官方文档学习&#xA;总结 这是个人的小心得，也可以算是总纲。据我了解，百度的程序员也不用百度，不只计算机领域，科研领域的人应该也都知道，查资料都用谷歌学术&#xA;————————————————————————————————————&#xA;补充 &amp;ldquo;百度开发者网址&amp;rdquo; 据说百度内部程序员开发的网址，也可以用这个来替代百度</description>
+      <description>工作正好满10年了，说下个人学习心得
+尽量别用百度,CSDN 我发现有许多工作多年的老程序员还是喜欢百度，这个真的是大忌，百度的质量大家有目共睹，直接上图
+搜索docker，用百度看看出来的什么
+再用必应国际版搜索
+哪个是真正的docker教程，结果一目了然
+百度给你的要么是广告，要么是CSDN，CSDN里面的东西大部分也都是抄过来的，抄也抄不全
+csdn的docker教程举例
+看完他的文章，你会部署docker吗
+而必应和谷歌，给你指向的，就是docker的官网，里面有最全的官方教程
+docker官方文档
+很多刚入门的程序员第一步就走错了，我当时也是一样，学习的途径不正确，路只会越走越糊涂。
+有同学说，官方文档全是英文啊，看不懂。我只是二本英语只过了四级，不懂的翻译一下，记一下，并不难。当然，我工作后经常阅读努力学习，现在英文肯定要比大学那时候好
+而且，我发现一个窍门，同样一篇文章，如果全部翻译成了中文再阅读，理解的东西可能只有英文原版的百分之七十左右。翻译成了中文再去阅读，反而不知道说的是什么。所以尽量阅读英文原版，不要整段整段地翻译
+所以如果你要学习docker，也别看我的教程，先去官网参照官方文档学习
+总结 这是个人的小心得，也可以算是总纲。据我了解，百度的程序员也不用百度，不只计算机领域，科研领域的人应该也都知道，查资料都用谷歌学术
+————————————————————————————————————
+补充 &amp;ldquo;百度开发者网址&amp;rdquo; 据说百度内部程序员开发的网址，也可以用这个来替代百度</description>
     </item>
     <item>
       <title>Docker 进阶</title>
       <link>http://localhost:1313/posts/dockerimprove/</link>
       <pubDate>Wed, 10 Jul 2024 15:36:33 +0800</pubDate>
       <guid>http://localhost:1313/posts/dockerimprove/</guid>
-      <description>随笔写的，docker进阶教程&#xA;现在docker desktop 越来越强大，功能越来越多，用它来学习docker是不二之选&#xA;选择一个运行的容器，如图&#xA;logs 可以查看容器的运行日志&#xA;inspect 可以查看容器的所有配置参数，环境变量等&#xA;bind mounts 查看绑定的volume或者Mounts&#xA;exec 可以进入容器内部执行linux命令&#xA;files 查看容器内部的文件，其实容器就是一台小型虚拟机，部署的文件被放在app文件夹下&#xA;stats 查看docker容器当前状态&#xA;docker scout 这是一个Docker大概20.x（不记得是哪个）版本后新出的指令，可以检查你的镜像,并给出修改建议&#xA;这次有点奇怪,docker desktop上出不了结果，算了，就用命令行把&#xA;docker scout cves &amp;lt;image_name&amp;gt;</description>
+      <description>随笔写的，docker进阶教程
+现在docker desktop 越来越强大，功能越来越多，用它来学习docker是不二之选
+选择一个运行的容器，如图
+logs 可以查看容器的运行日志
+inspect 可以查看容器的所有配置参数，环境变量等
+bind mounts 查看绑定的volume或者Mounts
+exec 可以进入容器内部执行linux命令
+files 查看容器内部的文件，其实容器就是一台小型虚拟机，部署的文件被放在app文件夹下
+stats 查看docker容器当前状态
+docker scout 这是一个Docker大概20.x（不记得是哪个）版本后新出的指令，可以检查你的镜像,并给出修改建议
+这次有点奇怪,docker desktop上出不了结果，算了，就用命令行把
+docker scout cves &amp;lt;image_name&amp;gt;</description>
     </item>
     <item>
       <title>Docker</title>
       <link>http://localhost:1313/posts/docker/</link>
       <pubDate>Wed, 10 Jul 2024 11:27:08 +0800</pubDate>
       <guid>http://localhost:1313/posts/docker/</guid>
-      <description>Docker 心得 我对docker要比k8s熟的多,最近正好空，那就摸摸鱼吧&#xA;Docker，英文翻译为码头工人，它的logo是一头鲸鱼搭载着好几个集装箱，从这些就能看出它的含义，它是方便工程师更快捷地打包和部署应用的 安装 windows:docker desktop linux:linux安装&#xA;image 在 Docker 中，&amp;ldquo;image&amp;rdquo; 是一个不可变的文件系统快照，其中包含应用程序及其所有依赖项。它相当于一个模板，用来创建 Docker 容器&#xA;可以这么说，你应用程序的发布包就是一个镜像&#xA;构建镜像 构建镜像需要Dockerfile,示例&#xA;# 基础镜像，用于构建 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env # 设置工作目录 WORKDIR /app # 复制 .csproj 文件并恢复依赖项 COPY *.csproj ./ RUN dotnet restore # 复制项目文件 COPY . ./ # 编译项目 RUN dotnet publish -c Release -o out # 基础镜像，用于运行 FROM mcr.microsoft.com/dotnet/aspnet:7.0 # 设置工作目录 WORKDIR /app # 复制编译好的文件到工作目录 COPY --from=build-env /app/out . # 设置容器启动时执行的命令 ENTRYPOINT [&amp;#34;dotnet&amp;#34;, &amp;#34;my-dotnet-app.</description>
+      <description>Docker 心得 我对docker要比k8s熟的多,最近正好空，那就摸摸鱼吧
+Docker，英文翻译为码头工人，它的logo是一头鲸鱼搭载着好几个集装箱，从这些就能看出它的含义，它是方便工程师更快捷地打包和部署应用的 安装 windows:docker desktop linux:linux安装
+image 在 Docker 中，&amp;ldquo;image&amp;rdquo; 是一个不可变的文件系统快照，其中包含应用程序及其所有依赖项。它相当于一个模板，用来创建 Docker 容器
+可以这么说，你应用程序的发布包就是一个镜像
+构建镜像 构建镜像需要Dockerfile,示例
+# 基础镜像，用于构建 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env # 设置工作目录 WORKDIR /app # 复制 .csproj 文件并恢复依赖项 COPY *.csproj ./ RUN dotnet restore # 复制项目文件 COPY . ./ # 编译项目 RUN dotnet publish -c Release -o out # 基础镜像，用于运行 FROM mcr.microsoft.com/dotnet/aspnet:7.0 # 设置工作目录 WORKDIR /app # 复制编译好的文件到工作目录 COPY --from=build-env /app/out . # 设置容器启动时执行的命令 ENTRYPOINT [&amp;#34;dotnet&amp;#34;, &amp;#34;my-dotnet-app.</description>
     </item>
     <item>
       <title>K8s</title>
       <link>http://localhost:1313/posts/k8s/</link>
       <pubDate>Wed, 10 Jul 2024 10:56:25 +0800</pubDate>
       <guid>http://localhost:1313/posts/k8s/</guid>
-      <description>K8s部署 最近公司上了k8s, 我只学了点皮毛,如能学好如虎添翼&#xA;前期准备 个人认为，学习K8S前必须掌握docker相关知识，否则学起来很困难&#xA;linux上安装k8s 教程&#xA;简要结构图 ingress 在Kubernetes中，Ingress 是一个API对象，用于管理对集群内服务的外部访问，通常是 HTTP 和 HTTPS。Ingress 可以提供负载均衡、SSL 终止和基于名称的虚拟主机等功能&#xA;apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: example-ingress spec: rules: - host: example.com http: paths: - path: /app1 pathType: Prefix backend: service: name: app1-service port: number: 80 - path: /app2 pathType: Prefix backend: service: name: app2-service port: number: 80 tls: - hosts: - example.com secretName: example-tls service 在Kubernetes中，Service 是一种用于定义逻辑集合的Pod及其访问策略的API对象。Service 提供了一种抽象，允许你将一组Pod作为一个单一的服务进行访问，而不需要知道这些Pod的具体位置或数量。Service 可以实现负载均衡、服务发现和故障转移等功能&#xA;apiVersion: v1 kind: Service metadata: name: my-service spec: selector: app: MyApp ports: - protocol: TCP port: 80 targetPort: 9376 pod 在Kubernetes中，Pod 是最小的可部署计算单元。它是运行在集群上的容器或容器组的抽象。Pod 是Kubernetes中管理和调度容器的基本单元。</description>
+      <description>K8s部署 最近公司上了k8s, 我只学了点皮毛,如能学好如虎添翼
+前期准备 个人认为，学习K8S前必须掌握docker相关知识，否则学起来很困难
+linux上安装k8s 教程
+简要结构图 ingress 在Kubernetes中，Ingress 是一个API对象，用于管理对集群内服务的外部访问，通常是 HTTP 和 HTTPS。Ingress 可以提供负载均衡、SSL 终止和基于名称的虚拟主机等功能
+apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: example-ingress spec: rules: - host: example.com http: paths: - path: /app1 pathType: Prefix backend: service: name: app1-service port: number: 80 - path: /app2 pathType: Prefix backend: service: name: app2-service port: number: 80 tls: - hosts: - example.com secretName: example-tls service 在Kubernetes中，Service 是一种用于定义逻辑集合的Pod及其访问策略的API对象。Service 提供了一种抽象，允许你将一组Pod作为一个单一的服务进行访问，而不需要知道这些Pod的具体位置或数量。Service 可以实现负载均衡、服务发现和故障转移等功能
+apiVersion: v1 kind: Service metadata: name: my-service spec: selector: app: MyApp ports: - protocol: TCP port: 80 targetPort: 9376 pod 在Kubernetes中，Pod 是最小的可部署计算单元。它是运行在集群上的容器或容器组的抽象。Pod 是Kubernetes中管理和调度容器的基本单元。</description>
     </item>
     <item>
       <title>冒险岛V083 docker部署</title>
       <link>http://localhost:1313/posts/maplestorydocker/</link>
       <pubDate>Wed, 10 Jul 2024 09:52:42 +0800</pubDate>
       <guid>http://localhost:1313/posts/maplestorydocker/</guid>
-      <description>gitee地址请点击 B站被封，只能转移到外网&#xA;点击查看视频教程</description>
+      <description>gitee地址请点击 B站被封，只能转移到外网
+点击查看视频教程</description>
     </item>
     <item>
       <title>Stablediffusion</title>
@@ -83,7 +133,8 @@
       <link>http://localhost:1313/posts/my-first-post/</link>
       <pubDate>Sun, 14 Jan 2024 07:07:07 +0800</pubDate>
       <guid>http://localhost:1313/posts/my-first-post/</guid>
-      <description>简介 今天很开心，这是hugo部署的&#xA;Visit the Hugo website!</description>
+      <description>简介 今天很开心，这是hugo部署的
+Visit the Hugo website!</description>
     </item>
   </channel>
 </rss>
