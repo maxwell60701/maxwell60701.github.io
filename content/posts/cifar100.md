@@ -4,7 +4,7 @@ date = 2024-09-22T10:36:31+08:00
 draft = false
 +++
 
-### 用CIFAR100数据集来训练图像分类（未完待续）
+### 用CIFAR100数据集来训练图像分类
 
 最近在学习如何进行图像分类和识别，比如给一张狗的图片，系统能够准确识别
 
@@ -112,10 +112,75 @@ for epoch in range(epochs):
     scheduler.step()  # 更新学习率
 
 # 保存模型
-torch.save(model.state_dict(), 'cifar100_resnet50_improved.pth')
+torch.save(model.state_dict(), 'cifar100.pth')
 
 ```
 
 用此代码训练，准确率可达70%，我是RTX3060显卡，训练了2个小时
 
-未完待续。。。
+训练好的模型保存为cifar100.pth,接下来我们进行测试一下
+
+测试代码如下
+
+```python
+import torch
+import torchvision.transforms as transforms
+from PIL import Image
+import os
+from torchvision import models
+
+# 定义设备
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+# 加载训练好的模型
+model = models.resnet50(pretrained=False)
+model.fc = torch.nn.Linear(2048, 100)  # CIFAR-100 具有 100 个分类
+model.load_state_dict(torch.load('cifar100.pth'))  # 加载模型权重
+model = model.to(device)
+model.eval()  # 设置模型为评估模式
+
+# 定义预处理函数，和训练时的一致
+preprocess = transforms.Compose([
+    transforms.Resize((32, 32)),  # 将图片调整为与 CIFAR-100 数据集的大小一致
+    transforms.ToTensor(),
+    transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2761))
+])
+
+# 类别标签（CIFAR-100 的类别）
+classes = ['apple', 'aquarium_fish', 'baby', 'bear', 'beaver', 'bed', 'bee', 'beetle', 'bicycle', 'bottle', 
+           'bowl', 'boy', 'bridge', 'bus', 'butterfly', 'camel', 'can', 'castle', 'caterpillar', 'cattle', 
+           'chair', 'chimpanzee', 'clock', 'cloud', 'cockroach', 'couch', 'crab', 'crocodile', 'cup', 'dinosaur', 
+           'dolphin', 'elephant', 'flatfish', 'forest', 'fox', 'girl', 'hamster', 'house', 'kangaroo', 'keyboard', 'lamp', 
+           'lawn_mower', 'leopard', 'lion', 'lizard', 'lobster', 'man', 'maple_tree', 'motorcycle', 'mountain', 'mouse', 
+           'mushroom', 'oak_tree', 'orange', 'orchid', 'otter', 'palm_tree', 'pear', 'pickup_truck', 'pine_tree', 'plain', 
+           'plate', 'poppy', 'porcupine', 'possum', 'rabbit', 'raccoon', 'ray', 'road', 'rocket', 'rose', 'sea', 'seal', 
+           'shark', 'shrew', 'skunk', 'skyscraper', 'snail', 'snake', 'spider', 'squirrel', 'streetcar', 'sunflower', 'sweet_pepper', 
+           'table', 'tank', 'telephone', 'television', 'tiger', 'tractor', 'train', 'trout', 'tulip', 'turtle', 'wardrobe', 
+           'whale', 'willow_tree', 'wolf', 'woman', 'worm']
+
+# 预测函数
+def predict_image(image_path):
+    image = Image.open(image_path)  # 打开图片
+    image = preprocess(image).unsqueeze(0).to(device)  # 预处理并增加批次维度
+
+    with torch.no_grad():  # 关闭梯度计算
+        outputs = model(image)  # 进行前向传播
+        _, predicted = outputs.max(1)  # 获取预测的类别索引
+    
+    return classes[predicted.item()]  # 返回对应的类别名称
+
+# 测试图片目录
+image_dir = './test/'
+
+# 遍历目录下的所有图片并进行预测
+for img_file in os.listdir(image_dir):
+    if img_file.endswith(('jpg', 'jpeg', 'png')):
+        img_path = os.path.join(image_dir, img_file)
+        prediction = predict_image(img_path)
+        print(f'Image: {img_file} is predicted as {prediction}')
+
+```
+
+测试图片文件夹为test,里面的图片文件为test1.png,test2.png,test3.png...
+
+只要图片在这100个类别中，基本都可以识别,识别准确率也很高

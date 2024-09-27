@@ -13,7 +13,7 @@
       <link>http://localhost:1313/posts/cifar100/</link>
       <pubDate>Sun, 22 Sep 2024 10:36:31 +0800</pubDate>
       <guid>http://localhost:1313/posts/cifar100/</guid>
-      <description>用CIFAR100数据集来训练图像分类（未完待续） 最近在学习如何进行图像分类和识别，比如给一张狗的图片，系统能够准确识别
+      <description>用CIFAR100数据集来训练图像分类 最近在学习如何进行图像分类和识别，比如给一张狗的图片，系统能够准确识别
 查下来目前初学者用的最多的是CIFAR10和CIFAR100，
 CIFAR100是一个在线数据集，包含了100个分类，每个分类600张图片，供咱们训练使用
 接下来直接上代码
