@@ -2,7 +2,7 @@
 <html lang="en" dir="auto">
 
 <head>
-	<meta name="generator" content="Hugo 0.128.2"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.135.0"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
@@ -107,6 +107,21 @@
 
 <article class="first-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">Howtomakeblog
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>如何制作我的博客 1.XXXXXX
+2。XXXXX
+3……….
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-09-30 17:20:13 +0800 CST'>September 30, 2024</span></footer>
+  <a class="entry-link" aria-label="post link to Howtomakeblog" href="http://localhost:1313/posts/howtomakeblog/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">Cifar100
     </h2>
   </header>
@@ -115,7 +130,8 @@
 查下来目前初学者用的最多的是CIFAR10和CIFAR100，
 CIFAR100是一个在线数据集，包含了100个分类，每个分类600张图片，供咱们训练使用
 接下来直接上代码
-代码 import torch import torch.nn as nn import torch.optim as optim import torchvision import torchvision.transforms as transforms from torchvision import models # 定义数据预处理步骤 transform_train = transforms.Compose([ transforms.RandomCrop(32, padding=4), # 随机裁剪 transforms.RandomHorizontalFlip(), # 随机水平翻转 transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2), # 颜色增强 transforms.RandomRotation(15), # 随机旋转 transforms.ToTensor(), transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2761)) # 归一化 ]) transform_test = transforms.Compose([ transforms.ToTensor(), transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2761)) ]) # 加载 CIFAR-100 数据集 trainset = torchvision....</p>
+代码 import torch import torch.nn as nn import torch.optim as optim import torchvision import torchvision.transforms as transforms from torchvision import models # 定义数据预处理步骤 transform_train = transforms.Compose([ transforms.RandomCrop(32, padding=4), # 随机裁剪 transforms.RandomHorizontalFlip(), # 随机水平翻转 transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2), # 颜色增强 transforms.RandomRotation(15), # 随机旋转 transforms.ToTensor(), transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2761)) # 归一化 ]) transform_test = transforms.Compose([ transforms.ToTensor(), transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2761)) ]) # 加载 CIFAR-100 数据集 trainset = torchvision.datasets.CIFAR100(root=&#39;./data100&#39;, train=True, download=True, transform=transform_train) trainloader = torch.utils.data.DataLoader(trainset, batch_size=128, shuffle=True, num_workers=4) testset = torchvision.datasets.CIFAR100(root=&#39;./data100&#39;, train=False, download=True, transform=transform_test) testloader = torch.utils.data.DataLoader(testset, batch_size=100, shuffle=False, num_workers=4) # 使用预训练的 ResNet50 模型并调整第一层卷积层和删除池化层 model = models.resnet50(pretrained=False) model.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False) # 适合小图像 model.maxpool = nn.Identity() # 删除池化层 model.fc = nn.Linear(2048, 100) # 修改最后一层用于 CIFAR-100 分类 # 定义设备（GPU / CPU） device = torch.device(&#39;cuda&#39; if torch.cuda.is_available() else &#39;cpu&#39;) model = model.to(device) # 定义损失函数和优化器 criterion = nn.CrossEntropyLoss() optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9, weight_decay=5e-4) # 学习率调度器 scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=30, gamma=0.1) # 训练函数 def train(epoch): model.train() running_loss = 0.0 correct = 0 total = 0 for batch_idx, (inputs, targets) in enumerate(trainloader): inputs, targets = inputs.to(device), targets.to(device) optimizer.zero_grad() outputs = model(inputs) loss = criterion(outputs, targets) loss.backward() # 应用梯度剪裁，防止梯度爆炸 torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=5) optimizer.step() running_loss &#43;= loss.item() _, predicted = outputs.max(1) total &#43;= targets.size(0) correct &#43;= predicted.eq(targets).sum().item() if batch_idx % 100 == 0: print(f&#39;Epoch [{epoch}], Step [{batch_idx}/{len(trainloader)}], Loss: {running_loss / (batch_idx &#43; 1):.3f}, Accuracy: {100. * correct / total:.3f}%&#39;) # 测试函数 def test(): model.eval() correct = 0 total = 0 with torch.no_grad(): for inputs, targets in testloader: inputs, targets = inputs.to(device), targets.to(device) outputs = model(inputs) _, predicted = outputs.max(1) total &#43;= targets.size(0) correct &#43;= predicted.eq(targets).sum().item() print(f&#39;Test Accuracy: {100. * correct / total:.3f}%&#39;) # 训练和测试模型 epochs = 70 # 增加训练 epoch for epoch in range(epochs): train(epoch) test() scheduler.step() # 更新学习率 # 保存模型 torch.save(model.state_dict(), &#39;cifar100.pth&#39;) 用此代码训练，准确率可达70%，我是RTX3060显卡，训练了2个小时
+...</p>
   </div>
   <footer class="entry-footer"><span title='2024-09-22 10:36:31 +0800 CST'>September 22, 2024</span></footer>
   <a class="entry-link" aria-label="post link to Cifar100" href="http://localhost:1313/posts/cifar100/"></a>
@@ -127,7 +143,8 @@ CIFAR100是一个在线数据集，包含了100个分类，每个分类600张图
     </h2>
   </header>
   <div class="entry-content">
-    <p>最近单位事情多，等结束后，练习训练大模型，之前的文章删除了</p>
+    <p>最近单位事情多，等结束后，练习训练大模型，之前的文章删除了
+</p>
   </div>
   <footer class="entry-footer"><span title='2024-08-07 14:53:30 +0800 CST'>August 7, 2024</span></footer>
   <a class="entry-link" aria-label="post link to 最近忙" href="http://localhost:1313/posts/job/"></a>
@@ -147,7 +164,8 @@ import torch from diffusers import StableDiffusion3Pipeline pipe = StableDiffusi
 刚开始运行有报错的话,按照错误提示去安装python的包
 当然，你的PC上得有独显才行，还有装一个CUDA的显卡驱动，我显卡是RTX3060，CUDA 11.6
 这个生成很慢，平均10分钟，可能跟本机显卡有关
-这个模型我感觉整体上没有他们在线的api调用的那个模型好，不过也凑合能用</p>
+这个模型我感觉整体上没有他们在线的api调用的那个模型好，不过也凑合能用
+</p>
   </div>
   <footer class="entry-footer"><span title='2024-07-19 16:35:38 +0800 CST'>July 19, 2024</span></footer>
   <a class="entry-link" aria-label="post link to 使用HuggingFace的模型来生成图像" href="http://localhost:1313/posts/stablediffusion-3/"></a>
@@ -175,7 +193,8 @@ docker官方文档
 所以如果你要学习docker，也别看我的教程，先去官网参照官方文档学习
 总结 这是个人的小心得，也可以算是总纲。据我了解，百度的程序员也不用百度，不只计算机领域，科研领域的人应该也都知道，查资料都用谷歌学术
 ————————————————————————————————————
-补充 “百度开发者网址” 据说百度内部程序员开发的网址，也可以用这个来替代百度</p>
+补充 “百度开发者网址” 据说百度内部程序员开发的网址，也可以用这个来替代百度
+</p>
   </div>
   <footer class="entry-footer"><span title='2024-07-10 16:09:19 +0800 CST'>July 10, 2024</span></footer>
   <a class="entry-link" aria-label="post link to 别用百度" href="http://localhost:1313/posts/mind/"></a>
@@ -198,7 +217,8 @@ files 查看容器内部的文件，其实容器就是一台小型虚拟机，�
 stats 查看docker容器当前状态
 docker scout 这是一个Docker大概20.x（不记得是哪个）版本后新出的指令，可以检查你的镜像,并给出修改建议
 这次有点奇怪,docker desktop上出不了结果，算了，就用命令行把
-docker scout cves &lt;image_name&gt;</p>
+docker scout cves &lt;image_name&gt;
+</p>
   </div>
   <footer class="entry-footer"><span title='2024-07-10 15:36:33 +0800 CST'>July 10, 2024</span></footer>
   <a class="entry-link" aria-label="post link to Docker 进阶" href="http://localhost:1313/posts/dockerimprove/"></a>
@@ -215,7 +235,8 @@ Docker，英文翻译为码头工人，它的logo是一头鲸鱼搭载着好几�
 image 在 Docker 中，“image” 是一个不可变的文件系统快照，其中包含应用程序及其所有依赖项。它相当于一个模板，用来创建 Docker 容器
 可以这么说，你应用程序的发布包就是一个镜像
 构建镜像 构建镜像需要Dockerfile,示例
-# 基础镜像，用于构建 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env # 设置工作目录 WORKDIR /app # 复制 .csproj 文件并恢复依赖项 COPY *.csproj ./ RUN dotnet restore # 复制项目文件 COPY . ./ # 编译项目 RUN dotnet publish -c Release -o out # 基础镜像，用于运行 FROM mcr.microsoft.com/dotnet/aspnet:7.0 # 设置工作目录 WORKDIR /app # 复制编译好的文件到工作目录 COPY --from=build-env /app/out . # 设置容器启动时执行的命令 ENTRYPOINT [&#34;dotnet&#34;, &#34;my-dotnet-app....</p>
+# 基础镜像，用于构建 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env # 设置工作目录 WORKDIR /app # 复制 .csproj 文件并恢复依赖项 COPY *.csproj ./ RUN dotnet restore # 复制项目文件 COPY . ./ # 编译项目 RUN dotnet publish -c Release -o out # 基础镜像，用于运行 FROM mcr.microsoft.com/dotnet/aspnet:7.0 # 设置工作目录 WORKDIR /app # 复制编译好的文件到工作目录 COPY --from=build-env /app/out . # 设置容器启动时执行的命令 ENTRYPOINT [&#34;dotnet&#34;, &#34;my-dotnet-app.dll&#34;] 运行命令
+...</p>
   </div>
   <footer class="entry-footer"><span title='2024-07-10 11:27:08 +0800 CST'>July 10, 2024</span></footer>
   <a class="entry-link" aria-label="post link to Docker" href="http://localhost:1313/posts/docker/"></a>
@@ -232,7 +253,8 @@ image 在 Docker 中，“image” 是一个不可变的文件系统快照，其
 linux上安装k8s 教程
 简要结构图 ingress 在Kubernetes中，Ingress 是一个API对象，用于管理对集群内服务的外部访问，通常是 HTTP 和 HTTPS。Ingress 可以提供负载均衡、SSL 终止和基于名称的虚拟主机等功能
 apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: example-ingress spec: rules: - host: example.com http: paths: - path: /app1 pathType: Prefix backend: service: name: app1-service port: number: 80 - path: /app2 pathType: Prefix backend: service: name: app2-service port: number: 80 tls: - hosts: - example.com secretName: example-tls service 在Kubernetes中，Service 是一种用于定义逻辑集合的Pod及其访问策略的API对象。Service 提供了一种抽象，允许你将一组Pod作为一个单一的服务进行访问，而不需要知道这些Pod的具体位置或数量。Service 可以实现负载均衡、服务发现和故障转移等功能
-apiVersion: v1 kind: Service metadata: name: my-service spec: selector: app: MyApp ports: - protocol: TCP port: 80 targetPort: 9376 pod 在Kubernetes中，Pod 是最小的可部署计算单元。它是运行在集群上的容器或容器组的抽象。Pod 是Kubernetes中管理和调度容器的基本单元。...</p>
+apiVersion: v1 kind: Service metadata: name: my-service spec: selector: app: MyApp ports: - protocol: TCP port: 80 targetPort: 9376 pod 在Kubernetes中，Pod 是最小的可部署计算单元。它是运行在集群上的容器或容器组的抽象。Pod 是Kubernetes中管理和调度容器的基本单元。
+...</p>
   </div>
   <footer class="entry-footer"><span title='2024-07-10 10:56:25 +0800 CST'>July 10, 2024</span></footer>
   <a class="entry-link" aria-label="post link to K8s" href="http://localhost:1313/posts/k8s/"></a>
@@ -245,7 +267,8 @@ apiVersion: v1 kind: Service metadata: name: my-service spec: selector: app: MyA
   </header>
   <div class="entry-content">
     <p>gitee地址请点击 B站被封，只能转移到外网
-点击查看视频教程</p>
+点击查看视频教程
+</p>
   </div>
   <footer class="entry-footer"><span title='2024-07-10 09:52:42 +0800 CST'>July 10, 2024</span></footer>
   <a class="entry-link" aria-label="post link to 冒险岛V083 docker部署" href="http://localhost:1313/posts/maplestorydocker/"></a>
@@ -261,18 +284,6 @@ apiVersion: v1 kind: Service metadata: name: my-service spec: selector: app: MyA
   </div>
   <footer class="entry-footer"><span title='2024-07-10 09:35:19 +0800 CST'>July 10, 2024</span></footer>
   <a class="entry-link" aria-label="post link to Stablediffusion" href="http://localhost:1313/posts/stablediffusion/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">关于我的哔哩哔哩
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>简介 个人哔哩哔哩账号</p>
-  </div>
-  <footer class="entry-footer"><span title='2024-07-09 17:37:06 +0800 CST'>July 9, 2024</span></footer>
-  <a class="entry-link" aria-label="post link to 关于我的哔哩哔哩" href="http://localhost:1313/posts/bili/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

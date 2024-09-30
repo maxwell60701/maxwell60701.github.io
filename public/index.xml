@@ -4,137 +4,385 @@
     <title>maxwell60701 少寒风的Blog</title>
     <link>http://localhost:1313/</link>
     <description>Recent content on maxwell60701 少寒风的Blog</description>
-    <generator>Hugo -- 0.128.2</generator>
+    <generator>Hugo -- 0.135.0</generator>
     <language>zh</language>
-    <lastBuildDate>Sun, 22 Sep 2024 10:36:31 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 30 Sep 2024 17:20:13 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Howtomakeblog</title>
+      <link>http://localhost:1313/posts/howtomakeblog/</link>
+      <pubDate>Mon, 30 Sep 2024 17:20:13 +0800</pubDate>
+      <guid>http://localhost:1313/posts/howtomakeblog/</guid>
+      <description>&lt;h3 id=&#34;如何制作我的博客&#34;&gt;如何制作我的博客&lt;/h3&gt;
+&lt;p&gt;1.XXXXXX&lt;/p&gt;
+&lt;p&gt;2。XXXXX&lt;/p&gt;
+&lt;p&gt;3&amp;hellip;&amp;hellip;&amp;hellip;.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Cifar100</title>
       <link>http://localhost:1313/posts/cifar100/</link>
       <pubDate>Sun, 22 Sep 2024 10:36:31 +0800</pubDate>
       <guid>http://localhost:1313/posts/cifar100/</guid>
-      <description>用CIFAR100数据集来训练图像分类 最近在学习如何进行图像分类和识别，比如给一张狗的图片，系统能够准确识别
-查下来目前初学者用的最多的是CIFAR10和CIFAR100，
-CIFAR100是一个在线数据集，包含了100个分类，每个分类600张图片，供咱们训练使用
-接下来直接上代码
-代码 import torch import torch.nn as nn import torch.optim as optim import torchvision import torchvision.transforms as transforms from torchvision import models # 定义数据预处理步骤 transform_train = transforms.Compose([ transforms.RandomCrop(32, padding=4), # 随机裁剪 transforms.RandomHorizontalFlip(), # 随机水平翻转 transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2), # 颜色增强 transforms.RandomRotation(15), # 随机旋转 transforms.ToTensor(), transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2761)) # 归一化 ]) transform_test = transforms.Compose([ transforms.ToTensor(), transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2761)) ]) # 加载 CIFAR-100 数据集 trainset = torchvision.</description>
+      <description>&lt;h3 id=&#34;用cifar100数据集来训练图像分类&#34;&gt;用CIFAR100数据集来训练图像分类&lt;/h3&gt;
+&lt;p&gt;最近在学习如何进行图像分类和识别，比如给一张狗的图片，系统能够准确识别&lt;/p&gt;
+&lt;p&gt;查下来目前初学者用的最多的是CIFAR10和CIFAR100，&lt;/p&gt;
+&lt;p&gt;CIFAR100是一个在线数据集，包含了100个分类，每个分类600张图片，供咱们训练使用&lt;/p&gt;
+&lt;p&gt;接下来直接上代码&lt;/p&gt;
+&lt;h3 id=&#34;代码&#34;&gt;代码&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; torch
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; torch.nn &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; nn
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; torch.optim &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; optim
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; torchvision
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; torchvision.transforms &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; transforms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; torchvision &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; models
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 定义数据预处理步骤&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;transform_train &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Compose([
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;RandomCrop(&lt;span style=&#34;color:#ae81ff&#34;&gt;32&lt;/span&gt;, padding&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;),  &lt;span style=&#34;color:#75715e&#34;&gt;# 随机裁剪&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;RandomHorizontalFlip(),     &lt;span style=&#34;color:#75715e&#34;&gt;# 随机水平翻转&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ColorJitter(brightness&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt;, contrast&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt;, saturation&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt;, hue&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt;),  &lt;span style=&#34;color:#75715e&#34;&gt;# 颜色增强&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;RandomRotation(&lt;span style=&#34;color:#ae81ff&#34;&gt;15&lt;/span&gt;),         &lt;span style=&#34;color:#75715e&#34;&gt;# 随机旋转&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ToTensor(),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Normalize((&lt;span style=&#34;color:#ae81ff&#34;&gt;0.5071&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.4865&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.4409&lt;/span&gt;), (&lt;span style=&#34;color:#ae81ff&#34;&gt;0.2673&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.2564&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.2761&lt;/span&gt;))  &lt;span style=&#34;color:#75715e&#34;&gt;# 归一化&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;transform_test &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Compose([
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ToTensor(),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Normalize((&lt;span style=&#34;color:#ae81ff&#34;&gt;0.5071&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.4865&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.4409&lt;/span&gt;), (&lt;span style=&#34;color:#ae81ff&#34;&gt;0.2673&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.2564&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.2761&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 加载 CIFAR-100 数据集&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;trainset &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; torchvision&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;datasets&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;CIFAR100(root&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;./data100&amp;#39;&lt;/span&gt;, train&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, download&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, transform&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;transform_train)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;trainloader &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;utils&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;data&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataLoader(trainset, batch_size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;128&lt;/span&gt;, shuffle&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, num_workers&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;testset &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; torchvision&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;datasets&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;CIFAR100(root&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;./data100&amp;#39;&lt;/span&gt;, train&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;, download&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, transform&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;transform_test)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;testloader &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;utils&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;data&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataLoader(testset, batch_size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;, shuffle&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;, num_workers&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 使用预训练的 ResNet50 模型并调整第一层卷积层和删除池化层&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; models&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;resnet50(pretrained&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;conv1 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Conv2d(&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt;, kernel_size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;, stride&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, padding&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, bias&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;)  &lt;span style=&#34;color:#75715e&#34;&gt;# 适合小图像&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;maxpool &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Identity()  &lt;span style=&#34;color:#75715e&#34;&gt;# 删除池化层&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;fc &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Linear(&lt;span style=&#34;color:#ae81ff&#34;&gt;2048&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;)  &lt;span style=&#34;color:#75715e&#34;&gt;# 修改最后一层用于 CIFAR-100 分类&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 定义设备（GPU / CPU）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;device &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;device(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;cuda&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;cuda&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;is_available() &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;cpu&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to(device)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 定义损失函数和优化器&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;criterion &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;CrossEntropyLoss()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;optimizer &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; optim&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;SGD(model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;parameters(), lr&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.01&lt;/span&gt;, momentum&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.9&lt;/span&gt;, weight_decay&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5e-4&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 学习率调度器&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;scheduler &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; optim&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;lr_scheduler&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;StepLR(optimizer, step_size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;30&lt;/span&gt;, gamma&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 训练函数&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;train&lt;/span&gt;(epoch):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;train()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    running_loss &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    correct &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    total &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; batch_idx, (inputs, targets) &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; enumerate(trainloader):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        inputs, targets &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; inputs&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to(device), targets&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to(device)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        optimizer&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zero_grad()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        outputs &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model(inputs)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        loss &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; criterion(outputs, targets)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        loss&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;backward()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# 应用梯度剪裁，防止梯度爆炸&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;nn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;utils&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;clip_grad_norm_(model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;parameters(), max_norm&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        optimizer&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;step()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        running_loss &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; loss&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;item()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        _, predicted &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; outputs&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;max(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        total &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; targets&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;size(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        correct &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; predicted&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;eq(targets)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;item()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; batch_idx &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            print(&lt;span style=&#34;color:#e6db74&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Epoch [&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;epoch&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;], Step [&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;batch_idx&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;len(trainloader)&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;], Loss: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;running_loss &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; (batch_idx &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)&lt;span style=&#34;color:#e6db74&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;, Accuracy: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;100.&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; correct &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; total&lt;span style=&#34;color:#e6db74&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 测试函数&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;test&lt;/span&gt;():
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;eval()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    correct &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    total &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;no_grad():
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; inputs, targets &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; testloader:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            inputs, targets &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; inputs&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to(device), targets&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to(device)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            outputs &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model(inputs)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            _, predicted &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; outputs&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;max(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            total &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; targets&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;size(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            correct &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; predicted&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;eq(targets)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;item()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    print(&lt;span style=&#34;color:#e6db74&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Test Accuracy: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;100.&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; correct &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; total&lt;span style=&#34;color:#e6db74&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 训练和测试模型&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;epochs &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;70&lt;/span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# 增加训练 epoch&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; epoch &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(epochs):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    train(epoch)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    test()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    scheduler&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;step()  &lt;span style=&#34;color:#75715e&#34;&gt;# 更新学习率&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 保存模型&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;save(model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;state_dict(), &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;cifar100.pth&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;用此代码训练，准确率可达70%，我是RTX3060显卡，训练了2个小时&lt;/p&gt;</description>
     </item>
     <item>
       <title>最近忙</title>
       <link>http://localhost:1313/posts/job/</link>
       <pubDate>Wed, 07 Aug 2024 14:53:30 +0800</pubDate>
       <guid>http://localhost:1313/posts/job/</guid>
-      <description>最近单位事情多，等结束后，练习训练大模型，之前的文章删除了</description>
+      <description>&lt;p&gt;最近单位事情多，等结束后，练习训练大模型，之前的文章删除了&lt;/p&gt;</description>
     </item>
     <item>
       <title>使用HuggingFace的模型来生成图像</title>
       <link>http://localhost:1313/posts/stablediffusion-3/</link>
       <pubDate>Fri, 19 Jul 2024 16:35:38 +0800</pubDate>
       <guid>http://localhost:1313/posts/stablediffusion-3/</guid>
-      <description>Huggingface 地址
-这个网站类似于github,github托管的是代码，而它托管的是模型
-选择右侧use this model,或者看readme,可以得知它的用法
-示例如下
-import torch from diffusers import StableDiffusion3Pipeline pipe = StableDiffusion3Pipeline.from_pretrained(&amp;#34;stabilityai/stable-diffusion-3-medium-diffusers&amp;#34;, torch_dtype=torch.float16,token=&amp;#34;hf_xxxxxx&amp;#34;) pipe = pipe.to(&amp;#34;cuda&amp;#34;) image = pipe( &amp;#34;A cat holding a sign that says hello world&amp;#34;, negative_prompt=&amp;#34;&amp;#34;, num_inference_steps=28, guidance_scale=7.0, ).images[0] image 这个token是你在huggingface上生成的，权限为write
-刚开始运行有报错的话,按照错误提示去安装python的包
-当然，你的PC上得有独显才行，还有装一个CUDA的显卡驱动，我显卡是RTX3060，CUDA 11.6
-这个生成很慢，平均10分钟，可能跟本机显卡有关
-这个模型我感觉整体上没有他们在线的api调用的那个模型好，不过也凑合能用</description>
+      <description>&lt;h3 id=&#34;huggingface&#34;&gt;Huggingface&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://huggingface.co/&#34;&gt;地址&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这个网站类似于github,github托管的是代码，而它托管的是模型&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/huggingFace/index.png&#34; alt=&#34;选择一个stablediffusion模型&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;选择右侧use this model,或者看readme,可以得知它的用法&lt;/p&gt;
+&lt;p&gt;示例如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; torch
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; diffusers &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; StableDiffusion3Pipeline
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pipe &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; StableDiffusion3Pipeline&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;from_pretrained(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;stabilityai/stable-diffusion-3-medium-diffusers&amp;#34;&lt;/span&gt;, torch_dtype&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;float16,token&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hf_xxxxxx&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pipe &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pipe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;cuda&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;image &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pipe(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;A cat holding a sign that says hello world&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    negative_prompt&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    num_inference_steps&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;28&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    guidance_scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;7.0&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;images[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;image
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个token是你在huggingface上生成的，权限为write&lt;/p&gt;
+&lt;p&gt;刚开始运行有报错的话,按照错误提示去安装python的包&lt;/p&gt;
+&lt;p&gt;当然，你的PC上得有独显才行，还有装一个CUDA的显卡驱动，我显卡是RTX3060，CUDA 11.6&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/huggingFace/code.png&#34; alt=&#34;code&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;这个生成很慢，平均10分钟，可能跟本机显卡有关&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/huggingFace/beauty.png&#34; alt=&#34;beauty&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/huggingFace/rabbit.png&#34; alt=&#34;rabbit&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;这个模型我感觉整体上没有他们在线的api调用的那个模型好，不过也凑合能用&lt;/p&gt;</description>
     </item>
     <item>
       <title>别用百度</title>
       <link>http://localhost:1313/posts/mind/</link>
       <pubDate>Wed, 10 Jul 2024 16:09:19 +0800</pubDate>
       <guid>http://localhost:1313/posts/mind/</guid>
-      <description>工作正好满10年了，说下个人学习心得
-尽量别用百度,CSDN 我发现有许多工作多年的老程序员还是喜欢百度，这个真的是大忌，百度的质量大家有目共睹，直接上图
-搜索docker，用百度看看出来的什么
-再用必应国际版搜索
-哪个是真正的docker教程，结果一目了然
-百度给你的要么是广告，要么是CSDN，CSDN里面的东西大部分也都是抄过来的，抄也抄不全
-csdn的docker教程举例
-看完他的文章，你会部署docker吗
-而必应和谷歌，给你指向的，就是docker的官网，里面有最全的官方教程
-docker官方文档
-很多刚入门的程序员第一步就走错了，我当时也是一样，学习的途径不正确，路只会越走越糊涂。
-有同学说，官方文档全是英文啊，看不懂。我只是二本英语只过了四级，不懂的翻译一下，记一下，并不难。当然，我工作后经常阅读努力学习，现在英文肯定要比大学那时候好
-而且，我发现一个窍门，同样一篇文章，如果全部翻译成了中文再阅读，理解的东西可能只有英文原版的百分之七十左右。翻译成了中文再去阅读，反而不知道说的是什么。所以尽量阅读英文原版，不要整段整段地翻译
-所以如果你要学习docker，也别看我的教程，先去官网参照官方文档学习
-总结 这是个人的小心得，也可以算是总纲。据我了解，百度的程序员也不用百度，不只计算机领域，科研领域的人应该也都知道，查资料都用谷歌学术
-————————————————————————————————————
-补充 &amp;ldquo;百度开发者网址&amp;rdquo; 据说百度内部程序员开发的网址，也可以用这个来替代百度</description>
+      <description>&lt;p&gt;工作正好满10年了，说下个人学习心得&lt;/p&gt;
+&lt;h3 id=&#34;尽量别用百度csdn&#34;&gt;尽量别用百度,CSDN&lt;/h3&gt;
+&lt;p&gt;我发现有许多工作多年的老程序员还是喜欢百度，这个真的是大忌，百度的质量大家有目共睹，直接上图&lt;/p&gt;
+&lt;p&gt;搜索docker，用百度看看出来的什么&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/mind/baidu.png&#34; alt=&#34;baidu&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;再用必应国际版搜索&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/mind/bing.png&#34; alt=&#34;bing&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;哪个是真正的docker教程，结果一目了然&lt;/p&gt;
+&lt;p&gt;百度给你的要么是广告，要么是CSDN，CSDN里面的东西大部分也都是抄过来的，抄也抄不全&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://blog.csdn.net/qq_34936541/article/details/104890251&#34;&gt;csdn的docker教程举例&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;看完他的文章，你会部署docker吗&lt;/p&gt;
+&lt;p&gt;而必应和谷歌，给你指向的，就是docker的官网，里面有最全的官方教程&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.docker.com/guides/docker-overview/&#34;&gt;docker官方文档&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;很多刚入门的程序员第一步就走错了，我当时也是一样，学习的途径不正确，路只会越走越糊涂。&lt;/p&gt;
+&lt;p&gt;有同学说，官方文档全是英文啊，看不懂。我只是二本英语只过了四级，不懂的翻译一下，记一下，并不难。当然，我工作后经常阅读努力学习，现在英文肯定要比大学那时候好&lt;/p&gt;
+&lt;p&gt;而且，我发现一个窍门，同样一篇文章，如果全部翻译成了中文再阅读，理解的东西可能只有英文原版的百分之七十左右。翻译成了中文再去阅读，反而不知道说的是什么。所以尽量阅读英文原版，不要整段整段地翻译&lt;/p&gt;
+&lt;p&gt;所以如果你要学习docker，也别看我的教程，先去官网参照官方文档学习&lt;/p&gt;
+&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
+&lt;p&gt;这是个人的小心得，也可以算是总纲。据我了解，百度的程序员也不用百度，不只计算机领域，科研领域的人应该也都知道，查资料都用谷歌学术&lt;/p&gt;
+&lt;p&gt;————————————————————————————————————&lt;/p&gt;
+&lt;h3 id=&#34;补充&#34;&gt;补充&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://kaifa.baidu.com/&#34;&gt;&amp;ldquo;百度开发者网址&amp;rdquo;&lt;/a&gt; 据说百度内部程序员开发的网址，也可以用这个来替代百度&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/mind/kaifa.png&#34; alt=&#34;&amp;ldquo;百度开发者网址&amp;rdquo;&#34;  /&gt;
+&lt;/p&gt;</description>
     </item>
     <item>
       <title>Docker 进阶</title>
       <link>http://localhost:1313/posts/dockerimprove/</link>
       <pubDate>Wed, 10 Jul 2024 15:36:33 +0800</pubDate>
       <guid>http://localhost:1313/posts/dockerimprove/</guid>
-      <description>随笔写的，docker进阶教程
-现在docker desktop 越来越强大，功能越来越多，用它来学习docker是不二之选
-选择一个运行的容器，如图
-logs 可以查看容器的运行日志
-inspect 可以查看容器的所有配置参数，环境变量等
-bind mounts 查看绑定的volume或者Mounts
-exec 可以进入容器内部执行linux命令
-files 查看容器内部的文件，其实容器就是一台小型虚拟机，部署的文件被放在app文件夹下
-stats 查看docker容器当前状态
-docker scout 这是一个Docker大概20.x（不记得是哪个）版本后新出的指令，可以检查你的镜像,并给出修改建议
-这次有点奇怪,docker desktop上出不了结果，算了，就用命令行把
-docker scout cves &amp;lt;image_name&amp;gt;</description>
+      <description>&lt;p&gt;随笔写的，docker进阶教程&lt;/p&gt;
+&lt;p&gt;现在docker desktop 越来越强大，功能越来越多，用它来学习docker是不二之选&lt;/p&gt;
+&lt;p&gt;选择一个运行的容器，如图&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/dockerimprove/dockerdesktop.png&#34; alt=&#34;dockerdesktop&#34;  /&gt;
+&lt;/p&gt;
+&lt;h4 id=&#34;logs&#34;&gt;logs&lt;/h4&gt;
+&lt;p&gt;可以查看容器的运行日志&lt;/p&gt;
+&lt;h4 id=&#34;inspect&#34;&gt;inspect&lt;/h4&gt;
+&lt;p&gt;可以查看容器的所有配置参数，环境变量等&lt;/p&gt;
+&lt;h4 id=&#34;bind-mounts&#34;&gt;bind mounts&lt;/h4&gt;
+&lt;p&gt;查看绑定的volume或者Mounts&lt;/p&gt;
+&lt;h4 id=&#34;exec&#34;&gt;exec&lt;/h4&gt;
+&lt;p&gt;可以进入容器内部执行linux命令&lt;/p&gt;
+&lt;h4 id=&#34;files&#34;&gt;files&lt;/h4&gt;
+&lt;p&gt;查看容器内部的文件，其实容器就是一台小型虚拟机，部署的文件被放在app文件夹下&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/dockerimprove/files.png&#34; alt=&#34;files&#34;  /&gt;
+&lt;/p&gt;
+&lt;h4 id=&#34;stats&#34;&gt;stats&lt;/h4&gt;
+&lt;p&gt;查看docker容器当前状态&lt;/p&gt;
+&lt;h4 id=&#34;docker-scout&#34;&gt;docker scout&lt;/h4&gt;
+&lt;p&gt;这是一个Docker大概20.x（不记得是哪个）版本后新出的指令，可以检查你的镜像,并给出修改建议&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/dockerimprove/dockerscout.png&#34; alt=&#34;files&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;这次有点奇怪,docker desktop上出不了结果，算了，就用命令行把&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;docker scout cves &amp;lt;image_name&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/dockerimprove/scoutconsole.png&#34; alt=&#34;files&#34;  /&gt;
+&lt;/p&gt;</description>
     </item>
     <item>
       <title>Docker</title>
       <link>http://localhost:1313/posts/docker/</link>
       <pubDate>Wed, 10 Jul 2024 11:27:08 +0800</pubDate>
       <guid>http://localhost:1313/posts/docker/</guid>
-      <description>Docker 心得 我对docker要比k8s熟的多,最近正好空，那就摸摸鱼吧
-Docker，英文翻译为码头工人，它的logo是一头鲸鱼搭载着好几个集装箱，从这些就能看出它的含义，它是方便工程师更快捷地打包和部署应用的 安装 windows:docker desktop linux:linux安装
-image 在 Docker 中，&amp;ldquo;image&amp;rdquo; 是一个不可变的文件系统快照，其中包含应用程序及其所有依赖项。它相当于一个模板，用来创建 Docker 容器
-可以这么说，你应用程序的发布包就是一个镜像
-构建镜像 构建镜像需要Dockerfile,示例
-# 基础镜像，用于构建 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env # 设置工作目录 WORKDIR /app # 复制 .csproj 文件并恢复依赖项 COPY *.csproj ./ RUN dotnet restore # 复制项目文件 COPY . ./ # 编译项目 RUN dotnet publish -c Release -o out # 基础镜像，用于运行 FROM mcr.microsoft.com/dotnet/aspnet:7.0 # 设置工作目录 WORKDIR /app # 复制编译好的文件到工作目录 COPY --from=build-env /app/out . # 设置容器启动时执行的命令 ENTRYPOINT [&amp;#34;dotnet&amp;#34;, &amp;#34;my-dotnet-app.</description>
+      <description>&lt;h3 id=&#34;docker-心得&#34;&gt;Docker 心得&lt;/h3&gt;
+&lt;p&gt;我对docker要比k8s熟的多,最近正好空，那就摸摸鱼吧&lt;/p&gt;
+&lt;p&gt;Docker，英文翻译为码头工人，它的logo是一头鲸鱼搭载着好几个集装箱，从这些就能看出它的含义，它是方便工程师更快捷地打包和部署应用的
+&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/docker/docker.png&#34; alt=&#34;dockerlogo&#34;  /&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;安装&#34;&gt;安装&lt;/h3&gt;
+&lt;p&gt;windows:docker desktop
+&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/docker/dockerdesktop.png&#34; alt=&#34;dockerdesktop&#34;  /&gt;
+
+linux:&lt;a href=&#34;https://docs.docker.com/desktop/install/linux-install/&#34;&gt;linux安装&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;image&#34;&gt;image&lt;/h3&gt;
+&lt;p&gt;在 Docker 中，&amp;ldquo;image&amp;rdquo; 是一个不可变的文件系统快照，其中包含应用程序及其所有依赖项。它相当于一个模板，用来创建 Docker 容器&lt;/p&gt;
+&lt;p&gt;可以这么说，你应用程序的发布包就是一个镜像&lt;/p&gt;
+&lt;h3 id=&#34;构建镜像&#34;&gt;构建镜像&lt;/h3&gt;
+&lt;p&gt;构建镜像需要Dockerfile,示例&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 基础镜像，用于构建&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 设置工作目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;WORKDIR /app&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 复制 .csproj 文件并恢复依赖项&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;COPY *.csproj ./&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;RUN dotnet restore&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 复制项目文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;COPY . ./&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 编译项目&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;RUN dotnet publish -c Release -o out&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 基础镜像，用于运行&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;FROM mcr.microsoft.com/dotnet/aspnet:7.0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 设置工作目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;WORKDIR /app&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 复制编译好的文件到工作目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;COPY --from=build-env /app/out .&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 设置容器启动时执行的命令&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;ENTRYPOINT [&amp;#34;dotnet&amp;#34;, &amp;#34;my-dotnet-app.dll&amp;#34;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行命令&lt;/p&gt;</description>
     </item>
     <item>
       <title>K8s</title>
       <link>http://localhost:1313/posts/k8s/</link>
       <pubDate>Wed, 10 Jul 2024 10:56:25 +0800</pubDate>
       <guid>http://localhost:1313/posts/k8s/</guid>
-      <description>K8s部署 最近公司上了k8s, 我只学了点皮毛,如能学好如虎添翼
-前期准备 个人认为，学习K8S前必须掌握docker相关知识，否则学起来很困难
-linux上安装k8s 教程
-简要结构图 ingress 在Kubernetes中，Ingress 是一个API对象，用于管理对集群内服务的外部访问，通常是 HTTP 和 HTTPS。Ingress 可以提供负载均衡、SSL 终止和基于名称的虚拟主机等功能
-apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: example-ingress spec: rules: - host: example.com http: paths: - path: /app1 pathType: Prefix backend: service: name: app1-service port: number: 80 - path: /app2 pathType: Prefix backend: service: name: app2-service port: number: 80 tls: - hosts: - example.com secretName: example-tls service 在Kubernetes中，Service 是一种用于定义逻辑集合的Pod及其访问策略的API对象。Service 提供了一种抽象，允许你将一组Pod作为一个单一的服务进行访问，而不需要知道这些Pod的具体位置或数量。Service 可以实现负载均衡、服务发现和故障转移等功能
-apiVersion: v1 kind: Service metadata: name: my-service spec: selector: app: MyApp ports: - protocol: TCP port: 80 targetPort: 9376 pod 在Kubernetes中，Pod 是最小的可部署计算单元。它是运行在集群上的容器或容器组的抽象。Pod 是Kubernetes中管理和调度容器的基本单元。</description>
+      <description>&lt;h3 id=&#34;k8s部署&#34;&gt;K8s部署&lt;/h3&gt;
+&lt;p&gt;最近公司上了k8s, 我只学了点皮毛,如能学好如虎添翼&lt;/p&gt;
+&lt;h3 id=&#34;前期准备&#34;&gt;前期准备&lt;/h3&gt;
+&lt;p&gt;个人认为，学习K8S前必须掌握docker相关知识，否则学起来很困难&lt;/p&gt;
+&lt;h3 id=&#34;linux上安装k8s&#34;&gt;linux上安装k8s&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/zh-cn/docs/tasks/tools/install-kubectl-linux/&#34;&gt;教程&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;简要结构图&#34;&gt;简要结构图&lt;/h3&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/k8s/structure.png&#34; alt=&#34;结构图&#34;  /&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;ingress&#34;&gt;ingress&lt;/h3&gt;
+&lt;p&gt;在Kubernetes中，Ingress 是一个API对象，用于管理对集群内服务的外部访问，通常是 HTTP 和 HTTPS。Ingress 可以提供负载均衡、SSL 终止和基于名称的虚拟主机等功能&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;apiVersion&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;networking.k8s.io/v1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;kind&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;Ingress&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;metadata&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;example-ingress&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;spec&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;rules&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - &lt;span style=&#34;color:#f92672&#34;&gt;host&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;example.com&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;http&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;paths&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - &lt;span style=&#34;color:#f92672&#34;&gt;path&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;/app1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;pathType&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;Prefix&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;backend&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;service&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;app1-service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;port&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              &lt;span style=&#34;color:#f92672&#34;&gt;number&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;80&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - &lt;span style=&#34;color:#f92672&#34;&gt;path&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;/app2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;pathType&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;Prefix&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;backend&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;service&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;app2-service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;port&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              &lt;span style=&#34;color:#f92672&#34;&gt;number&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;80&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;tls&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - &lt;span style=&#34;color:#f92672&#34;&gt;hosts&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    - &lt;span style=&#34;color:#ae81ff&#34;&gt;example.com&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;secretName&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;example-tls&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;service&#34;&gt;service&lt;/h3&gt;
+&lt;p&gt;在Kubernetes中，Service 是一种用于定义逻辑集合的Pod及其访问策略的API对象。Service 提供了一种抽象，允许你将一组Pod作为一个单一的服务进行访问，而不需要知道这些Pod的具体位置或数量。Service 可以实现负载均衡、服务发现和故障转移等功能&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;apiVersion&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;v1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;kind&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;Service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;metadata&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;my-service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;spec&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;selector&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;app&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;MyApp&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;ports&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    - &lt;span style=&#34;color:#f92672&#34;&gt;protocol&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;TCP&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;port&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;80&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;targetPort&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;9376&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;pod&#34;&gt;pod&lt;/h3&gt;
+&lt;p&gt;在Kubernetes中，Pod 是最小的可部署计算单元。它是运行在集群上的容器或容器组的抽象。Pod 是Kubernetes中管理和调度容器的基本单元。&lt;/p&gt;</description>
     </item>
     <item>
       <title>冒险岛V083 docker部署</title>
       <link>http://localhost:1313/posts/maplestorydocker/</link>
       <pubDate>Wed, 10 Jul 2024 09:52:42 +0800</pubDate>
       <guid>http://localhost:1313/posts/maplestorydocker/</guid>
-      <description>gitee地址请点击 B站被封，只能转移到外网
-点击查看视频教程</description>
+      <description>&lt;h3 id=&#34;gitee地址请点击httpsgiteecommaxwell60701shf-heaven-ms&#34;&gt;&lt;a href=&#34;https://gitee.com/maxwell60701/shf-heaven-ms&#34;&gt;gitee地址请点击&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;B站被封，只能转移到外网&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://youtu.be/7vWNCHvZHnc&#34;&gt;点击查看视频教程&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>Stablediffusion</title>
       <link>http://localhost:1313/posts/stablediffusion/</link>
       <pubDate>Wed, 10 Jul 2024 09:35:19 +0800</pubDate>
       <guid>http://localhost:1313/posts/stablediffusion/</guid>
-      <description>我自己写了一个nuget包,用以调用stablediffusion的webapi StableDiffusion.AI.Core </description>
+      <description>&lt;h3 id=&#34;我自己写了一个nuget包用以调用stablediffusion的webapi&#34;&gt;我自己写了一个nuget包,用以调用stablediffusion的webapi&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.nuget.org/packages/StableDiffusion.AI.Core&#34;&gt;StableDiffusion.AI.Core&lt;/a&gt;
+&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/ai.png&#34; alt=&#34;nuget&#34;  title=&#34;nuget&#34;  /&gt;
+&lt;/p&gt;</description>
     </item>
     <item>
       <title>关于我的哔哩哔哩</title>
       <link>http://localhost:1313/posts/bili/</link>
       <pubDate>Tue, 09 Jul 2024 17:37:06 +0800</pubDate>
       <guid>http://localhost:1313/posts/bili/</guid>
-      <description>简介 个人哔哩哔哩账号</description>
+      <description>&lt;h3 id=&#34;简介&#34;&gt;简介&lt;/h3&gt;
+&lt;p&gt;个人哔哩哔哩账号&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/hot.png&#34; alt=&#34;hot&#34;  title=&#34;hot&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/bili.png&#34; alt=&#34;myaccount&#34;  title=&#34;myaccount&#34;  /&gt;
+&lt;/p&gt;</description>
     </item>
     <item>
       <title>我的第一个博客</title>
       <link>http://localhost:1313/posts/my-first-post/</link>
       <pubDate>Sun, 14 Jan 2024 07:07:07 +0800</pubDate>
       <guid>http://localhost:1313/posts/my-first-post/</guid>
-      <description>简介 今天很开心，这是hugo部署的
-Visit the Hugo website!</description>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;
+&lt;p&gt;今天很开心，这是hugo部署的&lt;/p&gt;
+&lt;p&gt;Visit the &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; website!&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
