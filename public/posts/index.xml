@@ -9,14 +9,19 @@
     <lastBuildDate>Mon, 30 Sep 2024 17:20:13 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Howtomakeblog</title>
+      <title>个人手机壁纸微信小程序</title>
       <link>http://localhost:1313/posts/howtomakeblog/</link>
       <pubDate>Mon, 30 Sep 2024 17:20:13 +0800</pubDate>
       <guid>http://localhost:1313/posts/howtomakeblog/</guid>
-      <description>&lt;h3 id=&#34;如何制作我的博客&#34;&gt;如何制作我的博客&lt;/h3&gt;
-&lt;p&gt;1.XXXXXX&lt;/p&gt;
-&lt;p&gt;2。XXXXX&lt;/p&gt;
-&lt;p&gt;3&amp;hellip;&amp;hellip;&amp;hellip;.&lt;/p&gt;</description>
+      <description>&lt;h3 id=&#34;stable-diffusion-生成的一位女侠&#34;&gt;stable diffusion 生成的一位女侠&lt;/h3&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;%27../../../../assets/img/myMiniprogram/womanHero.jpg&#34; alt=&#34;女侠&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;小程序提供免费下载&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;%27../../../../assets/img/myMiniprogram/index.jpg&#34; alt=&#34;首页&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;扫码进入小程序，欢迎体验&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;%27../../../../assets/img/myMiniprogram/miniProgram.jpg&#34; alt=&#34;miniprogramlog&#34;  /&gt;
+&lt;/p&gt;</description>
     </item>
     <item>
       <title>Cifar100</title>
