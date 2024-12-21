@@ -6,7 +6,7 @@ draft = false
 
 ### stable diffusion 生成的一位女侠
 
-![女侠]('../../../../assets/img/myMiniprogram/womanHero.jpg)
+![女侠]('../../../../assets/img/myMiniprogram/womanHero.png)
 
 小程序提供免费下载
 
