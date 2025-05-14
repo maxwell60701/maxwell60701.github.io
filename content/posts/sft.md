@@ -1,5 +1,5 @@
 +++
-title = '使用deepseek微调原神角色基本信息的大模型'
+title = '基于DeepSeek微调原神角色信息的大语言模型'
 date = 2025-05-13T15:56:41+08:00
 draft = false
 +++
@@ -30,6 +30,40 @@ draft = false
 
 
 ### 准备事项
+
+#### python环境
+
+我的requirements.txt文件内容如下
+```
+transformers>=4.46.3
+datasets>=3.4.1
+accelerate==1.5.2
+peft==0.14.0
+trl==0.16.0
+tokenizers==0.20.3
+gradio==5.20.0
+pandas==2.2.3
+scipy
+einops
+sentencepiece
+tiktoken
+protobuf
+uvicorn
+pydantic
+fastapi
+sse-starlette
+matplotlib==3.10.1
+fire
+packaging
+pyyaml
+numpy==1.26.4
+av
+librosa
+
+```
+
+安装依赖包
+`pip install -r requirements.txt`
 
 #### 数据集
 
@@ -621,6 +655,7 @@ draft = false
 
 ### 训练
 
+#### 分词
 ```python
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
@@ -657,9 +692,11 @@ print(tokenizer.eos_token_id)
 model.resize_token_embeddings(len(tokenizer))
 ```
 
-添加几个special_tokens，这个后面再讲
+添加几个special_tokens，因为在deepseek中没有`<｜Assistant｜>`这个分词，我们需要手动添加，
+另外deepseek中，pad_token 和 eos_token是一样的,对于后面的DataCollatorForCompletionOnlyLM无法正确识别，所以这边必须手动再添加一个pad_token
 
-我的数据集托管在了huggingface，从这个地址下载
+#### 下载数据集
+数据集经过转换后，我上传到了huggingface，从这个仓库下载
 ```python
 # 加载数据集
 from datasets import load_dataset
@@ -691,7 +728,9 @@ raw_datasets['train'][0]
 {'messages': [{'content': '砂糖女士来自什么国家?', 'role': 'user'},
   {'content': '砂糖来自蒙德', 'role': 'assistant'}]}
 ```
+#### 转换格式
 
+我们需要将数据通过`apply_chat_template` 方法，转换为模型可识别的格式
 ```python
 def tokenizer_convert(example):
   prompt=tokenizer.apply_chat_template(example['messages'],tokenize=False)
@@ -702,21 +741,24 @@ def tokenizer_convert(example):
 train_datasets=raw_train_datasets.map(tokenizer_convert).remove_columns('messages')
 train_datasets[0]['text']
 ```
-```
-'<｜begin▁of▁sentence｜><｜User｜>砂糖女士来自什么国家?<｜Assistant｜>砂糖来自蒙德<｜end▁of▁sentence｜>'
-```
+
 
 ```python
 test_datasets=raw_test_datasets.map(tokenizer_convert).remove_columns('messages')
 test_datasets[0]['text']
 ```
+```
+'<｜begin▁of▁sentence｜><｜User｜>砂糖女士来自什么国家?<｜Assistant｜>砂糖来自蒙德<｜end▁of▁sentence｜>'
+```
 
 
-我们需要将数据集的数据通过`apply_chat_template` 方法，转换为上面的格式
 
 只有`[{'content': '砂糖女士来自什么国家?', 'role': 'user'},{'content': '砂糖来自蒙德', 'role': 'assistant'}]` 的格式，才能被模型识别，并被apply_chat_template方法所转换，这是由大模型的`tokenizer_config.json`文件中的一个配置项`chat_template`决定的
 
-接下来定义一个collator,它会将数据整合成大模型可识别的格式，具体后面再讲
+
+#### 定义 collator
+
+接下来定义一个collator,它会将数据进一步整合
 
 ```python
 from trl import DataCollatorForCompletionOnlyLM
@@ -728,7 +770,9 @@ data_collator = DataCollatorForCompletionOnlyLM(
 data_collator
 ```
 
-接下来我们要定义`Trainer`，我们采用的是`SFTTrainer`
+#### 定义 trainer
+
+先定义`SFTConfig`
 
 ```python
 from trl import SFTTrainer,SFTConfig
@@ -742,7 +786,7 @@ training_args=SFTConfig(
     logging_steps=10,
     output_dir="./",
     save_strategy="epoch",
-    num_train_epochs=5,
+    num_train_epochs=10,
     eval_steps=10,
     eval_strategy="epoch",
     learning_rate=5e-5,
@@ -758,16 +802,16 @@ training_args=SFTConfig(
 ```python
 from peft import LoraConfig,get_peft_model
 peft_config=LoraConfig(
-    r=8,  
-    lora_alpha=16,
-    lora_dropout=0.0,
+    r=32,  
+    lora_alpha=64,
+    lora_dropout=0.05,
     bias="none",
     target_modules=["embed_tokens", "lm_head","q_proj","k_proj","v_proj","o_proj"],
     task_type="CAUSAL_LM"
 )
 
 ```
-定义sfttrainer
+定义`SFTTrainer`
 
 ```python
 trainer= SFTTrainer(
@@ -782,6 +826,8 @@ trainer= SFTTrainer(
 )
 
 ```
+
+#### 绘制损失曲线
 
 定义`LossPlotCallback()`
 
@@ -839,7 +885,7 @@ for batch in dataloader:
     print(batch)
     break
 ```
-打印结果
+打印第一行结果
 ```
 {'input_ids': tensor([[151646, 151646, 151644,  93488,  93488, 101523, 100660, 104066, 102021,
              30, 151645,  93488,  93488, 101523,  20412, 103324,  17340,  99410,
@@ -857,11 +903,13 @@ for batch in dataloader:
 
 ```
 
-`input_ids`: 指的是经过tokenizer分词后的结果，是一个矩阵数组，因为每个对话的长度都是不一样的，所以为了让矩阵的长度一致，短的那行就需要自动填充，也就是添加`padding`作为填充符
+`input_ids`: 指的是经过tokenizer分词后的结果，是一个矩阵数组，每一个数字都代表一个token，例如151646代表的就是<| begin__of__sentence |>
 
-`attention_mask`: 0 代表是被填充的，否则为1
+`attention_mask`: 因为每个对话的长度都是不一样的，所以为了让矩阵的长度一致，短的那行就需要自动填充，也就是添加`padding`作为填充符,0 代表是被填充的，否则为1
 
 `labels`: `<｜Assistant｜>` 之前的分词都被标记为-100，只将回答的部分算作loss统计的一部分
+
+#### 开始训练
 
 ```python
 trainer.train() #开始训练
@@ -931,3 +979,11 @@ print(tokenizer.decode(output[0],skip_special_tokens=True))
 ```
 砂糖来自蒙德
 ```
+
+损失曲线图
+
+![损失曲线图](../../assets/img/sft/loss_plot.png)
+
+损失图表
+
+![损失图表](../../assets/img/sft/loss_table.png)
