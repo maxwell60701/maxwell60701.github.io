@@ -9,14 +9,14 @@
     <lastBuildDate>Tue, 13 May 2025 15:56:41 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>基于DeepSeek微调原神角色信息的大语言模型</title>
+      <title>⭐基于DeepSeek微调原神角色信息的大语言模型</title>
       <link>http://localhost:1313/posts/sft/</link>
       <pubDate>Tue, 13 May 2025 15:56:41 +0800</pubDate>
       <guid>http://localhost:1313/posts/sft/</guid>
       <description>简介 最近两个月，业余时间研究了大语言模型的微调技巧，也成功微调出了一个原神的大模型
 我微调的大模型要达到的效果是
-问:钟离是什么性别? 答:钟离是男性 问:钟离来自什么国家? 答:钟离来自璃月 问:钟离掌握什么元素力？ 答:岩元素 问：钟离的身份是什么? 答:往生堂客卿，岩神 问: 钟离的性格特点是什么？ 答: 沉稳，深知璃月文化底蕴 准备事项 python环境 我的requirements.txt文件内容如下
-transformers&amp;gt;=4.46.3 datasets&amp;gt;=3.4.1 accelerate==1.5.2 peft==0.14.0 trl==0.16.0 tokenizers==0.20.3 gradio==5.20.0 pandas==2.2.3 scipy einops sentencepiece tiktoken protobuf uvicorn pydantic fastapi sse-starlette matplotlib==3.10.1 fire packaging pyyaml numpy==1.26.4 av librosa 安装依赖包 pip install -r requirements.txt
+问:钟离是什么性别?答:钟离是男性问:钟离来自什么国家?答:钟离来自璃月问:钟离掌握什么元素力？答:岩元素问：钟离的身份是什么?答:往生堂客卿，岩神问: 钟离的性格特点是什么？答: 沉稳，深知璃月文化底蕴 准备事项 python环境 我的requirements.txt文件内容如下
+transformers&amp;gt;=4.46.3datasets&amp;gt;=3.4.1accelerate==1.5.2peft==0.14.0trl==0.16.0tokenizers==0.20.3gradio==5.20.0pandas==2.2.3scipyeinopssentencepiecetiktokenprotobufuvicornpydanticfastapisse-starlettematplotlib==3.10.1firepackagingpyyamlnumpy==1.26.4avlibrosa 安装依赖包 pip install -r requirements.txt
 数据集 我的原始数据集是从huggingface下载的，原始数据格式大致如下
 { &amp;#34;丽莎&amp;#34;: { &amp;#34;性别&amp;#34;: &amp;#34;成年女性&amp;#34;, &amp;#34;国籍&amp;#34;: &amp;#34;蒙德&amp;#34;, &amp;#34;元素力&amp;#34;: &amp;#34;雷元素&amp;#34;, &amp;#34;身份&amp;#34;: &amp;#34;西风骑士团图书管理员&amp;#34;, &amp;#34;性格特征&amp;#34;: &amp;#34;喜欢挑逗人的魔法师大姐姐&amp;#34; }, &amp;#34;行秋&amp;#34;: { &amp;#34;性别&amp;#34;: &amp;#34;少年男性&amp;#34;, &amp;#34;国籍&amp;#34;: &amp;#34;璃月&amp;#34;, &amp;#34;元素力&amp;#34;: &amp;#34;水元素&amp;#34;, &amp;#34;身份&amp;#34;: &amp;#34;飞云商会少爷&amp;#34;, &amp;#34;性格特征&amp;#34;: &amp;#34;行侠仗义的侠客&amp;#34; }, &amp;#34;钟离&amp;#34;: { &amp;#34;性别&amp;#34;: &amp;#34;成年男性&amp;#34;, &amp;#34;国籍&amp;#34;: &amp;#34;璃月&amp;#34;, &amp;#34;元素力&amp;#34;: &amp;#34;岩元素&amp;#34;, &amp;#34;身份&amp;#34;: &amp;#34;往生堂客卿，岩神&amp;#34;, &amp;#34;性格特征&amp;#34;: &amp;#34;沉稳，深知璃月文化底蕴&amp;#34; }, &amp;#34;温迪&amp;#34;: { &amp;#34;性别&amp;#34;: &amp;#34;少年男性&amp;#34;, &amp;#34;国籍&amp;#34;: &amp;#34;蒙德&amp;#34;, &amp;#34;元素力&amp;#34;: &amp;#34;风元素&amp;#34;, &amp;#34;身份&amp;#34;: &amp;#34;吟游诗人，风神&amp;#34;, &amp;#34;性格特征&amp;#34;: &amp;#34;喜欢开玩笑的轻佻少年&amp;#34; } } 这样的数据集不能直接喂给大模型，我们需要处理，对于每一个角色，都做如下处理，以钟离为例</description>
     </item>

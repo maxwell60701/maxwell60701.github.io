@@ -107,19 +107,20 @@
 
 <article class="first-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">基于DeepSeek微调原神角色信息的大语言模型
+    <h2 class="entry-hint-parent">⭐基于DeepSeek微调原神角色信息的大语言模型
     </h2>
   </header>
   <div class="entry-content">
-    <p>简介 最近两个月，业余时间研究了大语言模型的微调技巧，也成功微调出了一个原神的大模型
+    <p>简介 源码地址
+最近两个月，业余时间研究了大语言模型的微调技巧，也成功微调出了一个原神的大模型
 我微调的大模型要达到的效果是
-问:钟离是什么性别? 答:钟离是男性 问:钟离来自什么国家? 答:钟离来自璃月 问:钟离掌握什么元素力？ 答:岩元素 问：钟离的身份是什么? 答:往生堂客卿，岩神 问: 钟离的性格特点是什么？ 答: 沉稳，深知璃月文化底蕴 准备事项 python环境 我的requirements.txt文件内容如下
-transformers&gt;=4.46.3 datasets&gt;=3.4.1 accelerate==1.5.2 peft==0.14.0 trl==0.16.0 tokenizers==0.20.3 gradio==5.20.0 pandas==2.2.3 scipy einops sentencepiece tiktoken protobuf uvicorn pydantic fastapi sse-starlette matplotlib==3.10.1 fire packaging pyyaml numpy==1.26.4 av librosa 安装依赖包 pip install -r requirements.txt
+问:钟离是什么性别?答:钟离是男性问:钟离来自什么国家?答:钟离来自璃月问:钟离掌握什么元素力？答:岩元素问：钟离的身份是什么?答:往生堂客卿，岩神问: 钟离的性格特点是什么？答: 沉稳，深知璃月文化底蕴 准备事项 python环境 我的requirements.txt文件内容如下
+transformers&gt;=4.46.3datasets&gt;=3.4.1accelerate==1.5.2peft==0.14.0trl==0.16.0tokenizers==0.20.3gradio==5.20.0pandas==2.2.3scipyeinopssentencepiecetiktokenprotobufuvicornpydanticfastapisse-starlettematplotlib==3.10.1firepackagingpyyamlnumpy==1.26.4avlibrosa 安装依赖包 pip install -r requirements.txt
 数据集 我的原始数据集是从huggingface下载的，原始数据格式大致如下
 { &#34;丽莎&#34;: { &#34;性别&#34;: &#34;成年女性&#34;, &#34;国籍&#34;: &#34;蒙德&#34;, &#34;元素力&#34;: &#34;雷元素&#34;, &#34;身份&#34;: &#34;西风骑士团图书管理员&#34;, &#34;性格特征&#34;: &#34;喜欢挑逗人的魔法师大姐姐&#34; }, &#34;行秋&#34;: { &#34;性别&#34;: &#34;少年男性&#34;, &#34;国籍&#34;: &#34;璃月&#34;, &#34;元素力&#34;: &#34;水元素&#34;, &#34;身份&#34;: &#34;飞云商会少爷&#34;, &#34;性格特征&#34;: &#34;行侠仗义的侠客&#34; }, &#34;钟离&#34;: { &#34;性别&#34;: &#34;成年男性&#34;, &#34;国籍&#34;: &#34;璃月&#34;, &#34;元素力&#34;: &#34;岩元素&#34;, &#34;身份&#34;: &#34;往生堂客卿，岩神&#34;, &#34;性格特征&#34;: &#34;沉稳，深知璃月文化底蕴&#34; }, &#34;温迪&#34;: { &#34;性别&#34;: &#34;少年男性&#34;, &#34;国籍&#34;: &#34;蒙德&#34;, &#34;元素力&#34;: &#34;风元素&#34;, &#34;身份&#34;: &#34;吟游诗人，风神&#34;, &#34;性格特征&#34;: &#34;喜欢开玩笑的轻佻少年&#34; } } 这样的数据集不能直接喂给大模型，我们需要处理，对于每一个角色，都做如下处理，以钟离为例...</p>
   </div>
   <footer class="entry-footer"><span title='2025-05-13 15:56:41 +0800 CST'>May 13, 2025</span></footer>
-  <a class="entry-link" aria-label="post link to 基于DeepSeek微调原神角色信息的大语言模型" href="http://localhost:1313/posts/sft/"></a>
+  <a class="entry-link" aria-label="post link to ⭐基于DeepSeek微调原神角色信息的大语言模型" href="http://localhost:1313/posts/sft/"></a>
 </article>
 
 <article class="post-entry"> 

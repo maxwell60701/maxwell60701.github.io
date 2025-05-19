@@ -1,10 +1,12 @@
 +++
-title = '基于DeepSeek微调原神角色信息的大语言模型'
+title = '⭐基于DeepSeek微调原神角色信息的大语言模型'
 date = 2025-05-13T15:56:41+08:00
 draft = false
 +++
 
 ### 简介
+
+[源码地址](https://github.com/maxwell60701/genshin-impact-role-train)
 
 最近两个月，业余时间研究了大语言模型的微调技巧，也成功微调出了一个原神的大模型
 
@@ -987,3 +989,119 @@ print(tokenizer.decode(output[0],skip_special_tokens=True))
 损失图表
 
 ![损失图表](../../assets/img/sft/loss_table.png)
+
+### 评估
+
+```python
+from transformers import AutoTokenizer,AutoModelForCausalLM
+import torch
+model_name='maxwell60701/genshin-impact-role-chat-model'
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto", torch_dtype=torch.float16)
+```
+```python
+from datasets import load_dataset
+raw_datasets=load_dataset('maxwell60701/genshin-impact-role-chat-model')
+raw_datasets
+```
+我采用bertscore来进行评估，它支持中文
+```python
+from evaluate import load
+bertscore = load("bertscore")
+```
+
+```python
+import pandas as pd
+
+def write_to_csv(question, answer, prediction, precision,recall,f1,hash):
+    data = {'question': [question], 'answer': [answer], 'prediction': [prediction], 'precision': [precision],'recall':[recall],'f1':[f1],'hash':[hash]}
+    df = pd.DataFrame(data)
+    df.to_csv('evalute.csv', mode='a', header=False, index=False)
+```
+
+```python
+for item in raw_datasets['train']:
+   message=[item["messages"][0]]
+   question=item["messages"][0]['content']
+   answer=item["messages"][1]['content']
+   print(question)
+   print(answer)
+   prompt=tokenizer.apply_chat_template(message,tokenize=True,add_generation_prompt=True,return_tensors="pt")
+   prompt=prompt.to(model.device)
+   output=model.generate(prompt,
+                         temperature=0.1,
+                         top_p=0.1, 
+                         top_k=10,
+                         max_new_tokens=512,
+                         pad_token_id=tokenizer.pad_token_id,
+                         eos_token_id=tokenizer.eos_token_id)
+   response=tokenizer.decode(output[0], skip_special_tokens=True)
+   if "</think>" in response:
+      prediction = response.split("</think>")[-1].strip()
+   elif "<think>" in response:
+      prediction = response.split("<think>")[-1].strip()
+   else:
+      prediction = response.strip()   
+   print(prediction)
+   predictions = [prediction]
+   references = [answer]
+   results = bertscore.compute(predictions=predictions, references=references, lang="zh", model_type="bert-base-chinese")
+   print(results)
+   precision=results['precision'][0]
+   recall=results['recall'][0]
+   f1=results['f1'][0]
+   hash=results['hashcode']
+   print(results['precision'][0])
+   write_to_csv(question, answer, prediction, precision,recall,f1,hash)
+```
+```python
+for item in raw_datasets['test']:
+   message=[item["messages"][0]]
+   question=item["messages"][0]['content']
+   answer=item["messages"][1]['content']
+   print(question)
+   print(answer)
+   prompt=tokenizer.apply_chat_template(message,tokenize=True,add_generation_prompt=True,return_tensors="pt")
+   prompt=prompt.to(model.device)
+   output=model.generate(prompt,
+                         temperature=0.1,
+                         top_p=0.1, 
+                         top_k=10,
+                         max_new_tokens=512,
+                         pad_token_id=tokenizer.pad_token_id,
+                         eos_token_id=tokenizer.eos_token_id)
+   response=tokenizer.decode(output[0], skip_special_tokens=True)
+   if "</think>" in response:
+      prediction = response.split("</think>")[-1].strip()
+   elif "<think>" in response:
+      prediction = response.split("<think>")[-1].strip()
+   else:
+      prediction = response.strip()   
+   print(prediction)
+   predictions = [prediction]
+   references = [answer]
+   results = bertscore.compute(predictions=predictions, references=references, lang="zh", model_type="bert-base-chinese")
+   print(results)
+   precision=results['precision'][0]
+   recall=results['recall'][0]
+   f1=results['f1'][0]
+   hash=results['hashcode']
+   print(results['precision'][0])
+   write_to_csv(question, answer, prediction, precision,recall,f1,hash)
+```
+
+以上代码大致含义是将正确的答案，与模型推理的答案，进行比较打分
+
+bertscore有三个指标
+
+precision（精确率）：生成答案中有多少内容与参考答案（标准答案）语义相符。衡量生成内容的“准确性”。
+
+recall（召回率）：参考答案中有多少内容被生成答案语义覆盖。衡量生成内容的“全面性”。
+
+f1：精确率和召回率的调和平均值，是综合评价生成内容和参考答案语义相似度的指标。
+
+可以用f1作为最终的评估指标
+
+经过筛选，总数5100条，114条数据f1分数小于0.6
+
+[evaluate.csv](https://github.com/maxwell60701/genshin-impact-role-train/blob/main/evaluate.csv)
