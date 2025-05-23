@@ -7,36 +7,14 @@
 <meta name="robots" content="noindex, nofollow">
 <title>使用HuggingFace的模型来生成图像 | maxwell60701 少寒风的Blog</title>
 <meta name="keywords" content="">
-<meta name="description" content="Huggingface
-地址
+<meta name="description" content="Huggingface 地址
 这个网站类似于github,github托管的是代码，而它托管的是模型
-
-
 选择右侧use this model,或者看readme,可以得知它的用法
 示例如下
-import torch
-from diffusers import StableDiffusion3Pipeline
-
-pipe = StableDiffusion3Pipeline.from_pretrained(&#34;stabilityai/stable-diffusion-3-medium-diffusers&#34;, torch_dtype=torch.float16,token=&#34;hf_xxxxxx&#34;)
-pipe = pipe.to(&#34;cuda&#34;)
-
-image = pipe(
-    &#34;A cat holding a sign that says hello world&#34;,
-    negative_prompt=&#34;&#34;,
-    num_inference_steps=28,
-    guidance_scale=7.0,
-).images[0]
-image
-这个token是你在huggingface上生成的，权限为write
+import torch from diffusers import StableDiffusion3Pipeline pipe = StableDiffusion3Pipeline.from_pretrained(&#34;stabilityai/stable-diffusion-3-medium-diffusers&#34;, torch_dtype=torch.float16,token=&#34;hf_xxxxxx&#34;) pipe = pipe.to(&#34;cuda&#34;) image = pipe( &#34;A cat holding a sign that says hello world&#34;, negative_prompt=&#34;&#34;, num_inference_steps=28, guidance_scale=7.0, ).images[0] image 这个token是你在huggingface上生成的，权限为write
 刚开始运行有报错的话,按照错误提示去安装python的包
 当然，你的PC上得有独显才行，还有装一个CUDA的显卡驱动，我显卡是RTX3060，CUDA 11.6
-
-
 这个生成很慢，平均10分钟，可能跟本机显卡有关
-
-
-
-
 这个模型我感觉整体上没有他们在线的api调用的那个模型好，不过也凑合能用">
 <meta name="author" content="">
 <link rel="canonical" href="http://localhost:1313/posts/stablediffusion-3/">
@@ -186,7 +164,7 @@ image
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="http://localhost:1313/">maxwell60701 少寒风的Blog</a></span> · 
+        <span>&copy; 2025 <a href="http://localhost:1313/">maxwell60701 少寒风的Blog</a></span> · 
 
     <span>
         Powered by
