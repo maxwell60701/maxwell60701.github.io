@@ -655,6 +655,40 @@ librosa
 
 对于每个问题，我设计多样的提问方式，这样可以让模型更好地理解我的提问
 
+#### 下载数据集
+数据集经过转换后，我上传到了huggingface，从这个仓库下载
+```python
+# 加载数据集
+from datasets import load_dataset
+raw_datasets=load_dataset('maxwell60701/genshin-impact-role-chat-model')
+raw_datasets
+```
+
+
+```
+DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 3480
+    })
+    test: Dataset({
+        features: ['messages'],
+        num_rows: 870
+    })
+})
+```
+
+可以看到我的训练集为3480行，测试集为870行
+
+```python
+raw_datasets['train'][0]
+```
+打印一笔训练数据集看看格式
+```
+{'messages': [{'content': '砂糖女士来自什么国家?', 'role': 'user'},
+  {'content': '砂糖来自蒙德', 'role': 'assistant'}]}
+```
+
 ### 训练
 
 #### 分词
@@ -697,39 +731,7 @@ model.resize_token_embeddings(len(tokenizer))
 添加几个special_tokens，因为在deepseek中没有`<｜Assistant｜>`这个分词，我们需要手动添加，
 另外deepseek中，pad_token 和 eos_token是一样的,对于后面的DataCollatorForCompletionOnlyLM无法正确识别，所以这边必须手动再添加一个pad_token
 
-#### 下载数据集
-数据集经过转换后，我上传到了huggingface，从这个仓库下载
-```python
-# 加载数据集
-from datasets import load_dataset
-raw_datasets=load_dataset('maxwell60701/genshin-impact-role-chat-model')
-raw_datasets
-```
 
-
-```
-DatasetDict({
-    train: Dataset({
-        features: ['messages'],
-        num_rows: 3480
-    })
-    test: Dataset({
-        features: ['messages'],
-        num_rows: 870
-    })
-})
-```
-
-可以看到我的训练集为3480行，测试集为870行
-
-```python
-raw_datasets['train'][0]
-```
-打印一笔训练数据集看看格式
-```
-{'messages': [{'content': '砂糖女士来自什么国家?', 'role': 'user'},
-  {'content': '砂糖来自蒙德', 'role': 'assistant'}]}
-```
 #### 转换格式
 
 我们需要将数据通过`apply_chat_template` 方法，转换为模型可识别的格式

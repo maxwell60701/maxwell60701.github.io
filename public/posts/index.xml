@@ -13,7 +13,8 @@
       <link>http://localhost:1313/posts/sft/</link>
       <pubDate>Tue, 13 May 2025 15:56:41 +0800</pubDate>
       <guid>http://localhost:1313/posts/sft/</guid>
-      <description>简介 最近两个月，业余时间研究了大语言模型的微调技巧，也成功微调出了一个原神的大模型
+      <description>简介 源码地址
+最近两个月，业余时间研究了大语言模型的微调技巧，也成功微调出了一个原神的大模型
 我微调的大模型要达到的效果是
 问:钟离是什么性别?答:钟离是男性问:钟离来自什么国家?答:钟离来自璃月问:钟离掌握什么元素力？答:岩元素问：钟离的身份是什么?答:往生堂客卿，岩神问: 钟离的性格特点是什么？答: 沉稳，深知璃月文化底蕴 准备事项 python环境 我的requirements.txt文件内容如下
 transformers&amp;gt;=4.46.3datasets&amp;gt;=3.4.1accelerate==1.5.2peft==0.14.0trl==0.16.0tokenizers==0.20.3gradio==5.20.0pandas==2.2.3scipyeinopssentencepiecetiktokenprotobufuvicornpydanticfastapisse-starlettematplotlib==3.10.1firepackagingpyyamlnumpy==1.26.4avlibrosa 安装依赖包 pip install -r requirements.txt
