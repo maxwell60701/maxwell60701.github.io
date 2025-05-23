@@ -11,26 +11,8 @@
     <loc>http://localhost:1313/posts/</loc>
     <lastmod>2025-05-13T15:56:41+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/howtomakeblog/</loc>
-    <lastmod>2024-09-30T17:20:13+08:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/posts/cifar100/</loc>
     <lastmod>2024-09-22T10:36:31+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/job/</loc>
-    <lastmod>2024-08-07T14:53:30+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/stablediffusion-3/</loc>
-    <lastmod>2024-07-19T16:35:38+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/mind/</loc>
-    <lastmod>2024-07-10T16:09:19+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/dockerimprove/</loc>
-    <lastmod>2024-07-10T15:36:33+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/docker/</loc>
-    <lastmod>2024-07-10T11:27:08+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/k8s/</loc>
     <lastmod>2024-07-10T10:56:25+08:00</lastmod>

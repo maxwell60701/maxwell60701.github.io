@@ -8,7 +8,7 @@ draft = false
 
 [源码地址](https://github.com/maxwell60701/genshin-impact-role-train)
 
-最近两个月，业余时间研究了大语言模型的微调技巧，也成功微调出了一个原神的大模型
+业余时间研究了大语言模型的微调技巧，也成功微调出了一个原神的大模型
 
 我微调的大模型要达到的效果是
 
@@ -916,14 +916,24 @@ for batch in dataloader:
 #### 开始训练
 
 ```python
-trainer.train() #开始训练
+trainer.train() 
 ```
+损失图表
+
+![损失图表](../../assets/img/sft/loss_table.png)
+
+损失曲线图
+
+![损失曲线图](../../assets/img/sft/loss_plot.png)
+
 
 ```python
 trainer.save_model('genshin-impact-role-model') #训练结束后保存模型
 ```
 
 ### 合并模型
+
+将微调后的模型与基座模型合并
 
 ```python
 from  peft import PeftModel
@@ -947,6 +957,8 @@ merged_model.save_pretrained('genshin-impact-role-model-7B-merged')
 tokenizer.save_pretrained('genshin-impact-role-model-7B-merged')
 ```
 
+
+
 ### 推理
 
 ```python
@@ -962,7 +974,6 @@ check_point='genshin-impact-role-model-7B-merged'
 tokenizer = AutoTokenizer.from_pretrained(check_point)
 model = AutoModelForCausalLM.from_pretrained(check_point,torch_dtype=torch.float16, device_map="cuda")
 model.to("cuda")
-model = AutoModelForCausalLM.from_pretrained(check_point,torch_dtype=torch.float16, device_map="cuda")
 
 prompt=tokenizer.apply_chat_template(chat,tokenize=True,add_generation_prompt=True,return_tensors='pt')
 print(tokenizer.chat_template)
@@ -984,13 +995,7 @@ print(tokenizer.decode(output[0],skip_special_tokens=True))
 砂糖来自蒙德
 ```
 
-损失曲线图
 
-![损失曲线图](../../assets/img/sft/loss_plot.png)
-
-损失图表
-
-![损失图表](../../assets/img/sft/loss_table.png)
 
 ### 评估
 
@@ -1015,6 +1020,7 @@ bertscore = load("bertscore")
 ```python
 import pandas as pd
 
+# 定义方法写入csv
 def write_to_csv(question, answer, prediction, precision,recall,f1,hash):
     data = {'question': [question], 'answer': [answer], 'prediction': [prediction], 'precision': [precision],'recall':[recall],'f1':[f1],'hash':[hash]}
     df = pd.DataFrame(data)
@@ -1047,6 +1053,7 @@ for item in raw_datasets['train']:
    print(prediction)
    predictions = [prediction]
    references = [answer]
+   # 比较预期值和实际值得到分数
    results = bertscore.compute(predictions=predictions, references=references, lang="zh", model_type="bert-base-chinese")
    print(results)
    precision=results['precision'][0]
