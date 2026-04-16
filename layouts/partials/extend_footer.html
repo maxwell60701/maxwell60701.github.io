@@ -1,0 +1,9 @@
+{{- /* Custom footer enhancements */ -}}
+<script>
+    // Initialize Lucide icons after DOM loads
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    });
+</script>
