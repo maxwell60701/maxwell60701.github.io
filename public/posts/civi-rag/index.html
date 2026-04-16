@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>文明6 RAG 知识库实战：从爬取到问答 | maxwell60701 少寒风的Blog</title>
+<title>文明6 RAG 知识库：架构设计与实现 | maxwell60701 少寒风的Blog</title>
 <meta name="keywords" content="RAG, LangChain, Milvus, FastAPI, Ollama, Civ6">
-<meta name="description" content="基于文明6百科构建 RAG：数据爬取、向量化、检索路由与生成，并拆解每个关键方法的设计与含义。">
+<meta name="description" content="基于文明6百科构建 RAG：路由判定、多路检索与生成，详解系统架构与核心设计。">
 <meta name="author" content="">
 <link rel="canonical" href="http://localhost:1313/posts/civi-rag/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.54405a410796490bc874ab6181fac9b675753cc2b91375d8f882566459eca428.css" integrity="sha256-VEBaQQeWSQvIdKthgfrJtnV1PMK5E3XY&#43;IJWZFnspCg=" rel="preload stylesheet" as="style">
@@ -107,470 +107,374 @@
   <header class="post-header">
     
     <h1 class="post-title entry-hint-parent">
-      文明6 RAG 知识库实战：从爬取到问答
+      文明6 RAG 知识库：架构设计与实现
     </h1>
     <div class="post-meta"><span title='2025-12-29 17:43:40 +0800 CST'>December 29, 2025</span>
 
 </div>
   </header> 
-  <div class="post-content"><h2 id="项目概览">项目概览<a hidden class="anchor" aria-hidden="true" href="#项目概览">#</a></h2>
-<p>本文讲解如何基于 Civilopedia 构建《文明 6》主题的 RAG（检索增强生成）问答系统：爬取 → 清洗拆分 → 向量化入库（Milvus）→ 路由判定多路检索 → 模型生成答案，并逐个方法拆解其设计与含义。</p>
-<h2 id="技术栈与部署">技术栈与部署<a hidden class="anchor" aria-hidden="true" href="#技术栈与部署">#</a></h2>
+  <div class="post-content"><h2 id="1-概述">1. 概述<a hidden class="anchor" aria-hidden="true" href="#1-概述">#</a></h2>
+<p>本项目基于 <a href="https://www.civilopedia.net/zh-CN/">Civilopedia</a> 构建《文明6》RAG 问答系统，支持用户询问游戏相关的各类问题。</p>
+<p><strong>核心挑战</strong>：游戏知识涉及多个领域（伟人、建筑、单位、奇观等），用户问题往往跨领域。例如问&quot;秦始皇的特色单位是什么&quot;，需要同时检索&quot;领袖&quot;和&quot;单位&quot;两个知识库。</p>
+<p><strong>解决方案</strong>：路由判定 + 多路检索。用户提问后，系统先判断涉及哪些知识库，再并行召回、聚合生成。</p>
+<hr>
+<h2 id="2-整体架构">2. 整体架构<a hidden class="anchor" aria-hidden="true" href="#2-整体架构">#</a></h2>
+<p>系统分为三大阶段：</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>职责</th>
+<th>关键技术</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据采集</td>
+<td>抓取、解析、入库</td>
+<td>BeautifulSoup, LangChain</td>
+</tr>
+<tr>
+<td>检索生成</td>
+<td>路由判定、多路召回、生成回答</td>
+<td>Ollama LLM, Milvus, LangChain</td>
+</tr>
+<tr>
+<td>服务部署</td>
+<td>API 服务化</td>
+<td>FastAPI, Docker Compose</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="3-数据采集层">3. 数据采集层<a hidden class="anchor" aria-hidden="true" href="#3-数据采集层">#</a></h2>
+<h3 id="31-采集策略">3.1 采集策略<a hidden class="anchor" aria-hidden="true" href="#31-采集策略">#</a></h3>
+<p>数据来源为 Civilopedia 网站，共 15 个采集器：</p>
+<table>
+<thead>
+<tr>
+<th>采集器</th>
+<th>主题</th>
+<th>示例 URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fetch_great_person.ipynb</td>
+<td>伟人</td>
+<td>great_person_individual_albert_einstein</td>
+</tr>
+<tr>
+<td>fetch_building.ipynb</td>
+<td>建筑</td>
+<td>building_factory</td>
+</tr>
+<tr>
+<td>fetch_unit.ipynb</td>
+<td>单位</td>
+<td>unit_destroyer</td>
+</tr>
+<tr>
+<td>fetch_wonder.ipynb</td>
+<td>奇观</td>
+<td>building_big_ben</td>
+</tr>
+<tr>
+<td>fetch_religion.ipynb</td>
+<td>宗教</td>
+<td>religion_catholicism</td>
+</tr>
+<tr>
+<td>fetch_leader.ipynb</td>
+<td>领袖</td>
+<td>leader_qin_shi_huang</td>
+</tr>
+<tr>
+<td>&hellip;</td>
+<td>&hellip;</td>
+<td>&hellip;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32-解析与文档化">3.2 解析与文档化<a hidden class="anchor" aria-hidden="true" href="#32-解析与文档化">#</a></h3>
+<p>每个采集器的工作流程相同：</p>
+<ol>
+<li><strong>构造 URL 列表</strong>：根据主题构造待抓取页面 ID 列表</li>
+<li><strong>发送请求</strong>：requests.get 抓取页面</li>
+<li><strong>解析 HTML</strong>：BeautifulSoup 提取关键字段</li>
+<li><strong>封装 Document</strong>：LangChain Document 对象</li>
+</ol>
+<p><strong>以伟人为例</strong>，解析字段包括：</p>
+<pre tabindex="0"><code>伟人姓名: 阿尔伯特·爱因斯坦
+特色能力: 核裂变 · 理论科学家
+身份: 伟人点数 +8 · 消耗 920 点伟人之力
+</code></pre><h3 id="33-文本分词">3.3 文本分词<a hidden class="anchor" aria-hidden="true" href="#33-文本分词">#</a></h3>
+<p>使用 <code>RecursiveCharacterTextSplitter</code> 进行分词：</p>
 <ul>
-<li>运行环境：Python 3.11，Docker</li>
-<li>框架组件：LangChain（链路与组件）、FastAPI（对外 API）</li>
-<li>模型：聊天模型 gpt-oss:120b-cloud、llama3.1；嵌入模型 embeddinggemma</li>
-<li>向量数据库：Milvus（本地/远程）</li>
+<li><strong>chunk_size</strong>: 1000 字符</li>
+<li><strong>chunk_overlap</strong>: 200 字符</li>
 </ul>
-<h2 id="数据爬取方法拆解">数据爬取（方法拆解）<a hidden class="anchor" aria-hidden="true" href="#数据爬取方法拆解">#</a></h2>
-<p>目标来源为 Civilopedia：https://www.civilopedia.net。以下示例展示伟人页面的采集与解析流程，拆解为：1) 构造采集清单；2) 解析页面；3) 封装入库文档。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>great_persons <span style="color:#f92672">=</span> [
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;alvar_aalto&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ada_lovelace&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;bi_sheng&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;charles_correa&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;kenzo_tange&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;filippo_brunelleschi&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;gustave_eiffel&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;jane_drew&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;leonardo_da_vinci&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;robert_goddard&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;isidore_of_miletus&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;mimar_sinan&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;nikola_tesla&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;shah_jahan&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;james_of_st_george&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;wernher_von_braun&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;sergei_korolev&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;imhotep&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;john_a_roebling&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;joseph_paxton&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;james_watt&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ahmad_shah_massoud&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ana_nzinga&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;aethelflaed&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;el_cid&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;boudica&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;dandara&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;douglas_macarthur&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;dwight_eisenhower&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;georgy_zhukov&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;gustavus_adolphus&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;hannibal_barca&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;simon_bolivar&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;marina_raskova&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;napoleon_bonaparte&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;samori_ture&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;joan_of_arc&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;sudirman&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;sun_tzu&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;timur&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;tupac_amaru&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;vijaya_wimalaratne&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;john_monash&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;rani_lakshmibai&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;trung_trac&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;abdus_salam&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;albert_einstein&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;alfred_nobel&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;alan_turing&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;aryabhata&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;erwin_schrodinger&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;emilie_du_chatelet&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;abu_al_qasim_al_zahrawi&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;isaac_newton&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;omar_khayyam&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;hildegard_of_bingen&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;charles_darwin&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;dmitri_mendeleev&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;janaki_ammal&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;carl_sagan&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;margaret_mead&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;mary_leakey&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;euclid&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;stephanie_kwolek&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;hypatia&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ibn_khaldun&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;james_young&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;zhang_heng&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;galileo_galilei&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;helena_rubinstein&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;jamsetji_tata&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;masaru_ibuka&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;colaeus&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;raja_todar_mal&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;levi_strauss&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;mary_katherine_goddard&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;marco_polo&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;marcus_licinius_crassus&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;melitta_bentz&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;piero_de_bardi&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;giovanni_de_medici&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;sarah_breedlove&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;stamford_raffles&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;jakob_fugger&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;estee_lauder&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;adam_smith&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ibn_fadlan&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;irene_of_athens&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;john_rockefeller&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;john_spilsbury&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;john_jacob_astor&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;zhang_qian&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;zhou_daguan&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;amrita_sher_gil&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;el_greco&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;edmonia_lewis&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;andrey_rublev&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;angelica_kauffman&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;boris_orlovsky&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;hasegawa_tohaku&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;qiu_ying&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;donatello&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;katsushika_hokusai&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;gustav_klimt&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;kamal_ud_din_behzad&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;claude_monet&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;rembrandt_van_rijn&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;mary_cassatt&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;marie_anne_collot&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;michelangelo&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;sofonisba_anguissola&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;titian&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;wassily_kandinsky&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;vincent_van_gogh&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;hieronimus_bosch&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;jang_seung_eop&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;antonin_dvorak&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;antonio_carlos_gomez&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;antonio_vivaldi&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;yatsuhashi_kengyo&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;peter_ilyich_tchaikovsky&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;dimitrie_cantemir&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;franz_liszt&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;frederic_chopin&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;gauhar_jaan&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;juventino_rosas&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;clara_schumann&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;liliuokalani&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;liu_tianhua&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ludwig_van_beethoven&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;mykola_leontovych&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;scott_joplin&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;wolfgang_amadeus_mozart&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;johann_sebastian_bach&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;adi_shankara&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;francis_of_assisi&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;irenaeus&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;haji_huud&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;confucius&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;laozi&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;martin_luther&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;madhva_acharya&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;bodhidharma&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;john_the_baptist&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;songtsan_gampo&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;zoroaster&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;o_no_yasumaro&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;thomas_aquinas&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;simon_peter&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;siddhartha_gautama&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;edgar_allen_poe&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;emily_dickinson&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ovid&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;bhasa&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;beatrix_potter&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;f_scott_fitzgerald&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;homer&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;hg_wells&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;gabriela_mistral&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;jane_austen&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;geoffrey_chaucer&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;karel_capek&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;rabindranath_tagore&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;li_bai&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;leo_tolstoy&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;rumi&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;margaret_cavendish&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;mary_shelley&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;marie_catherine_d_aulnoy&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;mark_twain&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;miguel_de_cervantes&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;niccolo_machiavelli&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;qu_yuan&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;william_shakespeare&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;alexander_pushkin&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;valmiki&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;johann_wolfgang_von_goethe&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;james_joyce&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;murasaki_shikibu&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;artemisia&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;togo_heihachiro&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;franz_von_hipper&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;francis_drake&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;gaius_duilius&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;grace_hopper&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;hanno_the_navigator&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;horatio_nelson&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;clancy_fernando&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;rajendra_chola&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;laskarina_bouboulina&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;leif_erikson&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;yi_sun_sin&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;matthew_perry&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;chester_nimitz&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;joaquim_marques_lisboa&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;santa_cruz&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;themistocles&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;himerios&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;sergey_gorshkov&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;zheng_he&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ching_shih&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ferdinand_magellan&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;commandante_jose_de_sucre&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;commandante_narino&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;commandante_paula_santander&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;commandante_macgregor&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;commandante_antonio_paez&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;commandante_ribas&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;commandante_urdaneta&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;commandante_montilla&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;commandante_piar&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;commandante_marino&#34;</span>
-</span></span><span style="display:flex;"><span>]
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> bs4 <span style="color:#f92672">import</span> BeautifulSoup
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_core.documents <span style="color:#f92672">import</span> Document
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_text_splitters <span style="color:#f92672">import</span> RecursiveCharacterTextSplitter
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_community.vectorstores <span style="color:#f92672">import</span> Milvus
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_ollama <span style="color:#f92672">import</span> OllamaEmbeddings
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
-</span></span><span style="display:flex;"><span>base_url<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;https://www.civilopedia.net/zh-CN/gathering-storm/greatpeople/great_person_individual_&#39;</span>
-</span></span><span style="display:flex;"><span>docs<span style="color:#f92672">=</span>[]
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> great_persons:
-</span></span><span style="display:flex;"><span>    url<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>base_url<span style="color:#e6db74">}{</span>item<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>    print(url)
-</span></span><span style="display:flex;"><span>    response<span style="color:#f92672">=</span>requests<span style="color:#f92672">.</span>get(url)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code<span style="color:#f92672">==</span><span style="color:#ae81ff">404</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>soup<span style="color:#f92672">=</span>BeautifulSoup(response<span style="color:#f92672">.</span>content,<span style="color:#e6db74">&#39;html.parser&#39;</span>)
-</span></span><span style="display:flex;"><span>    name<span style="color:#f92672">=</span>soup<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;App_pageHeaderText__SsfWm App_mainTextColor__6NGqD App_mainTextColor__6NGqD&#39;</span>)<span style="color:#f92672">.</span>get_text(strip<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>    print(name)
-</span></span><span style="display:flex;"><span>    special_ablities<span style="color:#f92672">=</span>[]
-</span></span><span style="display:flex;"><span>    special_elem<span style="color:#f92672">=</span>soup<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;App_pageLeftColumn__huW_2&#39;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> len(special_elem<span style="color:#f92672">.</span>find_all(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;App_leftColumnItem__GHlpJ&#39;</span>))<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">2</span>:
-</span></span><span style="display:flex;"><span>     special_ability_1<span style="color:#f92672">=</span>special_elem<span style="color:#f92672">.</span>find_all(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;App_leftColumnItem__GHlpJ&#39;</span>)[<span style="color:#ae81ff">2</span>] <span style="color:#66d9ef">if</span> special_elem <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">None</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>     special_ablities<span style="color:#f92672">.</span>append(special_ability_1<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;p&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderText__LuO9w App_mainTextColor__6NGqD&#39;</span>)<span style="color:#f92672">.</span>get_text(strip<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) <span style="color:#66d9ef">if</span> special_ability_1<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;p&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderText__LuO9w App_mainTextColor__6NGqD&#39;</span>) <span style="color:#66d9ef">else</span> special_ability_1<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderText__LuO9w App_mainTextColor__6NGqD&#39;</span>)<span style="color:#f92672">.</span>get_text(strip<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) <span style="color:#66d9ef">if</span> special_ability_1<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderText__LuO9w App_mainTextColor__6NGqD&#39;</span>) <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;&#39;</span> )
-</span></span><span style="display:flex;"><span>     special_ablities<span style="color:#f92672">.</span>append(special_ability_1<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;p&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderBody__MkvCp App_mainTextColor__6NGqD&#39;</span>)<span style="color:#f92672">.</span>get_text(strip<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) <span style="color:#66d9ef">if</span> special_ability_1<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;p&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderBody__MkvCp App_mainTextColor__6NGqD&#39;</span>) <span style="color:#66d9ef">else</span> special_ability_1<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderBody__MkvCp App_mainTextColor__6NGqD&#39;</span>)<span style="color:#f92672">.</span>get_text(strip<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) <span style="color:#66d9ef">if</span> special_ability_1<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderBody__MkvCp App_mainTextColor__6NGqD&#39;</span>) <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;&#39;</span> )
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> len(special_elem<span style="color:#f92672">.</span>find_all(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;App_leftColumnItem__GHlpJ&#39;</span>))<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">3</span>:
-</span></span><span style="display:flex;"><span>     special_ability_2<span style="color:#f92672">=</span>special_elem<span style="color:#f92672">.</span>find_all(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;App_leftColumnItem__GHlpJ&#39;</span>)[<span style="color:#ae81ff">3</span>]
-</span></span><span style="display:flex;"><span>     special_ablities<span style="color:#f92672">.</span>append(special_ability_2<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;p&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderText__LuO9w App_mainTextColor__6NGqD&#39;</span>)<span style="color:#f92672">.</span>get_text(strip<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) <span style="color:#66d9ef">if</span> special_ability_2<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;p&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderText__LuO9w App_mainTextColor__6NGqD&#39;</span>) <span style="color:#66d9ef">else</span> special_ability_2<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderText__LuO9w App_mainTextColor__6NGqD&#39;</span>)<span style="color:#f92672">.</span>get_text(strip<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) <span style="color:#66d9ef">if</span> special_ability_2<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderText__LuO9w App_mainTextColor__6NGqD&#39;</span>) <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;&#39;</span> )
-</span></span><span style="display:flex;"><span>     special_ablities<span style="color:#f92672">.</span>append(special_ability_2<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;p&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderBody__MkvCp App_mainTextColor__6NGqD&#39;</span>)<span style="color:#f92672">.</span>get_text(strip<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) <span style="color:#66d9ef">if</span> special_ability_2<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;p&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderBody__MkvCp App_mainTextColor__6NGqD&#39;</span>) <span style="color:#66d9ef">else</span> special_ability_2<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderBody__MkvCp App_mainTextColor__6NGqD&#39;</span>)<span style="color:#f92672">.</span>get_text(strip<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) <span style="color:#66d9ef">if</span> special_ability_2<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Component_headerBodyHeaderBody__MkvCp App_mainTextColor__6NGqD&#39;</span>) <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;&#39;</span> )
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    special_ablities_text<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(special_ablities)
-</span></span><span style="display:flex;"><span>    print(special_ablities_text)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    duty_elem<span style="color:#f92672">=</span>soup<span style="color:#f92672">.</span>find_all(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;StatBox_statBoxFrame__Cgdpy&#39;</span>)[<span style="color:#ae81ff">0</span>]
-</span></span><span style="display:flex;"><span>    duties<span style="color:#f92672">=</span>[]
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> duty_elem<span style="color:#f92672">.</span>find_all(<span style="color:#e6db74">&#39;div&#39;</span>,class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;StatBox_statBoxComponent__M3Gcj&#39;</span>) <span style="color:#66d9ef">if</span> duty_elem <span style="color:#66d9ef">else</span> []:
-</span></span><span style="display:flex;"><span>        duties<span style="color:#f92672">.</span>append(item<span style="color:#f92672">.</span>get_text(strip<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>))
-</span></span><span style="display:flex;"><span>    duty_text<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(duties)
-</span></span><span style="display:flex;"><span>    print(duty_text)
-</span></span><span style="display:flex;"><span>    doc<span style="color:#f92672">=</span>Document(
-</span></span><span style="display:flex;"><span>        page_content<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;伟人姓名:</span><span style="color:#e6db74">{</span>name<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">特色能力:</span><span style="color:#e6db74">{</span>special_ablities_text<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">身份:</span><span style="color:#e6db74">{</span>duty_text<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,
-</span></span><span style="display:flex;"><span>        metadata<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;source&#34;</span>:url}
-</span></span><span style="display:flex;"><span>    )
-</span></span><span style="display:flex;"><span>    docs<span style="color:#f92672">.</span>append(doc)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>text_splitter<span style="color:#f92672">=</span>RecursiveCharacterTextSplitter(chunk_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>,chunk_overlap<span style="color:#f92672">=</span><span style="color:#ae81ff">200</span>)
-</span></span><span style="display:flex;"><span>split_docs<span style="color:#f92672">=</span>text_splitter<span style="color:#f92672">.</span>split_documents(docs)
-</span></span><span style="display:flex;"><span>embeddings<span style="color:#f92672">=</span>OllamaEmbeddings(model<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;embeddinggemma&#34;</span>)
-</span></span><span style="display:flex;"><span>vector_store<span style="color:#f92672">=</span>Milvus<span style="color:#f92672">.</span>from_documents(split_docs,embedding<span style="color:#f92672">=</span>embeddings,connection_args<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;host&#34;</span>:<span style="color:#e6db74">&#34;localhost&#34;</span>,<span style="color:#e6db74">&#34;port&#34;</span>:<span style="color:#e6db74">&#34;19530&#34;</span>},collection_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;great_person&#34;</span>)
-</span></span></code></pre></div><h2 id="方法含义与提示">方法含义与提示<a hidden class="anchor" aria-hidden="true" href="#方法含义与提示">#</a></h2>
-<p>环境变量：</p>
-<ul>
-<li><code>CIVI6_OLLAMA_HOST</code>：Ollama 服务器地址（含端口）。</li>
-<li><code>MILVUS_HOST</code> / <code>MILVUS_PORT</code>：Milvus 服务地址与端口。</li>
-</ul>
-<h2 id="向量数据库">向量数据库<a hidden class="anchor" aria-hidden="true" href="#向量数据库">#</a></h2>
-<p>我将文明6的数据信息，分成了几张表如图(宗教，建筑，国家等)</p>
-<p><img loading="lazy" src="../../assets/img/civiRag/milvus.png" alt="milvus"  />
-</p>
-<h2 id="正式代码">正式代码<a hidden class="anchor" aria-hidden="true" href="#正式代码">#</a></h2>
-<p>核心思路：先判定问题涉及的主题表（如宗教/建筑/国家等），为每个表构造检索器并行召回上下文，最后交由生成模型整合回答。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> fastapi <span style="color:#f92672">import</span> FastAPI
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pydantic <span style="color:#f92672">import</span> BaseModel, Field
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> List, Literal
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_ollama <span style="color:#f92672">import</span> ChatOllama, OllamaEmbeddings
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_core.prompts <span style="color:#f92672">import</span> ChatPromptTemplate
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_core.output_parsers <span style="color:#f92672">import</span> StrOutputParser
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_core.runnables <span style="color:#f92672">import</span> RunnableParallel
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> lib <span style="color:#f92672">import</span> get_vectorstore_from_milvus, generate_answer_by_multiple_retriever
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>app <span style="color:#f92672">=</span> FastAPI()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AskRequest</span>(BaseModel):
-</span></span><span style="display:flex;"><span>    question: str
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AskResponse</span>(BaseModel):
-</span></span><span style="display:flex;"><span>    answer: str
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RouteQuery</span>(BaseModel):
+<p>保证上下文窗口有足够重叠，便于检索时保持连贯性。</p>
+<hr>
+<h2 id="4-向量存储层">4. 向量存储层<a hidden class="anchor" aria-hidden="true" href="#4-向量存储层">#</a></h2>
+<h3 id="41-milvus-collection-设计">4.1 Milvus Collection 设计<a hidden class="anchor" aria-hidden="true" href="#41-milvus-collection-设计">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Collection</th>
+<th>存储内容</th>
+<th>示例字段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>belief</code></td>
+<td>万神殿信仰</td>
+<td>信仰名、效果</td>
+</tr>
+<tr>
+<td><code>religion</code></td>
+<td>宗教</td>
+<td>宗教名、信徒领袖</td>
+</tr>
+<tr>
+<td><code>country</code></td>
+<td>文明国家</td>
+<td>文明特性</td>
+</tr>
+<tr>
+<td><code>leader</code></td>
+<td>领袖</td>
+<td>名称、特色能力</td>
+</tr>
+<tr>
+<td><code>building</code></td>
+<td>建筑</td>
+<td>名称、成本、产出</td>
+</tr>
+<tr>
+<td><code>wonder</code></td>
+<td>奇观</td>
+<td>名称、建造条件</td>
+</tr>
+<tr>
+<td><code>resource</code></td>
+<td>资源</td>
+<td>类型、分布</td>
+</tr>
+<tr>
+<td><code>citystate</code></td>
+<td>城邦</td>
+<td>名称、增益类型</td>
+</tr>
+<tr>
+<td><code>district</code></td>
+<td>城区</td>
+<td>名称、建造条件</td>
+</tr>
+<tr>
+<td><code>feature</code></td>
+<td>地形</td>
+<td>地形效果</td>
+</tr>
+<tr>
+<td><code>great_person</code></td>
+<td>伟人</td>
+<td>名称、时代、特长</td>
+</tr>
+<tr>
+<td><code>improvement</code></td>
+<td>改良设施</td>
+<td>名称、建造条件</td>
+</tr>
+<tr>
+<td><code>moment</code></td>
+<td>历史时刻</td>
+<td>名称、触发条件</td>
+</tr>
+<tr>
+<td><code>unit</code></td>
+<td>单位</td>
+<td>名称、强度、升级</td>
+</tr>
+<tr>
+<td><code>unit_promotion</code></td>
+<td>晋升</td>
+<td>名称、效果</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-向量化">4.2 向量化<a hidden class="anchor" aria-hidden="true" href="#42-向量化">#</a></h3>
+<p>使用 <code>embeddinggemma</code> 模型进行向量化，存入 Milvus。</p>
+<hr>
+<h2 id="5-检索生成层">5. 检索生成层<a hidden class="anchor" aria-hidden="true" href="#5-检索生成层">#</a></h2>
+<p>这是系统的核心，分为三个步骤：</p>
+<h3 id="51-路由判定">5.1 路由判定<a hidden class="anchor" aria-hidden="true" href="#51-路由判定">#</a></h3>
+<p><strong>问题</strong>：用户问题可能涉及多个领域，如何确定检索范围？</p>
+<p><strong>方案</strong>：让 LLM 自主判断。</p>
+<pre tabindex="0"><code>用户问题 → gpt-oss 分析 → llama3.1 结构化输出 → 确定涉及的表
+</code></pre><p><strong>RouteQuery 定义</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RouteQuery</span>(BaseModel):
 </span></span><span style="display:flex;"><span>    tables: List[Literal[
 </span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;belief&#34;</span>, <span style="color:#e6db74">&#34;religion&#34;</span>, <span style="color:#e6db74">&#34;country&#34;</span>, <span style="color:#e6db74">&#34;leader&#34;</span>, <span style="color:#e6db74">&#34;building&#34;</span>, <span style="color:#e6db74">&#34;wonder&#34;</span>,
 </span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;resource&#34;</span>, <span style="color:#e6db74">&#34;citystate&#34;</span>, <span style="color:#e6db74">&#34;district&#34;</span>, <span style="color:#e6db74">&#34;feature&#34;</span>, <span style="color:#e6db74">&#34;great_person&#34;</span>,
 </span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;improvement&#34;</span>, <span style="color:#e6db74">&#34;moment&#34;</span>, <span style="color:#e6db74">&#34;unit&#34;</span>, <span style="color:#e6db74">&#34;unit_promotion&#34;</span>
-</span></span><span style="display:flex;"><span>    ]] <span style="color:#f92672">=</span> Field(description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;这个问题与哪些关键字有关，返回对应的表名&#34;</span>)
+</span></span><span style="display:flex;"><span>    ]]
+</span></span></code></pre></div><p><strong>判定示例</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>用户问题</th>
+<th>判定结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&ldquo;秦始皇的特色单位是什么&rdquo;</td>
+<td><code>[&quot;leader&quot;, &quot;unit&quot;]</code></td>
+</tr>
+<tr>
+<td>&ldquo;哪些领袖信仰天主教&rdquo;</td>
+<td><code>[&quot;religion&quot;, &quot;leader&quot;]</code></td>
+</tr>
+<tr>
+<td>&ldquo;科学类伟人有哪些&rdquo;</td>
+<td><code>[&quot;great_person&quot;]</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>为什么二次调用</strong>？</p>
+<ol>
+<li>第一次用 gpt-oss 输出自然语言判断</li>
+<li>第二次用 llama3.1 + <code>with_structured_output</code> 确保 JSON 稳定可解析</li>
+</ol>
+<h3 id="52-多路检索">5.2 多路检索<a hidden class="anchor" aria-hidden="true" href="#52-多路检索">#</a></h3>
+<p><strong>问题</strong>：跨领域查询需要同时从多个 Collection 召回。</p>
+<p><strong>方案</strong>：为每个涉及的 Collection 创建独立检索器，并行执行。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>retriever_dict <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;leader&#34;</span>: vectorstore<span style="color:#f92672">.</span>as_retriever(search_kwargs<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;k&#34;</span>: <span style="color:#ae81ff">100</span>}),
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;unit&#34;</span>: vectorstore<span style="color:#f92672">.</span>as_retriever(search_kwargs<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;k&#34;</span>: <span style="color:#ae81ff">100</span>}),
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>RunnableParallel(retriever_dict)
+</span></span></code></pre></div><p><strong>效果</strong>：各检索器同时执行，结果自动聚合为上下文。</p>
+<h3 id="53-回答生成">5.3 回答生成<a hidden class="anchor" aria-hidden="true" href="#53-回答生成">#</a></h3>
+<p><strong>原则</strong>：严格基于检索结果，禁止编造和省略。</p>
+<p><strong>提示词约束</strong>：</p>
+<ol>
+<li>只能用上下文中的内容</li>
+<li>按 source 逐条列出，不合并</li>
+<li>不省略、不推断</li>
+</ol>
+<p><strong>RAG Chain</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>RunnableParallel({
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;context&#34;</span>: retriever,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;question&#34;</span>: RunnablePassthrough(),
+</span></span><span style="display:flex;"><span>}) <span style="color:#f92672">|</span> prompt <span style="color:#f92672">|</span> llm <span style="color:#f92672">|</span> StrOutputParser()
+</span></span></code></pre></div><hr>
+<h2 id="6-服务接口">6. 服务接口<a hidden class="anchor" aria-hidden="true" href="#6-服务接口">#</a></h2>
+<p>FastAPI 提供单一端点：</p>
+<p><strong>POST /ask</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#75715e">// 请求
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>{ <span style="color:#f92672">&#34;question&#34;</span>: <span style="color:#e6db74">&#34;哪些领袖信仰天主教&#34;</span> }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_answer</span>(question: str) <span style="color:#f92672">-&gt;</span> str:
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    根据用户的问题，生成文明6相关的答案
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    template <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    你是一个文明6的助手，根据用户的问题，判断应该查询哪些数据库表，表有以下几种：[]belief,religion,country,leader,building,citystate,country,district,feature,great_person,improvement,moment,resource,unit,unit_promotion,wonder]，
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">请你判断用户的问题应该查询哪些表，返回格式为json，字段为tables，值为一个数组，数组元素为表名。
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">重要规则（必须遵守）：
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">- 禁止以任何形式进行省略，包括但不限于：
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  - “为避免篇幅过长”
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  - “以下内容已省略”
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  - “部分内容略”
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  - “……”
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">- 必须完整输出所有检索到的内容，不允许合并，不允许跳过，不允许折叠。
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">- 只要上下文里有多少条，就必须全部原样列出。
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">- 输出不完整视为错误。
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">用户的问题是：</span><span style="color:#e6db74">{question}</span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    prompt <span style="color:#f92672">=</span> ChatPromptTemplate<span style="color:#f92672">.</span>from_template(template)
-</span></span><span style="display:flex;"><span>    llm <span style="color:#f92672">=</span> ChatOllama(model<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpt-oss:120b-cloud&#34;</span>,base_url<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;https://ollama.com:443&#39;</span>)
-</span></span><span style="display:flex;"><span>    chain <span style="color:#f92672">=</span> prompt <span style="color:#f92672">|</span> llm <span style="color:#f92672">|</span> StrOutputParser()
-</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> chain<span style="color:#f92672">.</span>invoke({<span style="color:#e6db74">&#34;question&#34;</span>: question})
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 换成可靠的 JSON 模型</span>
-</span></span><span style="display:flex;"><span>    structured_llm <span style="color:#f92672">=</span> ChatOllama(model<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;llama3.1&#34;</span>, base_url<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;CIVI6_OLLAMA_HOST&#34;</span>))
-</span></span><span style="display:flex;"><span>    structured_chain <span style="color:#f92672">=</span> structured_llm<span style="color:#f92672">.</span>with_structured_output(RouteQuery)
-</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> structured_chain<span style="color:#f92672">.</span>invoke(response)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    embeddings <span style="color:#f92672">=</span> OllamaEmbeddings(model<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;embeddinggemma&#34;</span>, base_url<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;CIVI6_OLLAMA_HOST&#34;</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    retriever_dict <span style="color:#f92672">=</span> {}
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> table <span style="color:#f92672">in</span> result<span style="color:#f92672">.</span>tables:
-</span></span><span style="display:flex;"><span>        vectorstore <span style="color:#f92672">=</span> get_vectorstore_from_milvus(embeddings, collection_name<span style="color:#f92672">=</span>table,connection_args<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;host&#34;</span>:os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;MILVUS_HOST&#34;</span>,<span style="color:#e6db74">&#34;localhost&#34;</span>),<span style="color:#e6db74">&#34;port&#34;</span>:os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;MILVUS_PORT&#34;</span>,<span style="color:#e6db74">&#34;19530&#34;</span>)})
-</span></span><span style="display:flex;"><span>        retriever_dict[table] <span style="color:#f92672">=</span> vectorstore<span style="color:#f92672">.</span>as_retriever(search_kwargs<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;k&#34;</span>: <span style="color:#ae81ff">300</span>})
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> generate_answer_by_multiple_retriever(
-</span></span><span style="display:flex;"><span>        question,
-</span></span><span style="display:flex;"><span>        RunnableParallel(retriever_dict),
-</span></span><span style="display:flex;"><span>        llm
-</span></span><span style="display:flex;"><span>    )
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@app.post</span>(<span style="color:#e6db74">&#34;/ask&#34;</span>, response_model<span style="color:#f92672">=</span>AskResponse)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">ask</span>(req: AskRequest):
-</span></span><span style="display:flex;"><span>    answer <span style="color:#f92672">=</span> generate_answer(req<span style="color:#f92672">.</span>question<span style="color:#f92672">.</span>strip())
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> AskResponse(answer<span style="color:#f92672">=</span>answer)
-</span></span></code></pre></div><p>类库方法</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_core.runnables <span style="color:#f92672">import</span> RunnableParallel, RunnablePassthrough
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_core.prompts <span style="color:#f92672">import</span> ChatPromptTemplate
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> langchain_core.output_parsers <span style="color:#f92672">import</span> StrOutputParser
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_answer</span>(question,retriever,llm):
-</span></span><span style="display:flex;"><span> template_message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 你是一名文明6的专家，你的任务是根据用户的问题严格回答。请遵守以下规则：
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 1. 只能使用上下文（context）中的内容，禁止使用上下文以外的知识。
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 2. 如果上下文包含多条信息，请逐条列出所有内容，确保不要遗漏。
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 3. 如果上下文中有多篇文档，请按 source 分别回答，不允许将不同文档的内容合并。
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 4. 不允许自行概括、推断或生成额外信息。
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 5. 回答应简洁、清晰，直接列出事实内容。
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 用户问题：
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> </span><span style="color:#e6db74">{question}</span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 上下文：
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> </span><span style="color:#e6db74">{context}</span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 请严格根据上下文和 source 列出答案：
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> &#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span> prompt<span style="color:#f92672">=</span>ChatPromptTemplate<span style="color:#f92672">.</span>from_template(template_message)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span> rag_chain <span style="color:#f92672">=</span> (
-</span></span><span style="display:flex;"><span>    RunnableParallel({
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;context&#34;</span>: retriever,          <span style="color:#75715e"># 检索上下文</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;question&#34;</span>: RunnablePassthrough(),  <span style="color:#75715e"># 直接传入问题</span>
-</span></span><span style="display:flex;"><span>    })
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> prompt
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> llm
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> StrOutputParser()
-</span></span><span style="display:flex;"><span> )
-</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> rag_chain<span style="color:#f92672">.</span>invoke(question)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_answer_by_multiple_retriever</span>(question,multiple_retriever,llm):
-</span></span><span style="display:flex;"><span> template_message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 你是一名文明6的专家，你的任务是根据用户的问题严格回答。请遵守以下规则：
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 1. 只能使用上下文（context）中的内容，禁止使用上下文以外的知识。
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 2. 如果上下文包含多条信息，请逐条列出所有内容，确保不要遗漏。
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 3. 如果上下文中有多篇文档，请按 source 分别回答，不允许将不同文档的内容合并。
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 4. 不允许自行概括、推断或生成额外信息。
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 5. 回答应简洁、清晰，直接列出事实内容。
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 用户问题：
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> </span><span style="color:#e6db74">{question}</span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 上下文：
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> </span><span style="color:#e6db74">{context}</span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> 请严格根据上下文和 source 列出答案：
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> &#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span> prompt<span style="color:#f92672">=</span>ChatPromptTemplate<span style="color:#f92672">.</span>from_template(template_message)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span> rag_chain <span style="color:#f92672">=</span> (
-</span></span><span style="display:flex;"><span>    RunnableParallel({
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;context&#34;</span>: multiple_retriever,          <span style="color:#75715e"># 检索上下文</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;question&#34;</span>: RunnablePassthrough(),  <span style="color:#75715e"># 直接传入问题</span>
-</span></span><span style="display:flex;"><span>    })
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> prompt
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> llm
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> StrOutputParser()
-</span></span><span style="display:flex;"><span> )
-</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">return</span> rag_chain<span style="color:#f92672">.</span>invoke(question)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">store_in_milvus</span>(chunk_size,chunk_overlap,embeddings,docs,collection_name,connection_args<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;host&#34;</span>:<span style="color:#e6db74">&#34;localhost&#34;</span>,<span style="color:#e6db74">&#34;port&#34;</span>:<span style="color:#e6db74">&#34;19530&#34;</span>}):
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">from</span> langchain_text_splitters  <span style="color:#f92672">import</span> RecursiveCharacterTextSplitter
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">from</span> langchain_community.vectorstores <span style="color:#f92672">import</span> Milvus
-</span></span><span style="display:flex;"><span>    text_splitter<span style="color:#f92672">=</span>RecursiveCharacterTextSplitter(chunk_size<span style="color:#f92672">=</span>chunk_size,chunk_overlap<span style="color:#f92672">=</span>chunk_overlap)
-</span></span><span style="display:flex;"><span>    splitted_docs<span style="color:#f92672">=</span>text_splitter<span style="color:#f92672">.</span>split_documents(docs)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Milvus<span style="color:#f92672">.</span>from_documents(splitted_docs,embeddings,connection_args<span style="color:#f92672">=</span>connection_args,collection_name<span style="color:#f92672">=</span>collection_name)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_vectorstore_from_milvus</span>(embeddings,collection_name,connection_args<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;host&#34;</span>:<span style="color:#e6db74">&#34;localhost&#34;</span>,<span style="color:#e6db74">&#34;port&#34;</span>:<span style="color:#e6db74">&#34;19530&#34;</span>}):
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">from</span> langchain_community.vectorstores <span style="color:#f92672">import</span> Milvus
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Milvus(embedding_function<span style="color:#f92672">=</span>embeddings,connection_args<span style="color:#f92672">=</span>connection_args,collection_name<span style="color:#f92672">=</span>collection_name)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_config</span>(path):
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">with</span> open(path,<span style="color:#e6db74">&#34;r&#34;</span>,encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>) <span style="color:#66d9ef">as</span> f:
-</span></span><span style="display:flex;"><span>       <span style="color:#f92672">import</span> json
-</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">return</span> json<span style="color:#f92672">.</span>load(f)
-</span></span></code></pre></div><p>设计说明：</p>
-<ul>
-<li>路由判定：先用判定链确定涉及的集合（如宗教/建筑/国家等）。</li>
-<li>结构化输出：二次调用结构化模型 <code>with_structured_output(RouteQuery)</code>，保证 JSON 稳定可解析。</li>
-<li>多路检索：对每个集合创建检索器并行召回，聚合上下文后交给生成模型整合回答。</li>
-</ul>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 响应
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;answer&#34;</span>: <span style="color:#e6db74">&#34;信仰天主教的领袖包括：\n\n**来源：** ...\n- 佩德罗二世\n- 凯瑟琳·德·美第奇\n...&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<h2 id="7-部署架构">7. 部署架构<a hidden class="anchor" aria-hidden="true" href="#7-部署架构">#</a></h2>
+<p>Docker Compose 编排四个服务：</p>
+<table>
+<thead>
+<tr>
+<th>服务</th>
+<th>镜像</th>
+<th>端口</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>app</td>
+<td>自定义</td>
+<td>8081</td>
+<td>RAG API</td>
+</tr>
+<tr>
+<td>ollama</td>
+<td>ollama/ollama:0.13.0</td>
+<td>11434</td>
+<td>LLM 推理 + Embedding</td>
+</tr>
+<tr>
+<td>milvus</td>
+<td>milvusdb/milvus:v2.6.4</td>
+<td>19530</td>
+<td>向量数据库</td>
+</tr>
+<tr>
+<td>attu</td>
+<td>zilliz/attu:v2.6</td>
+<td>8000</td>
+<td>Milvus 管理界面</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心环境变量</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CIVI6_OLLAMA_HOST</code></td>
+<td>Ollama 服务地址</td>
+</tr>
+<tr>
+<td><code>MILVUS_HOST</code></td>
+<td>Milvus 服务地址</td>
+</tr>
+<tr>
+<td><code>MILVUS_PORT</code></td>
+<td>Milvus 端口</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="8-设计亮点">8. 设计亮点<a hidden class="anchor" aria-hidden="true" href="#8-设计亮点">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>设计</th>
+<th>意图</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>路由判定</strong></td>
+<td>按需检索，避免全量扫描，节省资源</td>
+</tr>
+<tr>
+<td><strong>结构化输出</strong></td>
+<td>二次调用确保 JSON 稳定可解析</td>
+</tr>
+<tr>
+<td><strong>多路并行</strong></td>
+<td>RunnableParallel 实现真正并行</td>
+</tr>
+<tr>
+<td><strong>严格回答</strong></td>
+<td>提示词约束保证答案准确性</td>
+</tr>
+<tr>
+<td><strong>按需扩展</strong></td>
+<td>新增领域只需新建 Collection</td>
+</tr>
+</tbody>
+</table>
 
 
   </div>

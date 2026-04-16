@@ -9,11 +9,11 @@
     <lastBuildDate>Mon, 29 Dec 2025 17:43:40 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/civ6/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>文明6 RAG 知识库实战：从爬取到问答</title>
+      <title>文明6 RAG 知识库：架构设计与实现</title>
       <link>http://localhost:1313/posts/civi-rag/</link>
       <pubDate>Mon, 29 Dec 2025 17:43:40 +0800</pubDate>
       <guid>http://localhost:1313/posts/civi-rag/</guid>
-      <description>基于文明6百科构建 RAG：数据爬取、向量化、检索路由与生成，并拆解每个关键方法的设计与含义。</description>
+      <description>基于文明6百科构建 RAG：路由判定、多路检索与生成，详解系统架构与核心设计。</description>
     </item>
   </channel>
 </rss>
