@@ -4,8 +4,51 @@
     <title>Tags on maxwell60701 少寒风的Blog</title>
     <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on maxwell60701 少寒风的Blog</description>
-    <generator>Hugo -- 0.135.0</generator>
+    <generator>Hugo -- 0.128.2</generator>
     <language>zh</language>
+    <lastBuildDate>Mon, 29 Dec 2025 17:43:40 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Civ6</title>
+      <link>http://localhost:1313/tags/civ6/</link>
+      <pubDate>Mon, 29 Dec 2025 17:43:40 +0800</pubDate>
+      <guid>http://localhost:1313/tags/civ6/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>FastAPI</title>
+      <link>http://localhost:1313/tags/fastapi/</link>
+      <pubDate>Mon, 29 Dec 2025 17:43:40 +0800</pubDate>
+      <guid>http://localhost:1313/tags/fastapi/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>LangChain</title>
+      <link>http://localhost:1313/tags/langchain/</link>
+      <pubDate>Mon, 29 Dec 2025 17:43:40 +0800</pubDate>
+      <guid>http://localhost:1313/tags/langchain/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Milvus</title>
+      <link>http://localhost:1313/tags/milvus/</link>
+      <pubDate>Mon, 29 Dec 2025 17:43:40 +0800</pubDate>
+      <guid>http://localhost:1313/tags/milvus/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ollama</title>
+      <link>http://localhost:1313/tags/ollama/</link>
+      <pubDate>Mon, 29 Dec 2025 17:43:40 +0800</pubDate>
+      <guid>http://localhost:1313/tags/ollama/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>RAG</title>
+      <link>http://localhost:1313/tags/rag/</link>
+      <pubDate>Mon, 29 Dec 2025 17:43:40 +0800</pubDate>
+      <guid>http://localhost:1313/tags/rag/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>

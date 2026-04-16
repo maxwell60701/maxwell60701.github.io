@@ -4,303 +4,92 @@
     <title>maxwell60701 少寒风的Blog</title>
     <link>http://localhost:1313/</link>
     <description>Recent content on maxwell60701 少寒风的Blog</description>
-    <generator>Hugo -- 0.135.0</generator>
+    <generator>Hugo -- 0.128.2</generator>
     <language>zh</language>
-    <lastBuildDate>Tue, 13 May 2025 15:56:41 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 29 Dec 2025 17:43:40 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>文明6 RAG 知识库实战：从爬取到问答</title>
+      <link>http://localhost:1313/posts/civi-rag/</link>
+      <pubDate>Mon, 29 Dec 2025 17:43:40 +0800</pubDate>
+      <guid>http://localhost:1313/posts/civi-rag/</guid>
+      <description>基于文明6百科构建 RAG：数据爬取、向量化、检索路由与生成，并拆解每个关键方法的设计与含义。</description>
+    </item>
+    <item>
+      <title>⭐Langchain--RAG信息检索</title>
+      <link>http://localhost:1313/posts/langchain/</link>
+      <pubDate>Fri, 15 Aug 2025 13:36:40 +0800</pubDate>
+      <guid>http://localhost:1313/posts/langchain/</guid>
+      <description>简介 最近学习了用Langchain构建RAG（检索增强生成）信息检索链，这是目前业界主流的知识问答框架。通过实践发现这个框架功能强大且灵活，于是基于rag from scratch课程构建了一个巴萨球员知识库。
+值得注意的是，尽管当前AI在网页生成、后端开发等领域表现出色，但对于RAG系统的端到端代码生成，现有AI工具仍难以准确完成。这表明RAG领域的技术复杂性和专业性仍然需要人工深度参与，为开发者提供了独特的技术价值空间。
+主要流程 导入数据 用pandas这个库导入数据，得到结果如下
+Name Description Position Record marc-andre-ter-stegen ViewMarc-André ter Stegen signed for FC Barcelona&amp;hellip; goalkeeper 422 apps / 174 CS / 986 saves inaki-pena ViewIñaki Peña signed for Alicante CF when he was&amp;hellip; goalkeeper 45 apps / 10 CS / 90 saves wojciech-szczesny ViewFC Barcelona and the player Wojciech Szczęsny&amp;hellip; goalkeeper 30 apps / 14 CS / 66 saves ronald-federico-araujo-da-silva ViewRonald Araujo was born in Rivera, Uruguay&amp;hellip; defender 175 apps / 10 G / 7 A jules-kounde ViewJules Kounde was born in Paris on November 12&amp;hellip; defender 141 apps / 7 G / 18 A pau-cubarsi ViewPau Cubarsí arrived at La Masia from Girona&amp;hellip; defender 80 apps / 1 G / 5 A alejandro-balde ViewAlejandro Balde, born in Barcelona to Guinean&amp;hellip; defender 126 apps / 3 G / 15 A inigo-martinez-berridi ViewBorn in Ondarroa on 17 May 1991, a town in&amp;hellip; defender 71 apps / 3 G / 5 A eric-garcia ViewA player of massive potential, he is the class&amp;hellip; defender 114 apps / 6 G / 5 A gavi ViewA combative and technically gifted midfielder&amp;hellip; midfielder 153 apps / 10 G / 14 A Pedri ViewOn September 2, 2019, FC Barcelona and Las Pal&amp;hellip; midfielder 202 apps / 26 G / 21 A Pablo Torre ViewIn March of 2022 Barça reached an agreement&amp;hellip; midfielder 27 apps / 5 G / 4 A fermin-lopez ViewFermín López Marín was part of the Campillo&amp;hellip; midfielder 88 apps / 19 G / 9 A marc-casado ViewBorn in Sant Pere de Vilamajor in 2003 and&amp;hellip; midfielder 41 apps / 1 G / 6 A dani-olmo ViewAn attack minded forward who can play anywhere&amp;hellip; midfielder 39 apps / 12 G / 6 A de-jong ViewFrenkie de Jong was born in Arkel (Netherlands&amp;hellip; midfielder 259 apps / 19 G / 21 A ferran-torres ViewBorn on 29 February 2000 in Foios (Valencia)&amp;hellip; forward 158 apps / 44 G / 19 A robert-lewandowski ViewThe striker from Poland stands out for his goa&amp;hellip; forward 147 apps / 101 G / 20 A ansu-fati ViewAnssumane Fati (31 October 2002) was born in&amp;hellip; forward 123 apps / 29 G / 6 A raphael-dias-belloli-raphinha ViewA technically proficient winger, with good dri&amp;hellip; forward 144 apps / 54 G / 45 A pau-victor ViewA versatile forward who can play as a striker&amp;hellip; forward 29 apps / 2 G / 1 A lamine-yamal ViewLamine Yamal arrived at FC Barcelona at the ag&amp;hellip; forward 106 apps / 25 G / 28 A Leo Messi ViewMessi (Rosario, Argentina, 24 June 1987) is th&amp;hellip; forward 778 apps / 672 G / 269 A xavi-hernandez ViewIf Barça is more than a club, then Xavi Hernán&amp;hellip; midfielder 767 apps / 87 G / 184 A andres-iniesta ViewIniesta (Fuentealbilla, Albacete, 1984) was on&amp;hellip; midfielder 674 apps / 57 G / 139 A ronaldinho ViewWith his trademark goal celebration and broad&amp;hellip; forward 207 apps / 94 G / 69 A sergio-busquets ViewSergio Busquets (Sabadell, 16 July 1988), from&amp;hellip; Midfielder 722 apps / 18 G / 45 A david-villa ViewDavid Villa (Tuilla, Asturias, 1981) came to B&amp;hellip; forward 130 apps / 51 G / 24 A pedro-rodriguez ViewPedro Rodríguez (Santa Cruz de Tenerife)&amp;hellip; forward 358 apps / 109 G / 62 A Daniel Alves ViewDani Alves (Juazeiro, Brazil, 1983) is conside&amp;hellip; defender 431 apps / 24 G luis-suarez ViewSuárez, (Salto, Uruguay, 1987) was one of the&amp;hellip; forward 300 apps / 210 G Samuel Eto&amp;rsquo;o ViewEto&amp;rsquo;o (Nkon, Cameroon, 1981) goes down in Bar&amp;hellip; forward 234 apps / 152 G 我直接找的官网的数据，所以没有翻译成中文，就是每个球员在巴萨的生涯数据，包括出场次数，进球，助攻。</description>
+    </item>
     <item>
       <title>⭐基于DeepSeek微调原神角色信息的大语言模型</title>
       <link>http://localhost:1313/posts/sft/</link>
       <pubDate>Tue, 13 May 2025 15:56:41 +0800</pubDate>
       <guid>http://localhost:1313/posts/sft/</guid>
-      <description>&lt;h3 id=&#34;简介&#34;&gt;简介&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/maxwell60701/genshin-impact-role-train&#34;&gt;源码地址&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;业余时间研究了大语言模型的微调技巧，也成功微调出了一个原神的大模型&lt;/p&gt;
-&lt;p&gt;我微调的大模型要达到的效果是&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;问:钟离是什么性别?
-答:钟离是男性
-
-问:钟离来自什么国家?
-答:钟离来自璃月
-
-问:钟离掌握什么元素力？
-答:岩元素
-
-问：钟离的身份是什么?
-答:往生堂客卿，岩神
-
-问: 钟离的性格特点是什么？
-答: 沉稳，深知璃月文化底蕴
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;准备事项&#34;&gt;准备事项&lt;/h3&gt;
-&lt;h4 id=&#34;python环境&#34;&gt;python环境&lt;/h4&gt;
-&lt;p&gt;我的requirements.txt文件内容如下&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;transformers&amp;gt;=4.46.3
-datasets&amp;gt;=3.4.1
-accelerate==1.5.2
-peft==0.14.0
-trl==0.16.0
-tokenizers==0.20.3
-gradio==5.20.0
-pandas==2.2.3
-scipy
-einops
-sentencepiece
-tiktoken
-protobuf
-uvicorn
-pydantic
-fastapi
-sse-starlette
-matplotlib==3.10.1
-fire
-packaging
-pyyaml
-numpy==1.26.4
-av
-librosa
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;安装依赖包
-&lt;code&gt;pip install -r requirements.txt&lt;/code&gt;&lt;/p&gt;
-&lt;h4 id=&#34;数据集&#34;&gt;数据集&lt;/h4&gt;
-&lt;p&gt;我的原始数据集是从huggingface下载的，原始数据格式大致如下&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;丽莎&amp;#34;&lt;/span&gt;: {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;性别&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;成年女性&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;国籍&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;蒙德&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;元素力&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;雷元素&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;身份&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;西风骑士团图书管理员&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;性格特征&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;喜欢挑逗人的魔法师大姐姐&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    },
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;行秋&amp;#34;&lt;/span&gt;: {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;性别&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;少年男性&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;国籍&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;璃月&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;元素力&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;水元素&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;身份&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;飞云商会少爷&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;性格特征&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;行侠仗义的侠客&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    },
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;钟离&amp;#34;&lt;/span&gt;: {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;性别&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;成年男性&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;国籍&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;璃月&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;元素力&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;岩元素&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;身份&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;往生堂客卿，岩神&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;性格特征&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;沉稳，深知璃月文化底蕴&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    },
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;温迪&amp;#34;&lt;/span&gt;: {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;性别&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;少年男性&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;国籍&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;蒙德&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;元素力&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;风元素&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;身份&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;吟游诗人，风神&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;性格特征&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;喜欢开玩笑的轻佻少年&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这样的数据集不能直接喂给大模型，我们需要处理，对于每一个角色，都做如下处理，以钟离为例&lt;/p&gt;</description>
+      <description>简介 源码地址
+业余时间研究了大语言模型的微调技巧，也成功微调出了一个原神的大模型
+我微调的大模型要达到的效果是
+问:钟离是什么性别?答:钟离是男性问:钟离来自什么国家?答:钟离来自璃月问:钟离掌握什么元素力？答:岩元素问：钟离的身份是什么?答:往生堂客卿，岩神问: 钟离的性格特点是什么？答: 沉稳，深知璃月文化底蕴 准备事项 python环境 我的requirements.txt文件内容如下
+transformers&amp;gt;=4.46.3datasets&amp;gt;=3.4.1accelerate==1.5.2peft==0.14.0trl==0.16.0tokenizers==0.20.3gradio==5.20.0pandas==2.2.3scipyeinopssentencepiecetiktokenprotobufuvicornpydanticfastapisse-starlettematplotlib==3.10.1firepackagingpyyamlnumpy==1.26.4avlibrosa 安装依赖包 pip install -r requirements.txt
+数据集 我的原始数据集是从huggingface下载的，原始数据格式大致如下
+{ &amp;#34;丽莎&amp;#34;: { &amp;#34;性别&amp;#34;: &amp;#34;成年女性&amp;#34;, &amp;#34;国籍&amp;#34;: &amp;#34;蒙德&amp;#34;, &amp;#34;元素力&amp;#34;: &amp;#34;雷元素&amp;#34;, &amp;#34;身份&amp;#34;: &amp;#34;西风骑士团图书管理员&amp;#34;, &amp;#34;性格特征&amp;#34;: &amp;#34;喜欢挑逗人的魔法师大姐姐&amp;#34; }, &amp;#34;行秋&amp;#34;: { &amp;#34;性别&amp;#34;: &amp;#34;少年男性&amp;#34;, &amp;#34;国籍&amp;#34;: &amp;#34;璃月&amp;#34;, &amp;#34;元素力&amp;#34;: &amp;#34;水元素&amp;#34;, &amp;#34;身份&amp;#34;: &amp;#34;飞云商会少爷&amp;#34;, &amp;#34;性格特征&amp;#34;: &amp;#34;行侠仗义的侠客&amp;#34; }, &amp;#34;钟离&amp;#34;: { &amp;#34;性别&amp;#34;: &amp;#34;成年男性&amp;#34;, &amp;#34;国籍&amp;#34;: &amp;#34;璃月&amp;#34;, &amp;#34;元素力&amp;#34;: &amp;#34;岩元素&amp;#34;, &amp;#34;身份&amp;#34;: &amp;#34;往生堂客卿，岩神&amp;#34;, &amp;#34;性格特征&amp;#34;: &amp;#34;沉稳，深知璃月文化底蕴&amp;#34; }, &amp;#34;温迪&amp;#34;: { &amp;#34;性别&amp;#34;: &amp;#34;少年男性&amp;#34;, &amp;#34;国籍&amp;#34;: &amp;#34;蒙德&amp;#34;, &amp;#34;元素力&amp;#34;: &amp;#34;风元素&amp;#34;, &amp;#34;身份&amp;#34;: &amp;#34;吟游诗人，风神&amp;#34;, &amp;#34;性格特征&amp;#34;: &amp;#34;喜欢开玩笑的轻佻少年&amp;#34; } } 这样的数据集不能直接喂给大模型，我们需要处理，对于每一个角色，都做如下处理，以钟离为例</description>
     </item>
     <item>
       <title>Cifar100</title>
       <link>http://localhost:1313/posts/cifar100/</link>
       <pubDate>Sun, 22 Sep 2024 10:36:31 +0800</pubDate>
       <guid>http://localhost:1313/posts/cifar100/</guid>
-      <description>&lt;h3 id=&#34;用cifar100数据集来训练图像分类&#34;&gt;用CIFAR100数据集来训练图像分类&lt;/h3&gt;
-&lt;p&gt;最近在学习如何进行图像分类和识别，比如给一张狗的图片，系统能够准确识别&lt;/p&gt;
-&lt;p&gt;查下来目前初学者用的最多的是CIFAR10和CIFAR100，&lt;/p&gt;
-&lt;p&gt;CIFAR100是一个在线数据集，包含了100个分类，每个分类600张图片，供咱们训练使用&lt;/p&gt;
-&lt;p&gt;接下来直接上代码&lt;/p&gt;
-&lt;h3 id=&#34;代码&#34;&gt;代码&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; torch
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; torch.nn &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; nn
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; torch.optim &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; optim
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; torchvision
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; torchvision.transforms &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; transforms
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; torchvision &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; models
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 定义数据预处理步骤&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;transform_train &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Compose([
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;RandomCrop(&lt;span style=&#34;color:#ae81ff&#34;&gt;32&lt;/span&gt;, padding&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;),  &lt;span style=&#34;color:#75715e&#34;&gt;# 随机裁剪&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;RandomHorizontalFlip(),     &lt;span style=&#34;color:#75715e&#34;&gt;# 随机水平翻转&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ColorJitter(brightness&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt;, contrast&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt;, saturation&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt;, hue&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt;),  &lt;span style=&#34;color:#75715e&#34;&gt;# 颜色增强&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;RandomRotation(&lt;span style=&#34;color:#ae81ff&#34;&gt;15&lt;/span&gt;),         &lt;span style=&#34;color:#75715e&#34;&gt;# 随机旋转&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ToTensor(),
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Normalize((&lt;span style=&#34;color:#ae81ff&#34;&gt;0.5071&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.4865&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.4409&lt;/span&gt;), (&lt;span style=&#34;color:#ae81ff&#34;&gt;0.2673&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.2564&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.2761&lt;/span&gt;))  &lt;span style=&#34;color:#75715e&#34;&gt;# 归一化&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;])
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;transform_test &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Compose([
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ToTensor(),
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    transforms&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Normalize((&lt;span style=&#34;color:#ae81ff&#34;&gt;0.5071&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.4865&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.4409&lt;/span&gt;), (&lt;span style=&#34;color:#ae81ff&#34;&gt;0.2673&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.2564&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.2761&lt;/span&gt;))
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;])
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 加载 CIFAR-100 数据集&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;trainset &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; torchvision&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;datasets&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;CIFAR100(root&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;./data100&amp;#39;&lt;/span&gt;, train&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, download&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, transform&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;transform_train)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;trainloader &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;utils&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;data&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataLoader(trainset, batch_size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;128&lt;/span&gt;, shuffle&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, num_workers&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;testset &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; torchvision&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;datasets&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;CIFAR100(root&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;./data100&amp;#39;&lt;/span&gt;, train&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;, download&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, transform&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;transform_test)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;testloader &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;utils&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;data&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataLoader(testset, batch_size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;, shuffle&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;, num_workers&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 使用预训练的 ResNet50 模型并调整第一层卷积层和删除池化层&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; models&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;resnet50(pretrained&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;conv1 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Conv2d(&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt;, kernel_size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;, stride&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, padding&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, bias&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;)  &lt;span style=&#34;color:#75715e&#34;&gt;# 适合小图像&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;maxpool &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Identity()  &lt;span style=&#34;color:#75715e&#34;&gt;# 删除池化层&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;fc &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Linear(&lt;span style=&#34;color:#ae81ff&#34;&gt;2048&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;)  &lt;span style=&#34;color:#75715e&#34;&gt;# 修改最后一层用于 CIFAR-100 分类&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 定义设备（GPU / CPU）&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;device &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;device(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;cuda&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;cuda&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;is_available() &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;cpu&amp;#39;&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to(device)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 定义损失函数和优化器&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;criterion &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;CrossEntropyLoss()
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;optimizer &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; optim&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;SGD(model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;parameters(), lr&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.01&lt;/span&gt;, momentum&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.9&lt;/span&gt;, weight_decay&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5e-4&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 学习率调度器&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;scheduler &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; optim&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;lr_scheduler&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;StepLR(optimizer, step_size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;30&lt;/span&gt;, gamma&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 训练函数&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;train&lt;/span&gt;(epoch):
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;train()
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    running_loss &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    correct &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    total &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; batch_idx, (inputs, targets) &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; enumerate(trainloader):
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        inputs, targets &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; inputs&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to(device), targets&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to(device)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        optimizer&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zero_grad()
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        outputs &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model(inputs)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        loss &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; criterion(outputs, targets)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        loss&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;backward()
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# 应用梯度剪裁，防止梯度爆炸&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;nn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;utils&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;clip_grad_norm_(model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;parameters(), max_norm&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        optimizer&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;step()
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        running_loss &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; loss&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;item()
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        _, predicted &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; outputs&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;max(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        total &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; targets&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;size(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        correct &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; predicted&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;eq(targets)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;item()
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; batch_idx &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            print(&lt;span style=&#34;color:#e6db74&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Epoch [&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;epoch&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;], Step [&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;batch_idx&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;len(trainloader)&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;], Loss: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;running_loss &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; (batch_idx &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)&lt;span style=&#34;color:#e6db74&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;, Accuracy: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;100.&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; correct &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; total&lt;span style=&#34;color:#e6db74&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%&amp;#39;&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 测试函数&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;test&lt;/span&gt;():
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;eval()
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    correct &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    total &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;no_grad():
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; inputs, targets &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; testloader:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            inputs, targets &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; inputs&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to(device), targets&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to(device)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            outputs &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model(inputs)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            _, predicted &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; outputs&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;max(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            total &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; targets&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;size(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            correct &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; predicted&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;eq(targets)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;item()
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    print(&lt;span style=&#34;color:#e6db74&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Test Accuracy: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;100.&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; correct &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; total&lt;span style=&#34;color:#e6db74&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%&amp;#39;&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 训练和测试模型&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;epochs &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;70&lt;/span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# 增加训练 epoch&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; epoch &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(epochs):
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    train(epoch)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    test()
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    scheduler&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;step()  &lt;span style=&#34;color:#75715e&#34;&gt;# 更新学习率&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 保存模型&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;save(model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;state_dict(), &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;cifar100.pth&amp;#39;&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;用此代码训练，准确率可达70%，我是RTX3060显卡，训练了2个小时&lt;/p&gt;</description>
+      <description>用CIFAR100数据集来训练图像分类 最近在学习如何进行图像分类和识别，比如给一张狗的图片，系统能够准确识别
+查下来目前初学者用的最多的是CIFAR10和CIFAR100，
+CIFAR100是一个在线数据集，包含了100个分类，每个分类600张图片，供咱们训练使用
+接下来直接上代码
+代码 import torch import torch.nn as nn import torch.optim as optim import torchvision import torchvision.transforms as transforms from torchvision import models # 定义数据预处理步骤 transform_train = transforms.Compose([ transforms.RandomCrop(32, padding=4), # 随机裁剪 transforms.RandomHorizontalFlip(), # 随机水平翻转 transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2), # 颜色增强 transforms.RandomRotation(15), # 随机旋转 transforms.ToTensor(), transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2761)) # 归一化 ]) transform_test = transforms.Compose([ transforms.ToTensor(), transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2761)) ]) # 加载 CIFAR-100 数据集 trainset = torchvision.</description>
     </item>
     <item>
       <title>K8s</title>
       <link>http://localhost:1313/posts/k8s/</link>
       <pubDate>Wed, 10 Jul 2024 10:56:25 +0800</pubDate>
       <guid>http://localhost:1313/posts/k8s/</guid>
-      <description>&lt;h3 id=&#34;k8s部署&#34;&gt;K8s部署&lt;/h3&gt;
-&lt;p&gt;最近公司上了k8s, 我只学了点皮毛,如能学好如虎添翼&lt;/p&gt;
-&lt;h3 id=&#34;前期准备&#34;&gt;前期准备&lt;/h3&gt;
-&lt;p&gt;个人认为，学习K8S前必须掌握docker相关知识，否则学起来很困难&lt;/p&gt;
-&lt;h3 id=&#34;linux上安装k8s&#34;&gt;linux上安装k8s&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/zh-cn/docs/tasks/tools/install-kubectl-linux/&#34;&gt;教程&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&#34;简要结构图&#34;&gt;简要结构图&lt;/h3&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/k8s/structure.png&#34; alt=&#34;结构图&#34;  /&gt;
-&lt;/p&gt;
-&lt;h3 id=&#34;ingress&#34;&gt;ingress&lt;/h3&gt;
-&lt;p&gt;在Kubernetes中，Ingress 是一个API对象，用于管理对集群内服务的外部访问，通常是 HTTP 和 HTTPS。Ingress 可以提供负载均衡、SSL 终止和基于名称的虚拟主机等功能&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;apiVersion&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;networking.k8s.io/v1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;kind&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;Ingress&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;metadata&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;example-ingress&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;spec&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;rules&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - &lt;span style=&#34;color:#f92672&#34;&gt;host&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;example.com&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;http&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;paths&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - &lt;span style=&#34;color:#f92672&#34;&gt;path&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;/app1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;pathType&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;Prefix&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;backend&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;service&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;app1-service&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;port&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              &lt;span style=&#34;color:#f92672&#34;&gt;number&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;80&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - &lt;span style=&#34;color:#f92672&#34;&gt;path&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;/app2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;pathType&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;Prefix&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;backend&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;service&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;app2-service&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;port&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              &lt;span style=&#34;color:#f92672&#34;&gt;number&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;80&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;tls&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - &lt;span style=&#34;color:#f92672&#34;&gt;hosts&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    - &lt;span style=&#34;color:#ae81ff&#34;&gt;example.com&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;secretName&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;example-tls&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;service&#34;&gt;service&lt;/h3&gt;
-&lt;p&gt;在Kubernetes中，Service 是一种用于定义逻辑集合的Pod及其访问策略的API对象。Service 提供了一种抽象，允许你将一组Pod作为一个单一的服务进行访问，而不需要知道这些Pod的具体位置或数量。Service 可以实现负载均衡、服务发现和故障转移等功能&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;apiVersion&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;v1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;kind&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;Service&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;metadata&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;my-service&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;spec&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;selector&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;app&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;MyApp&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;ports&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    - &lt;span style=&#34;color:#f92672&#34;&gt;protocol&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;TCP&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;port&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;80&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;targetPort&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;9376&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;pod&#34;&gt;pod&lt;/h3&gt;
-&lt;p&gt;在Kubernetes中，Pod 是最小的可部署计算单元。它是运行在集群上的容器或容器组的抽象。Pod 是Kubernetes中管理和调度容器的基本单元。&lt;/p&gt;</description>
+      <description>K8s部署 最近公司上了k8s, 我只学了点皮毛,如能学好如虎添翼
+前期准备 个人认为，学习K8S前必须掌握docker相关知识，否则学起来很困难
+linux上安装k8s 教程
+简要结构图 ingress 在Kubernetes中，Ingress 是一个API对象，用于管理对集群内服务的外部访问，通常是 HTTP 和 HTTPS。Ingress 可以提供负载均衡、SSL 终止和基于名称的虚拟主机等功能
+apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: example-ingress spec: rules: - host: example.com http: paths: - path: /app1 pathType: Prefix backend: service: name: app1-service port: number: 80 - path: /app2 pathType: Prefix backend: service: name: app2-service port: number: 80 tls: - hosts: - example.com secretName: example-tls service 在Kubernetes中，Service 是一种用于定义逻辑集合的Pod及其访问策略的API对象。Service 提供了一种抽象，允许你将一组Pod作为一个单一的服务进行访问，而不需要知道这些Pod的具体位置或数量。Service 可以实现负载均衡、服务发现和故障转移等功能
+apiVersion: v1 kind: Service metadata: name: my-service spec: selector: app: MyApp ports: - protocol: TCP port: 80 targetPort: 9376 pod 在Kubernetes中，Pod 是最小的可部署计算单元。它是运行在集群上的容器或容器组的抽象。Pod 是Kubernetes中管理和调度容器的基本单元。</description>
     </item>
     <item>
       <title>冒险岛V083 docker部署</title>
       <link>http://localhost:1313/posts/maplestorydocker/</link>
       <pubDate>Wed, 10 Jul 2024 09:52:42 +0800</pubDate>
       <guid>http://localhost:1313/posts/maplestorydocker/</guid>
-      <description>&lt;h3 id=&#34;gitee地址请点击httpsgiteecommaxwell60701shf-heaven-ms&#34;&gt;&lt;a href=&#34;https://gitee.com/maxwell60701/shf-heaven-ms&#34;&gt;gitee地址请点击&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;B站被封，只能转移到外网&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://youtu.be/7vWNCHvZHnc&#34;&gt;点击查看视频教程&lt;/a&gt;&lt;/p&gt;</description>
+      <description>gitee地址请点击 B站被封，只能转移到外网
+点击查看视频教程</description>
     </item>
     <item>
       <title>Stablediffusion</title>
       <link>http://localhost:1313/posts/stablediffusion/</link>
       <pubDate>Wed, 10 Jul 2024 09:35:19 +0800</pubDate>
       <guid>http://localhost:1313/posts/stablediffusion/</guid>
-      <description>&lt;h3 id=&#34;我自己写了一个nuget包用以调用stablediffusion的webapi&#34;&gt;我自己写了一个nuget包,用以调用stablediffusion的webapi&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.nuget.org/packages/StableDiffusion.AI.Core&#34;&gt;StableDiffusion.AI.Core&lt;/a&gt;
-&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/ai.png&#34; alt=&#34;nuget&#34;  title=&#34;nuget&#34;  /&gt;
-&lt;/p&gt;</description>
+      <description>我自己写了一个nuget包,用以调用stablediffusion的webapi StableDiffusion.AI.Core </description>
     </item>
     <item>
       <title>关于我的哔哩哔哩</title>
       <link>http://localhost:1313/posts/bili/</link>
       <pubDate>Tue, 09 Jul 2024 17:37:06 +0800</pubDate>
       <guid>http://localhost:1313/posts/bili/</guid>
-      <description>&lt;h3 id=&#34;简介&#34;&gt;简介&lt;/h3&gt;
-&lt;p&gt;个人哔哩哔哩账号&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/hot.png&#34; alt=&#34;hot&#34;  title=&#34;hot&#34;  /&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../assets/img/bili.png&#34; alt=&#34;myaccount&#34;  title=&#34;myaccount&#34;  /&gt;
-&lt;/p&gt;</description>
+      <description>简介 个人哔哩哔哩账号</description>
     </item>
     <item>
       <title>我的第一个博客</title>
       <link>http://localhost:1313/posts/my-first-post/</link>
       <pubDate>Sun, 14 Jan 2024 07:07:07 +0800</pubDate>
       <guid>http://localhost:1313/posts/my-first-post/</guid>
-      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;
-&lt;p&gt;今天很开心，这是hugo部署的&lt;/p&gt;
-&lt;p&gt;Visit the &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; website!&lt;/p&gt;</description>
+      <description>简介 今天很开心，这是hugo部署的
+Visit the Hugo website!</description>
     </item>
   </channel>
 </rss>

@@ -4,8 +4,16 @@
     <title>Categories on maxwell60701 少寒风的Blog</title>
     <link>http://localhost:1313/categories/</link>
     <description>Recent content in Categories on maxwell60701 少寒风的Blog</description>
-    <generator>Hugo -- 0.135.0</generator>
+    <generator>Hugo -- 0.128.2</generator>
     <language>zh</language>
+    <lastBuildDate>Mon, 29 Dec 2025 17:43:40 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI 应用</title>
+      <link>http://localhost:1313/categories/ai-%E5%BA%94%E7%94%A8/</link>
+      <pubDate>Mon, 29 Dec 2025 17:43:40 +0800</pubDate>
+      <guid>http://localhost:1313/categories/ai-%E5%BA%94%E7%94%A8/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>
