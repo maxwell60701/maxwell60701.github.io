@@ -1,0 +1,215 @@
+{{- $lang := .Get 0 | default "plaintext" -}}
+{{- $code := .Inner | htmlEscape -}}
+<div class="code-block" data-language="{{ $lang }}">
+    <div class="code-header">
+        <span class="code-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            {{ $lang }}
+        </span>
+        <button class="copy-btn" onclick="copyCode(this)" title="复制代码">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span class="copy-text">复制</span>
+        </button>
+    </div>
+    <pre class="chroma"><code class="language-{{ $lang }}">{{ $code }}</code></pre>
+</div>
+
+<script>
+function copyCode(btn) {
+    const codeBlock = btn.closest('.code-block');
+    const code = codeBlock.querySelector('code').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+        const textEl = btn.querySelector('.copy-text');
+        textEl.textContent = '已复制';
+        setTimeout(() => textEl.textContent = '复制', 2000);
+    });
+}
+</script>
+
+<style>
+.code-block {
+    margin: 24px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #1e1e2e;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.code-block:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.16);
+}
+
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.code-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    color: #7f849c;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.code-title svg {
+    opacity: 0.6;
+}
+
+.copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #7f849c;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #cdd6f4;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.copy-btn svg {
+    opacity: 0.7;
+}
+
+.code-block pre.chroma {
+    margin: 0;
+    padding: 20px;
+    background: #1e1e2e !important;
+    overflow-x: auto;
+}
+
+.code-block code {
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, monospace;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #cdd6f4;
+}
+
+/* 滚动条样式 */
+.code-block pre::-webkit-scrollbar {
+    height: 6px;
+}
+
+.code-block pre::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.code-block pre::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+}
+
+.code-block pre::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* 深色模式适配 */
+.dark .code-block {
+    background: #1e1e2e;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* 代码语法高亮颜色（Catppuccin Mocha inspired） */
+.chroma .hl { background: rgba(203, 166, 247, 0.15); display: block; }
+.chroma .k { color: #cba6f7; } /* Keyword */
+.chroma .kn { color: #cba6f7; } /* Keyword.Namespace */
+.chroma .o { color: #89dceb; } /* Operator */
+.chroma .c { color: #6c7086; font-style: italic; } /* Comment */
+.chroma .ch { color: #6c7086; font-style: italic; } /* Comment.HashBang */
+.chroma .cm { color: #6c7086; font-style: italic; } /* Comment.Multiline */
+.chroma .cp { color: #f38ba8; } /* Comment.Preproc */
+.chroma .cpf { color: #f38ba8; } /* Comment.PreprocFile */
+.chroma .c1 { color: #6c7086; font-style: italic; } /* Comment.Single */
+.chroma .cs { color: #6c7086; font-style: italic; } /* Comment.Special */
+.chroma .gd { color: #f38ba8; } /* Generic.Deleted */
+.chroma .ge { font-style: italic; } /* Generic.Emph */
+.chroma .ges { font-style: italic; } /* Generic.Strong */
+.chroma .gh { color: #89b4fa; font-weight: normal; } /* Generic.Heading */
+.chroma .gi { color: #a6e3a1; } /* Generic.Inserted */
+.chroma .go { color: #bac2de; } /* Generic.Output */
+.chroma .gp { color: #89b4fa; font-weight: normal; } /* Generic.Prompt */
+.chroma .gr { color: #f38ba8; } /* Generic.Error */
+.chroma .gs { font-weight: bold; } /* Generic.Strong */
+.chroma .gt { color: #f38ba8; } /* Generic.Traceback */
+.chroma .h { color: #89b4fa; } /* Name.Label */
+.chroma .nd { color: #f9e2af; } /* Name.Decorator */
+.chroma .nf { color: #89b4fa; } /* Name.Function */
+.chroma .fm { color: #89b4fa; } /* Name.Function.Magic */
+.chroma .py { color: #89b4fa; } /* Name.Property */
+.chroma .nb { color: #89b4fa; } /* Name.Builtin */
+.chroma .bp { color: #89b4fa; } /* Name.Builtin.Pseudo */
+.chroma .nc { color: #f9e2af; font-weight: bold; } /* Name.Class */
+.chroma .nn { color: #f9e2af; } /* Name.Namespace */
+.chroma .no { color: #f38ba8; } /* Name.Constant */
+.chroma .nv { color: #fab387; } /* Name.Variable */
+.chroma .vc { color: #fab387; } /* Name.Variable.Class */
+.chroma .vg { color: #fab387; } /* Name.Variable.Global */
+.chroma .vi { color: #fab387; } /* Name.Variable.Instance */
+.chroma .vm { color: #fab387; } /* Name.Variable.Magic */
+.chroma .l { color: #fab387; } /* Literal */
+.chroma .ld { color: #a6e3a1; } /* Literal.Date */
+.chroma .m { color: #fab387; } /* Literal.Number */
+.chroma .mb { color: #fab387; } /* Literal.Number.Bin */
+.chroma .mf { color: #fab387; } /* Literal.Number.Float */
+.chroma .mh { color: #fab387; } /* Literal.Number.Hex */
+.chroma .mi { color: #fab387; } /* Literal.Number.Integer */
+.chroma .il { color: #fab387; } /* Literal.Number.Integer.Long */
+.chroma .mo { color: #fab387; } /* Literal.Number.Oct */
+.chroma .sa { color: #a6e3a1; } /* String.Affix */
+.chroma .sb { color: #a6e3a1; } /* String.Backtick */
+.chroma .sc { color: #a6e3a1; } /* String.Char */
+.chroma .dl { color: #a6e3a1; } /* String.Delimiter */
+.chroma .sd { color: #a6e3a1; font-style: italic; } /* String.Doc */
+.chroma .s2 { color: #a6e3a1; } /* String.Double */
+.chroma .se { color: #f9e2af; font-weight: bold; } /* String.Escape */
+.chroma .sh { color: #a6e3a1; } /* String.Heredoc */
+.chroma .si { color: #f9e2af; } /* String.Interpol */
+.chroma .sx { color: #a6e3a1; } /* String.Other */
+.chroma .sr { color: #a6e3a1; } /* String.Regex */
+.chroma .s1 { color: #a6e3a1; } /* String.Single */
+.chroma .ss { color: #a6e3a1; } /* String.Symbol */
+.chroma .ta { color: #f9e2af; } /* Title.Arg */
+.chroma .bs { color: #a6e3a1; } /* Name.Builtin */
+.chroma .p { color: #cdd6f4; } /* Punctuation */
+.chroma .w { color: #6c7086; } /* Text.Whitespace */
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .code-block {
+        margin: 16px -8px;
+        border-radius: 8px;
+    }
+    .code-block pre {
+        padding: 16px;
+    }
+    .code-block code {
+        font-size: 12.5px;
+    }
+}
+</style>

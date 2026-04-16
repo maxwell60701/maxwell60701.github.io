@@ -1,0 +1,176 @@
+<div class="profile">
+    {{- with site.Params.profileMode }}
+    <div class="profile_inner">
+        {{- if .imageUrl -}}
+        {{- $img := "" }}
+        {{- if not (urls.Parse .imageUrl).IsAbs }}
+            {{- $img = resources.Get .imageUrl }}
+        {{- end }}
+        {{- if $img }}
+            {{- $processableFormats := (slice "jpg" "jpeg" "png" "tif" "bmp" "gif") -}}
+            {{- if hugo.IsExtended -}}
+                {{- $processableFormats = $processableFormats | append "webp" -}}
+            {{- end -}}
+            {{- $prod := (hugo.IsProduction | or (eq site.Params.env "production")) }}
+            {{- if and (in $processableFormats $img.MediaType.SubType) (eq $prod true)}}
+                {{- if (not (and (not .imageHeight) (not .imageWidth))) }}
+                    {{- $img = $img.Resize (printf "%dx%d" .imageWidth .imageHeight) }}
+                {{- else if .imageHeight }}
+                    {{- $img = $img.Resize (printf "x%d" .imageHeight) }}
+                {{ else if .imageWidth }}
+                    {{- $img = $img.Resize (printf "%dx" .imageWidth) }}
+                {{ else }}
+                    {{- $img = $img.Resize "150x150" }}
+                {{- end }}
+            {{- end }}
+            <img draggable="false" src="{{ $img.Permalink }}" alt="{{ .imageTitle | default "profile image" }}" title="{{ .imageTitle }}"
+                height="{{ .imageHeight | default 150 }}" width="{{ .imageWidth | default 150 }}" class="profile-avatar" />
+        {{- else }}
+        <img draggable="false" src="{{ .imageUrl | absURL }}" alt="{{ .imageTitle | default "profile image" }}" title="{{ .imageTitle }}"
+            height="{{ .imageHeight | default 150 }}" width="{{ .imageWidth | default 150 }}" class="profile-avatar" />
+        {{- end }}
+        {{- end }}
+        <h1>{{ .title | default site.Title | markdownify }}</h1>
+        <span class="profile-subtitle">{{ .subtitle | markdownify }}</span>
+        {{- partial "social_icons.html" -}}
+
+        {{- with .buttons }}
+        <div class="profile-buttons">
+            {{- range . }}
+            <a class="profile-button" href="{{ trim .url " " }}" rel="noopener" title="{{ .name }}">
+                <span class="button-inner">
+                    {{ .name }}
+                </span>
+            </a>
+            {{- end }}
+        </div>
+        {{- end }}
+    </div>
+    {{- end}}
+</div>
+
+<style>
+    .profile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(90vh - var(--header-height));
+        padding: 40px 0;
+    }
+
+    .profile_inner {
+        text-align: center;
+        max-width: 500px;
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    .profile-avatar {
+        width: 120px !important;
+        height: 120px !important;
+        border-radius: 50% !important;
+        object-fit: cover;
+        border: 3px solid var(--border-subtle);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        margin-bottom: 24px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .dark .profile-avatar {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .profile-avatar:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .profile_inner h1 {
+        font-size: 2rem;
+        font-family: var(--font-display);
+        margin-bottom: 8px;
+        letter-spacing: -0.02em;
+    }
+
+    .profile-subtitle {
+        display: block;
+        font-size: 1.0625rem;
+        color: var(--text-secondary);
+        margin-bottom: 24px;
+        line-height: 1.6;
+    }
+
+    .profile-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+
+    .profile-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 24px;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: var(--bg-primary);
+        background: var(--accent);
+        border-radius: 24px;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+
+    .profile-button:hover {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+        text-decoration: none;
+    }
+
+    .profile .social-icons {
+        margin-top: 16px;
+    }
+
+    .profile .social-icons a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin: 0 6px;
+        background: var(--bg-primary);
+        border: 1px solid var(--border-subtle);
+        transition: all 0.2s ease;
+    }
+
+    .profile .social-icons a:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .profile .social-icons svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .profile_inner h1 {
+            font-size: 1.75rem;
+        }
+    }
+</style>

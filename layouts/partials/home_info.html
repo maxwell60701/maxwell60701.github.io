@@ -1,0 +1,53 @@
+{{- with site.Params.homeInfoParams }}
+<article class="first-entry home-info">
+    <header class="entry-header">
+        <h1>{{ .Title | markdownify }}</h1>
+    </header>
+    <div class="entry-content">
+        {{ .Content | markdownify }}
+    </div>
+    <footer class="entry-footer">
+        {{ partial "social_icons.html" (dict "align" site.Params.homeInfoParams.AlignSocialIconsTo) }}
+    </footer>
+</article>
+{{- end -}}
+
+<style>
+    .home-info {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-subtle);
+        border-radius: 16px;
+        padding: 48px;
+        margin-bottom: 48px;
+        text-align: center;
+    }
+
+    .home-info .entry-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        font-family: var(--font-display);
+    }
+
+    .home-info .entry-content {
+        font-size: 1.125rem;
+        line-height: 1.8;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto 24px;
+    }
+
+    .home-info .entry-footer {
+        display: flex;
+        justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+        .home-info {
+            padding: 32px 24px;
+            border-radius: 12px;
+        }
+        .home-info .entry-header h1 {
+            font-size: 1.875rem;
+        }
+    }
+</style>
