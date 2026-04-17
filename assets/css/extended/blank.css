@@ -1,0 +1,552 @@
+/* ============================================
+   PaperMod Enhanced - Minimal Luxury Theme
+   ============================================ */
+
+/* === Font Variables === */
+:root {
+    --font-display: "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
+    --font-body: "Inter", "Noto Sans SC", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: "JetBrains Mono", "Fira Code", "SF Mono", Monaco, monospace;
+
+    /* Refined Color Palette */
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --accent-soft: rgba(37, 99, 235, 0.08);
+
+    /* Light Theme Refinements */
+    --bg-primary: #fafafa;
+    --bg-secondary: #ffffff;
+    --text-primary: #1a1a2e;
+    --text-secondary: #64748b;
+    --border-subtle: #e2e8f0;
+    --code-surface: #f8fafc;
+}
+
+/* === Dark Theme Refinements === */
+.dark {
+    --bg-primary: #0f0f12;
+    --bg-secondary: #1a1a1f;
+    --text-primary: #e8e8ed;
+    --text-secondary: #8b8b96;
+    --border-subtle: #2d2d35;
+    --code-surface: #1e1e24;
+    --accent: #60a5fa;
+    --accent-hover: #93c5fd;
+    --accent-soft: rgba(96, 165, 250, 0.1);
+}
+
+/* === Base Resets === */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* === Typography Enhancements === */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+h1 { font-size: 2.5rem; line-height: 1.2; }
+h2 { font-size: 1.875rem; line-height: 1.3; }
+h3 { font-size: 1.5rem; line-height: 1.4; }
+
+.post-content {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+}
+
+/* === Selection Styling === */
+::selection {
+    background: var(--accent-soft);
+    color: var(--text-primary);
+}
+
+/* === Header & Navigation === */
+.header {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav {
+    max-width: 1200px;
+}
+
+.logo a {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    transition: color 0.2s ease;
+}
+
+.logo a:hover {
+    color: var(--accent);
+}
+
+#menu a {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+    position: relative;
+}
+
+#menu a:hover,
+#menu .active {
+    color: var(--accent);
+}
+
+#menu .active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+}
+
+/* === Theme Toggle Button === */
+#theme-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+#theme-toggle:hover {
+    background: var(--accent-soft);
+    transform: scale(1.05);
+}
+
+#theme-toggle svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* === Main Content Area === */
+.main {
+    max-width: 780px;
+    padding: 48px 24px;
+}
+
+/* === Page Header === */
+.page-header {
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.page-header h1 {
+    font-size: 2.25rem;
+    margin-bottom: 12px;
+}
+
+/* === Post Entry Cards === */
+.post-entry {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.post-entry:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    border-color: var(--accent);
+}
+
+.dark .post-entry:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.entry-hint-parent {
+    font-size: 1.375rem;
+}
+
+.entry-content {
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* === Post Single === */
+.post-single {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    padding: 48px;
+    border: 1px solid var(--border-subtle);
+}
+
+.post-title {
+    font-size: 2.25rem;
+    margin-bottom: 16px;
+}
+
+.post-description {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-bottom: 24px;
+    padding-left: 16px;
+    border-left: 3px solid var(--accent);
+}
+
+/* === Post Meta === */
+.post-meta {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+}
+
+.post-meta time,
+.post-meta .author {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* === Post Tags === */
+.post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 32px 0;
+}
+
+.post-tags a {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    transition: all 0.2s ease;
+}
+
+.post-tags a:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* === Code Blocks (Built-in) === */
+.post-content pre,
+.post-content .highlight {
+    background: #1e1e2e !important;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 0;
+    margin: 28px 0;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-content pre:hover,
+.post-content .highlight:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.16);
+}
+
+.post-content pre::before,
+.post-content .highlight::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+
+/* Code header bar */
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.code-lang {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #7f849c;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.post-content pre code,
+.post-content .highlight code {
+    display: block;
+    padding: 20px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #cdd6f4;
+    background: transparent !important;
+    overflow-x: auto;
+}
+
+/* Inline code */
+.post-content code:not(pre code) {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875em;
+    padding: 3px 8px;
+    background: rgba(137, 180, 250, 0.12);
+    border: 1px solid rgba(137, 180, 250, 0.2);
+    border-radius: 4px;
+    color: #89b4fa;
+}
+
+/* Copy button */
+.copy-code {
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: #7f849c !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 6px !important;
+    font-size: 11px !important;
+    padding: 4px 10px !important;
+    transition: all 0.2s ease !important;
+}
+
+.copy-code:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: #cdd6f4 !important;
+}
+
+/* Scrollbar styling */
+.post-content pre code::-webkit-scrollbar,
+.post-content .highlight code::-webkit-scrollbar {
+    height: 6px;
+}
+
+.post-content pre code::-webkit-scrollbar-track,
+.post-content .highlight code::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.post-content pre code::-webkit-scrollbar-thumb,
+.post-content .highlight code::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+}
+
+.post-content pre code::-webkit-scrollbar-thumb:hover,
+.post-content .highlight code::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Dark mode adjustments */
+.dark .post-content pre,
+.dark .post-content .highlight {
+    background: #1e1e2e !important;
+}
+
+/* Light mode code block - force dark even in light theme for consistency */
+.post-content pre,
+.post-content .highlight {
+    background: #1e1e2e !important;
+}
+
+.post-content pre code,
+.post-content .highlight code {
+    color: #cdd6f4;
+}
+
+/* === Tables === */
+.post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 0.9375rem;
+}
+
+.post-content table th {
+    background: var(--bg-primary);
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 2px solid var(--border-subtle);
+}
+
+.post-content table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: top;
+}
+
+.post-content table tr:hover td {
+    background: var(--accent-soft);
+}
+
+/* === Blockquotes === */
+.post-content blockquote {
+    margin: 24px 0;
+    padding: 16px 24px;
+    background: var(--accent-soft);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+.post-content blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* === Horizontal Rules === */
+.post-content hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-subtle), transparent);
+    margin: 48px 0;
+}
+
+/* === Links === */
+.post-content a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.post-content a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+
+/* === Footer === */
+.footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-subtle);
+    padding: 24px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.footer a {
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+}
+
+.footer a:hover {
+    color: var(--accent);
+}
+
+/* === Scroll to Top === */
+.top-link {
+    background: var(--accent) !important;
+    color: white !important;
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.top-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+}
+
+.top-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* === Animations === */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.post-entry,
+.post-single,
+.page-header {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .main {
+        padding: 24px 16px;
+    }
+
+    .post-single {
+        padding: 24px 20px;
+        border-radius: 12px;
+    }
+
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+
+    .page-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .post-title {
+        font-size: 1.75rem;
+    }
+}
+
+/* === Print Styles === */
+@media print {
+    .header,
+    .footer,
+    .top-link,
+    .post-tags {
+        display: none !important;
+    }
+
+    .main {
+        max-width: 100%;
+        padding: 0;
+    }
+}
