@@ -1,5 +1,5 @@
 +++
-title = '文明6 RAG 知识库：架构设计与实现'
+title = '文明6 RAG 知识库'
 date = 2025-12-29T17:43:40+08:00
 draft = false
 tags = ['RAG', 'LangChain', 'Milvus', 'FastAPI', 'Ollama', 'Civ6']

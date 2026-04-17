@@ -1,4 +1,397 @@
 /* ============================================
+   Hugo Book Typography & Layout Styles
+   Modern Documentation Website Aesthetic
+   ============================================ */
+
+/* === Document Typography Variables === */
+:root {
+    /* Base colors - clean documentation palette */
+    --doc-bg: #fafbfc;
+    --doc-bg-secondary: #ffffff;
+    --doc-text: #1a1a2e;
+    --doc-text-secondary: #5c6370;
+    --doc-text-muted: #9ca3af;
+    --doc-border: #e5e7eb;
+    --doc-accent: #3b82f6;
+    --doc-accent-hover: #2563eb;
+    --doc-accent-soft: rgba(59, 130, 246, 0.08);
+
+    /* Typography scale */
+    --doc-font-sans: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    --doc-font-serif: 'Noto Serif SC', 'Source Han Serif SC', Georgia, serif;
+    --doc-font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, monospace;
+
+    /* Content width */
+    --doc-content-max-width: 800px;
+    --doc-line-height: 1.75;
+    --doc-font-size-base: 16px;
+}
+
+.dark {
+    --doc-bg: #0f1117;
+    --doc-bg-secondary: #16181d;
+    --doc-text: #e5e7eb;
+    --doc-text-secondary: #9ca3af;
+    --doc-text-muted: #6b7280;
+    --doc-border: #2d2d35;
+    --doc-accent: #60a5fa;
+    --doc-accent-hover: #93c5fd;
+    --doc-accent-soft: rgba(96, 165, 250, 0.1);
+}
+
+/* === Page Layout === */
+.book-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px 24px;
+}
+
+.book-post {
+    background: var(--doc-bg-secondary);
+    border-radius: 16px;
+    padding: 48px 56px;
+    margin-bottom: 32px;
+    border: 1px solid var(--doc-border);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+/* === Typography Base === */
+.book-post-content,
+.markdown-inner {
+    font-family: var(--doc-font-sans);
+    font-size: var(--doc-font-size-base);
+    line-height: var(--doc-line-height);
+    color: var(--doc-text);
+}
+
+/* === Headings === */
+.book-post-content h1,
+.book-post-content h2,
+.book-post-content h3,
+.book-post-content h4,
+.book-post-content h5,
+.book-post-content h6,
+.markdown-inner h1,
+.markdown-inner h2,
+.markdown-inner h3,
+.markdown-inner h4,
+.markdown-inner h5,
+.markdown-inner h6 {
+    font-family: var(--doc-font-serif);
+    font-weight: 600;
+    color: var(--doc-text);
+    margin-top: 2em;
+    margin-bottom: 0.75em;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+}
+
+.book-post-content h1 { font-size: 2.25rem; margin-top: 0; }
+.book-post-content h2 { font-size: 1.75rem; padding-bottom: 0.5em; border-bottom: 1px solid var(--doc-border); }
+.book-post-content h3 { font-size: 1.375rem; }
+.book-post-content h4 { font-size: 1.125rem; }
+.book-post-content h5 { font-size: 1rem; }
+.book-post-content h6 { font-size: 0.875rem; color: var(--doc-text-secondary); }
+
+/* Heading anchor links */
+.book-post-content h1 a.anchor,
+.book-post-content h2 a.anchor,
+.book-post-content h3 a.anchor,
+.book-post-content h4 a.anchor,
+.book-post-content h5 a.anchor,
+.book-post-content h6 a.anchor {
+    color: inherit;
+    text-decoration: none;
+    opacity: 0;
+    margin-left: 0.5em;
+    font-size: 0.85em;
+    transition: opacity 0.2s;
+}
+
+.book-post-content h1:hover a.anchor,
+.book-post-content h2:hover a.anchor,
+.book-post-content h3:hover a.anchor,
+.book-post-content h4:hover a.anchor,
+.book-post-content h5:hover a.anchor,
+.book-post-content h6:hover a.anchor {
+    opacity: 0.5;
+}
+
+/* === Paragraphs & Text === */
+.book-post-content p,
+.markdown-inner p {
+    margin-bottom: 1.25em;
+    color: var(--doc-text);
+}
+
+.book-post-content strong,
+.markdown-inner strong {
+    font-weight: 600;
+    color: var(--doc-text);
+}
+
+.book-post-content em,
+.markdown-inner em {
+    font-style: italic;
+}
+
+/* === Links === */
+.book-post-content a,
+.markdown-inner a {
+    color: var(--doc-accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.book-post-content a:hover,
+.markdown-inner a:hover {
+    color: var(--doc-accent-hover);
+    border-bottom-color: var(--doc-accent-hover);
+}
+
+/* === Lists === */
+.book-post-content ul,
+.book-post-content ol,
+.markdown-inner ul,
+.markdown-inner ol {
+    margin-bottom: 1.25em;
+    padding-left: 1.5em;
+}
+
+.book-post-content li,
+.markdown-inner li {
+    margin-bottom: 0.5em;
+    line-height: var(--doc-line-height);
+}
+
+.book-post-content ul ul,
+.book-post-content ol ol,
+.book-post-content ul ol,
+.book-post-content ol ul,
+.markdown-inner ul ul,
+.markdown-inner ol ol,
+.markdown-inner ul ol,
+.markdown-inner ol ul {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.book-post-content ul li::marker,
+.markdown-inner ul li::marker {
+    color: var(--doc-accent);
+}
+
+.book-post-content ol li::marker,
+.markdown-inner ol li::marker {
+    color: var(--doc-accent);
+    font-weight: 600;
+}
+
+/* === Blockquotes === */
+.book-post-content blockquote,
+.markdown-inner blockquote {
+    margin: 1.5em 0;
+    padding: 16px 24px;
+    background: var(--doc-accent-soft);
+    border-left: 4px solid var(--doc-accent);
+    border-radius: 0 8px 8px 0;
+    color: var(--doc-text-secondary);
+    font-style: normal;
+}
+
+.book-post-content blockquote p:last-child,
+.markdown-inner blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+.book-post-content blockquote cite,
+.markdown-inner blockquote cite {
+    display: block;
+    margin-top: 0.5em;
+    font-size: 0.875em;
+    font-style: normal;
+    color: var(--doc-text-muted);
+}
+
+/* === Tables === */
+.book-post-content table,
+.markdown-inner table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5em 0;
+    font-size: 0.9375em;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--doc-border);
+}
+
+.book-post-content thead,
+.markdown-inner thead {
+    background: var(--doc-bg);
+}
+
+.book-post-content th,
+.markdown-inner th {
+    font-weight: 600;
+    text-align: left;
+    padding: 14px 16px;
+    border-bottom: 2px solid var(--doc-border);
+    color: var(--doc-text);
+}
+
+.book-post-content td,
+.markdown-inner td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--doc-border);
+    vertical-align: top;
+}
+
+.book-post-content tr:last-child td,
+.markdown-inner tr:last-child td {
+    border-bottom: none;
+}
+
+.book-post-content tr:hover td,
+.markdown-inner tr:hover td {
+    background: var(--doc-accent-soft);
+}
+
+/* === Horizontal Rules === */
+.book-post-content hr,
+.markdown-inner hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--doc-border), transparent);
+    margin: 3em 0;
+}
+
+/* === Images === */
+.book-post-content img,
+.markdown-inner img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1.5em 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* === Post Meta (date, author, etc.) === */
+.book-post-date {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    color: var(--doc-text-muted);
+    margin-bottom: 1.5em;
+}
+
+.book-post-date img {
+    width: 1em;
+    height: 1em;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* === Post Title === */
+.book-post h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5em;
+    letter-spacing: -0.03em;
+}
+
+/* === Book Header (page title area) === */
+.book-header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--doc-border);
+}
+
+.book-header h3 {
+    font-family: var(--doc-font-serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--doc-text);
+    margin: 0;
+}
+
+/* === Book Footer === */
+.book-footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--doc-border);
+    font-size: 0.875rem;
+    color: var(--doc-text-muted);
+}
+
+.book-footer a {
+    color: var(--doc-accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.book-footer a:hover {
+    color: var(--doc-accent-hover);
+}
+
+.book-footer img {
+    width: 1em;
+    height: 1em;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* === Prev/Next Navigation === */
+.book-post-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--doc-border);
+}
+
+.book-post-nav a {
+    flex: 1;
+    padding: 16px 20px;
+    background: var(--doc-bg);
+    border: 1px solid var(--doc-border);
+    border-radius: 10px;
+    color: var(--doc-text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.9375rem;
+}
+
+.book-post-nav a:hover {
+    background: var(--doc-accent-soft);
+    border-color: var(--doc-accent);
+    transform: translateY(-2px);
+}
+
+.book-post-nav a span {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--doc-text-muted);
+    margin-bottom: 4px;
+}
+
+/* === Selection === */
+::selection {
+    background: var(--doc-accent-soft);
+    color: var(--doc-text);
+}
+
+/* === Focus States === */
+.book-post-content a:focus-visible,
+.markdown-inner a:focus-visible {
+    outline: 2px solid var(--doc-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* ============================================
    Hugo Book Menu & TOC Styles
    ============================================ */
 
@@ -52,6 +445,12 @@
     margin-bottom: 4px;
     border-radius: 8px;
     transition: all 0.2s ease;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    word-break: break-word;
+    display: block;
+    line-height: 1.4;
 }
 
 .book-menu-content nav > ul > li > a:hover {
@@ -74,6 +473,12 @@
     border-radius: 8px;
     transition: all 0.15s ease;
     border-left: 2px solid transparent;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    word-break: break-word;
+    display: block;
+    line-height: 1.4;
 }
 
 .book-menu-content nav ul ul a:hover {
@@ -115,6 +520,11 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    word-break: break-word;
+    line-height: 1.4;
 }
 
 .book-toc-content nav > ul > li > a::before {
@@ -263,32 +673,9 @@
 .book-menu-content nav > ul > li:nth-child(5) a { animation-delay: 0.25s; }
 .book-menu-content nav > ul > li:nth-child(6) a { animation-delay: 0.3s; }
 
-/* === Responsive === */
-@media (max-width: 1200px) {
-    .book-menu-content,
-    .book-toc-content {
-        border-radius: 12px;
-        margin: 4px;
-        padding: 16px !important;
-    }
-}
-
-@media (max-width: 768px) {
-    .book-menu-content {
-        border-radius: 0 0 16px 16px;
-        border-right: none;
-        border-top: 1px solid var(--menu-toc-border);
-    }
-
-    .book-toc-content {
-        border-left: none;
-        border-bottom: 1px solid var(--menu-toc-border);
-        border-radius: 16px 16px 0 0;
-    }
-}
-
 /* ============================================
    Hugo Book Code Block Styles
+   (Preserved from original)
    ============================================ */
 
 /* === Code Block Container === */
@@ -381,81 +768,100 @@
 
 /* === Chroma Syntax Highlighting (Catppuccin Mocha inspired) === */
 .chroma .hl { background: rgba(203, 166, 247, 0.15); display: block; }
-.chroma .k { color: #cba6f7; } /* Keyword */
-.chroma .kn { color: #cba6f7; } /* Keyword.Namespace */
-.chroma .o { color: #89dceb; } /* Operator */
-.chroma .c { color: #6c7086; font-style: italic; } /* Comment */
-.chroma .ch { color: #6c7086; font-style: italic; } /* Comment.HashBang */
-.chroma .cm { color: #6c7086; font-style: italic; } /* Comment.Multiline */
-.chroma .cp { color: #f38ba8; } /* Comment.Preproc */
-.chroma .cpf { color: #f38ba8; } /* Comment.PreprocFile */
-.chroma .c1 { color: #6c7086; font-style: italic; } /* Comment.Single */
-.chroma .cs { color: #6c7086; font-style: italic; } /* Comment.Special */
-.chroma .gd { color: #f38ba8; } /* Generic.Deleted */
-.chroma .ge { font-style: italic; } /* Generic.Emph */
-.chroma .ges { font-style: italic; } /* Generic.Strong */
-.chroma .gh { color: #89b4fa; font-weight: normal; } /* Generic.Heading */
-.chroma .gi { color: #a6e3a1; } /* Generic.Inserted */
-.chroma .go { color: #bac2de; } /* Generic.Output */
-.chroma .gp { color: #89b4fa; font-weight: normal; } /* Generic.Prompt */
-.chroma .gr { color: #f38ba8; } /* Generic.Error */
-.chroma .gs { font-weight: bold; } /* Generic.Strong */
-.chroma .gt { color: #f38ba8; } /* Generic.Traceback */
-.chroma .h { color: #89b4fa; } /* Name.Label */
-.chroma .nd { color: #f9e2af; } /* Name.Decorator */
-.chroma .nf { color: #89b4fa; } /* Name.Function */
-.chroma .fm { color: #89b4fa; } /* Name.Function.Magic */
-.chroma .py { color: #89b4fa; } /* Name.Property */
-.chroma .nb { color: #89b4fa; } /* Name.Builtin */
-.chroma .bp { color: #89b4fa; } /* Name.Builtin.Pseudo */
-.chroma .nc { color: #f9e2af; font-weight: bold; } /* Name.Class */
-.chroma .nn { color: #f9e2af; } /* Name.Namespace */
-.chroma .no { color: #f38ba8; } /* Name.Constant */
-.chroma .nv { color: #fab387; } /* Name.Variable */
-.chroma .vc { color: #fab387; } /* Name.Variable.Class */
-.chroma .vg { color: #fab387; } /* Name.Variable.Global */
-.chroma .vi { color: #fab387; } /* Name.Variable.Instance */
-.chroma .vm { color: #fab387; } /* Name.Variable.Magic */
-.chroma .l { color: #fab387; } /* Literal */
-.chroma .ld { color: #a6e3a1; } /* Literal.Date */
-.chroma .m { color: #fab387; } /* Literal.Number */
-.chroma .mb { color: #fab387; } /* Literal.Number.Bin */
-.chroma .mf { color: #fab387; } /* Literal.Number.Float */
-.chroma .mh { color: #fab387; } /* Literal.Number.Hex */
-.chroma .mi { color: #fab387; } /* Literal.Number.Integer */
-.chroma .il { color: #fab387; } /* Literal.Number.Integer.Long */
-.chroma .mo { color: #fab387; } /* Literal.Number.Oct */
-.chroma .sa { color: #a6e3a1; } /* String.Affix */
-.chroma .sb { color: #a6e3a1; } /* String.Backtick */
-.chroma .sc { color: #a6e3a1; } /* String.Char */
-.chroma .dl { color: #a6e3a1; } /* String.Delimiter */
-.chroma .sd { color: #a6e3a1; font-style: italic; } /* String.Doc */
-.chroma .s2 { color: #a6e3a1; } /* String.Double */
-.chroma .se { color: #f9e2af; font-weight: bold; } /* String.Escape */
-.chroma .sh { color: #a6e3a1; } /* String.Heredoc */
-.chroma .si { color: #f9e2af; } /* String.Interpol */
-.chroma .sx { color: #a6e3a1; } /* String.Other */
-.chroma .sr { color: #a6e3a1; } /* String.Regex */
-.chroma .s1 { color: #a6e3a1; } /* String.Single */
-.chroma .ss { color: #a6e3a1; } /* String.Symbol */
-.chroma .ta { color: #f9e2af; } /* Title.Arg */
-.chroma .bs { color: #a6e3a1; } /* Name.Builtin */
-.chroma .p { color: #cdd6f4; } /* Punctuation */
-.chroma .w { color: #6c7086; } /* Text.Whitespace */
-
-/* === Hugo Chroma Inline Highlighting === */
-/* For inline code with syntax highlighting from Hugo */
-.chroma .nt { color: #cba6f7; } /* Name.Tag */
-.chroma .nx { color: #89b4fa; } /* Name.Attribute */
-.chroma .ni { color: #f38ba8; } /* Name.Entity */
-.chroma .na { color: #89b4fa; } /* Name.Attribute */
-.chroma .ne { color: #f9e2af; } /* Name.Exception */
-.chroma .nl { color: #cdd6f4; } /* Name.Label */
-.chroma .py { color: #cdd6f4; } /* Name.Property */
-.chroma .p { color: #cdd6f4; } /* Punctuation */
+.chroma .k { color: #cba6f7; }
+.chroma .kn { color: #cba6f7; }
+.chroma .o { color: #89dceb; }
+.chroma .c { color: #6c7086; font-style: italic; }
+.chroma .ch { color: #6c7086; font-style: italic; }
+.chroma .cm { color: #6c7086; font-style: italic; }
+.chroma .cp { color: #f38ba8; }
+.chroma .cpf { color: #f38ba8; }
+.chroma .c1 { color: #6c7086; font-style: italic; }
+.chroma .cs { color: #6c7086; font-style: italic; }
+.chroma .gd { color: #f38ba8; }
+.chroma .ge { font-style: italic; }
+.chroma .ges { font-style: italic; }
+.chroma .gh { color: #89b4fa; font-weight: normal; }
+.chroma .gi { color: #a6e3a1; }
+.chroma .go { color: #bac2de; }
+.chroma .gp { color: #89b4fa; font-weight: normal; }
+.chroma .gr { color: #f38ba8; }
+.chroma .gs { font-weight: bold; }
+.chroma .gt { color: #f38ba8; }
+.chroma .h { color: #89b4fa; }
+.chroma .nd { color: #f9e2af; }
+.chroma .nf { color: #89b4fa; }
+.chroma .fm { color: #89b4fa; }
+.chroma .py { color: #89b4fa; }
+.chroma .nb { color: #89b4fa; }
+.chroma .bp { color: #89b4fa; }
+.chroma .nc { color: #f9e2af; font-weight: bold; }
+.chroma .nn { color: #f9e2af; }
+.chroma .no { color: #f38ba8; }
+.chroma .nv { color: #fab387; }
+.chroma .vc { color: #fab387; }
+.chroma .vg { color: #fab387; }
+.chroma .vi { color: #fab387; }
+.chroma .vm { color: #fab387; }
+.chroma .l { color: #fab387; }
+.chroma .ld { color: #a6e3a1; }
+.chroma .m { color: #fab387; }
+.chroma .mb { color: #fab387; }
+.chroma .mf { color: #fab387; }
+.chroma .mh { color: #fab387; }
+.chroma .mi { color: #fab387; }
+.chroma .il { color: #fab387; }
+.chroma .mo { color: #fab387; }
+.chroma .sa { color: #a6e3a1; }
+.chroma .sb { color: #a6e3a1; }
+.chroma .sc { color: #a6e3a1; }
+.chroma .dl { color: #a6e3a1; }
+.chroma .sd { color: #a6e3a1; font-style: italic; }
+.chroma .s2 { color: #a6e3a1; }
+.chroma .se { color: #f9e2af; font-weight: bold; }
+.chroma .sh { color: #a6e3a1; }
+.chroma .si { color: #f9e2af; }
+.chroma .sx { color: #a6e3a1; }
+.chroma .sr { color: #a6e3a1; }
+.chroma .s1 { color: #a6e3a1; }
+.chroma .ss { color: #a6e3a1; }
+.chroma .ta { color: #f9e2af; }
+.chroma .bs { color: #a6e3a1; }
+.chroma .p { color: #cdd6f4; }
+.chroma .w { color: #6c7086; }
+.chroma .nt { color: #cba6f7; }
+.chroma .nx { color: #89b4fa; }
+.chroma .ni { color: #f38ba8; }
+.chroma .na { color: #89b4fa; }
+.chroma .ne { color: #f9e2af; }
+.chroma .nl { color: #cdd6f4; }
+.chroma .py { color: #cdd6f4; }
 
 /* === Responsive === */
+@media (max-width: 1024px) {
+    .book-post {
+        padding: 32px 40px;
+    }
+}
+
 @media (max-width: 768px) {
+    .book-page {
+        padding: 16px;
+    }
+
+    .book-post {
+        padding: 24px 20px;
+        border-radius: 12px;
+    }
+
+    .book-post h1 {
+        font-size: 1.875rem;
+    }
+
+    .book-post-content h1 { font-size: 1.75rem; }
+    .book-post-content h2 { font-size: 1.5rem; }
+    .book-post-content h3 { font-size: 1.25rem; }
+
     .book-post-content pre code,
     .book-post-content .highlight code,
     .markdown-inner pre code,
