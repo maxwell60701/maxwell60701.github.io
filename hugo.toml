@@ -1,5 +1,19 @@
 baseURL = 'https://maxwell60701.github.io/'
 languageCode = 'zh'
 title = 'maxwell60701 少寒风的Blog'
-theme = 'PaperMod'
+theme = 'hugo-book'
+
+[markup]
+[markup.goldmark.renderer]
+  unsafe = true
+
+[markup.highlight]
+  noClasses = false
+  style = "monokai"
+
+[params]
+BookSection = 'posts'
+BookTheme = 'light'
+BookSearch = true
+BookComments = true
 
