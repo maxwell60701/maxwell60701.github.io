@@ -28,9 +28,9 @@
     background: var(--menu-toc-bg) !important;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border-right: 1px solid var(--menu-toc-border);
-    box-shadow: var(--menu-toc-shadow);
-    border-radius: 0 16px 16px 0;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0;
     padding: 20px !important;
     margin: 8px 0;
 }
@@ -94,9 +94,9 @@
     background: var(--menu-toc-bg) !important;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border-left: 1px solid var(--menu-toc-border);
-    box-shadow: var(--menu-toc-shadow);
-    border-radius: 16px 0 0 16px;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0;
     padding: 20px !important;
     margin: 8px 0;
 }
