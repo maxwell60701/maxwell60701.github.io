@@ -315,17 +315,9 @@
 
 /* === Post Section Card === */
 .book-post-section {
-    background: var(--doc-bg-secondary);
-    border: 1px solid var(--doc-border);
-    border-radius: 16px;
-    padding: 40px 48px;
+    background: transparent;
+    padding: 0;
     margin-bottom: 32px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-    transition: box-shadow 0.2s ease;
-}
-
-.book-post-section:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 /* Content spacing after meta */
