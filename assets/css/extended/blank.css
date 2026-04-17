@@ -266,6 +266,42 @@
     margin: 3em 0;
 }
 
+/* === Architecture Diagram === */
+.architecture-diagram {
+    background: var(--doc-bg);
+    border: 1px solid var(--doc-border);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+    overflow-x: auto;
+    font-family: var(--doc-font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--doc-text);
+}
+
+.architecture-diagram pre {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+}
+
+.architecture-diagram code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+}
+
 /* === Images === */
 .book-post-content img,
 .markdown-inner img {
