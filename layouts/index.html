@@ -1,0 +1,35 @@
+{{ define "main" }}
+<article class="markdown book-article">
+  {{ range where .Site.RegularPages "Section" "posts" }}
+  <section class="book-post-section">
+    <h2 class="book-post-title">
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    </h2>
+    <div class="book-post-meta">
+      {{ with .Date }}{{ .Format "2006-01-02" }}{{ end }}
+    </div>
+    <div class="book-post-content">
+      {{ .Content }}
+    </div>
+    <a href="{{ .RelPermalink }}" class="read-more">阅读全文</a>
+  </section>
+  {{ end }}
+</article>
+{{ end }}
+
+{{ define "toc-container" }}
+<aside class="book-toc">
+  <div class="book-toc-content">
+    <nav>
+      <h3 style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--menu-toc-text); padding: 12px 16px; margin-bottom: 8px;">文章列表</h3>
+      <ul>
+        {{ range where .Site.RegularPages "Section" "posts" }}
+        <li>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </li>
+        {{ end }}
+      </ul>
+    </nav>
+  </div>
+</aside>
+{{ end }}

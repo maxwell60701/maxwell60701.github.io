@@ -1,0 +1,36 @@
+{{ define "main" }}
+<article class="markdown book-article">
+  <section class="book-post-section">
+    <h1 class="book-post-title">
+      {{ partial "docs/title" . }}
+    </h1>
+    <div class="book-post-meta">
+      {{ with .Date }}{{ .Format "2006-01-02" }}{{ end }}
+    </div>
+    <div class="book-post-content markdown-inner">
+      {{- .Content -}}
+    </div>
+  </section>
+</article>
+{{ end }}
+
+{{ define "footer" }}
+  {{ partial "docs/post-prev-next" . }}
+{{ end }}
+
+{{ define "toc-container" }}
+<aside class="book-toc">
+  <div class="book-toc-content">
+    <nav>
+      <h3 style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--menu-toc-text); padding: 12px 16px; margin-bottom: 8px;">文章列表</h3>
+      <ul>
+        {{ range where .Site.RegularPages "Section" "posts" }}
+        <li>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </li>
+        {{ end }}
+      </ul>
+    </nav>
+  </div>
+</aside>
+{{ end }}
