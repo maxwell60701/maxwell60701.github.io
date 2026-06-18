@@ -8,5 +8,6 @@
 {{- /* Lucide Icons CDN */ -}}
 <script src="https://unpkg.com/lucide@latest"></script>
 
-{{- /* Custom CSS */ -}}
-<link rel="stylesheet" href="/css/extended/blank.css">
+{{- /* Custom CSS — fingerprinted so the browser cache busts on every edit */ -}}
+{{- $css := resources.Get "css/extended/blank.css" | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}">

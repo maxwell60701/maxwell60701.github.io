@@ -1,7 +1,6 @@
 /* ============================================
    Hugo Book Typography & Layout Styles
    Blue-White — Clean & Professional
-   !! SYNC: This file must match static/css/extended/blank.css !!
    ============================================ */
 
 /* === Document Typography Variables === */
@@ -37,8 +36,8 @@
     --doc-line-height: 1.8;
     --doc-font-size-base: 16px;
     --doc-radius-sm: 8px;
-    --doc-radius-md: 16px;
-    --doc-radius-lg: 24px;
+    --doc-radius-md: 12px;
+    --doc-radius-lg: 12px;
 }
 
 .dark {
@@ -61,21 +60,42 @@
     --doc-shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.35);
 }
 
+/* === Container — full screen width, sidebars at edges, no outer margins === */
+.container {
+    max-width: 100% !important;
+}
+
+/* === Sidebars — slightly narrower for more content width === */
+.book-menu {
+    flex: 0 0 14rem !important;
+}
+
+.book-menu .book-menu-content {
+    width: 14rem !important;
+}
+
+.book-toc {
+    flex: 0 0 14rem !important;
+}
+
+.book-toc .book-toc-content {
+    width: 14rem !important;
+}
+
 /* === Page Layout === */
 .book-page {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 32px 24px;
+    max-width: none;
+    padding: 24px 32px;
     background: var(--doc-bg);
 }
 
 .book-post {
     background: var(--doc-bg-secondary);
-    border-radius: var(--doc-radius-lg);
-    padding: 56px 64px;
+    border-radius: 12px;
+    padding: 32px 40px;
     margin-bottom: 40px;
     border: 1px solid var(--doc-border);
-    box-shadow: var(--doc-shadow-md);
+    box-shadow: var(--doc-shadow-sm);
 }
 
 /* === Typography Base === */
@@ -571,7 +591,7 @@
     box-shadow: none !important;
     border-right: 1px solid var(--doc-border);
     border-radius: 0;
-    padding: 28px 12px !important;
+    padding: 20px 16px !important;
 }
 
 .book-menu-content nav > ul {
@@ -653,7 +673,7 @@
     box-shadow: none !important;
     border-left: 1px solid var(--doc-border);
     border-radius: 0;
-    padding: 28px 12px !important;
+    padding: 20px 16px !important;
 }
 
 .book-toc-content nav > ul > li:first-child {
@@ -967,9 +987,38 @@
 .chroma .py { color: #cdd6f4; }
 
 /* === Responsive === */
+
+/* Large screen — comfortable gap between columns */
+@media screen and (min-width: 96rem) {
+    main.container.flex {
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .book-menu .book-menu-content,
+    .book-toc .book-toc-content {
+        top: 1.5rem !important;
+    }
+}
+
+/* Mobile menu slide-in — match 14rem sidebar width */
+@media screen and (max-width: 56rem) {
+    .book-menu {
+        margin-inline-start: -14rem !important;
+    }
+
+    #menu-control:checked ~ main .book-menu .book-menu-content {
+        transform: translateX(14rem) !important;
+    }
+
+    body[dir="rtl"] #menu-control:checked ~ main .book-menu .book-menu-content {
+        transform: translateX(-14rem) !important;
+    }
+}
+
 @media (max-width: 1024px) {
     .book-post {
-        padding: 36px 44px;
+        padding: 28px 32px;
     }
 }
 
@@ -979,8 +1028,8 @@
     }
 
     .book-post {
-        padding: 24px 20px;
-        border-radius: var(--doc-radius-md);
+        padding: 20px 16px;
+        border-radius: 8px;
     }
 
     .book-post h1 {
