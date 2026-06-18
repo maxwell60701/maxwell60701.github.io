@@ -21,21 +21,3 @@
 {{- with ($scratch.Get "meta") }}
 <span class="post-meta">{{- delimit . "" | safeHTML -}}</span>
 {{- end -}}
-
-<style>
-    .meta-item {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        color: var(--text-secondary);
-        font-size: 0.8125rem;
-    }
-
-    .meta-item svg {
-        opacity: 0.7;
-    }
-
-    .meta-item.author {
-        font-weight: 500;
-    }
-</style>

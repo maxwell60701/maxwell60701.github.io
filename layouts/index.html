@@ -6,10 +6,10 @@
       <a href="{{ .RelPermalink }}">{{ .Title }}</a>
     </h2>
     <div class="book-post-meta">
-      {{ with .Date }}{{ .Format "2006-01-02" }}{{ end }}
+      {{ with .Date }}<time datetime="{{ .Format "2006-01-02" }}">{{ .Format "2006-01-02" }}</time>{{ end }}
     </div>
     <div class="book-post-content">
-      {{ .Content }}
+      {{ .Summary }}
     </div>
     <a href="{{ .RelPermalink }}" class="read-more">阅读全文</a>
   </section>
@@ -21,7 +21,7 @@
 <aside class="book-toc">
   <div class="book-toc-content">
     <nav>
-      <h3 style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--menu-toc-text); padding: 12px 16px; margin-bottom: 8px;">文章列表</h3>
+      <h3 style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--doc-text-muted); padding: 12px 16px; margin-bottom: 8px;">文章列表</h3>
       <ul>
         {{ range where .Site.RegularPages "Section" "posts" }}
         <li>

@@ -1,42 +1,64 @@
 /* ============================================
    Hugo Book Typography & Layout Styles
-   Modern Documentation Website Aesthetic
+   Blue-White — Clean & Professional
+   !! SYNC: This file must match static/css/extended/blank.css !!
    ============================================ */
 
 /* === Document Typography Variables === */
 :root {
-    /* Base colors - clean documentation palette */
-    --doc-bg: #fafbfc;
+    /* === Blue-White Color Palette === */
+    --doc-bg: #f8fafc;
     --doc-bg-secondary: #ffffff;
-    --doc-text: #1a1a2e;
-    --doc-text-secondary: #5c6370;
-    --doc-text-muted: #9ca3af;
-    --doc-border: #e5e7eb;
-    --doc-accent: #3b82f6;
-    --doc-accent-hover: #2563eb;
-    --doc-accent-soft: rgba(59, 130, 246, 0.08);
+    --doc-bg-tertiary: #f1f5f9;
+    --doc-text: #0f172a;
+    --doc-text-secondary: #475569;
+    --doc-text-muted: #94a3b8;
+    --doc-border: #e2e8f0;
+    --doc-border-strong: #cbd5e1;
 
-    /* Typography scale */
-    --doc-font-sans: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    --doc-accent: #2563eb;
+    --doc-accent-hover: #1d4ed8;
+    --doc-accent-soft: rgba(37, 99, 235, 0.08);
+    --doc-accent-glow: rgba(37, 99, 235, 0.15);
+
+    /* Shadows — cool slate tints */
+    --doc-shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+    --doc-shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+    --doc-shadow-lg: 0 8px 30px rgba(15, 23, 42, 0.12);
+
+    /* Typography */
+    --doc-font-sans: 'Sora', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
     --doc-font-serif: 'Noto Serif SC', 'Source Han Serif SC', Georgia, serif;
     --doc-font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, monospace;
+    --doc-font-display: 'Noto Serif SC', 'Sora', Georgia, serif;
 
-    /* Content width */
+    /* Spacing & Layout */
     --doc-content-max-width: 800px;
-    --doc-line-height: 1.75;
+    --doc-line-height: 1.8;
     --doc-font-size-base: 16px;
+    --doc-radius-sm: 8px;
+    --doc-radius-md: 16px;
+    --doc-radius-lg: 24px;
 }
 
 .dark {
-    --doc-bg: #0f1117;
-    --doc-bg-secondary: #16181d;
-    --doc-text: #e5e7eb;
-    --doc-text-secondary: #9ca3af;
-    --doc-text-muted: #6b7280;
-    --doc-border: #2d2d35;
+    --doc-bg: #0f172a;
+    --doc-bg-secondary: #1e293b;
+    --doc-bg-tertiary: #334155;
+    --doc-text: #f1f5f9;
+    --doc-text-secondary: #94a3b8;
+    --doc-text-muted: #64748b;
+    --doc-border: #334155;
+    --doc-border-strong: #475569;
+
     --doc-accent: #60a5fa;
     --doc-accent-hover: #93c5fd;
     --doc-accent-soft: rgba(96, 165, 250, 0.1);
+    --doc-accent-glow: rgba(96, 165, 250, 0.18);
+
+    --doc-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+    --doc-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
+    --doc-shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.35);
 }
 
 /* === Page Layout === */
@@ -44,15 +66,16 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: 32px 24px;
+    background: var(--doc-bg);
 }
 
 .book-post {
     background: var(--doc-bg-secondary);
-    border-radius: 16px;
-    padding: 48px 56px;
-    margin-bottom: 32px;
+    border-radius: var(--doc-radius-lg);
+    padding: 56px 64px;
+    margin-bottom: 40px;
     border: 1px solid var(--doc-border);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--doc-shadow-md);
 }
 
 /* === Typography Base === */
@@ -77,18 +100,18 @@
 .markdown-inner h4,
 .markdown-inner h5,
 .markdown-inner h6 {
-    font-family: var(--doc-font-serif);
+    font-family: var(--doc-font-display);
     font-weight: 600;
     color: var(--doc-text);
     margin-top: 2em;
     margin-bottom: 0.75em;
     line-height: 1.3;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
 }
 
 .book-post-content h1 { font-size: 2.25rem; margin-top: 0; }
-.book-post-content h2 { font-size: 1.75rem; padding-bottom: 0.5em; border-bottom: 1px solid var(--doc-border); }
-.book-post-content h3 { font-size: 1.375rem; }
+.book-post-content h2 { font-size: 1.75rem; padding-bottom: 0.5em; border-bottom: 1px solid var(--doc-border-strong); }
+.book-post-content h3 { font-size: 1.375rem; color: var(--doc-text-secondary); }
 .book-post-content h4 { font-size: 1.125rem; }
 .book-post-content h5 { font-size: 1rem; }
 .book-post-content h6 { font-size: 0.875rem; color: var(--doc-text-secondary); }
@@ -140,14 +163,14 @@
 .markdown-inner a {
     color: var(--doc-accent);
     text-decoration: none;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid var(--doc-accent-soft);
     transition: all 0.2s ease;
 }
 
 .book-post-content a:hover,
 .markdown-inner a:hover {
     color: var(--doc-accent-hover);
-    border-bottom-color: var(--doc-accent-hover);
+    border-bottom-color: var(--doc-accent);
 }
 
 /* === Lists === */
@@ -191,13 +214,27 @@
 /* === Blockquotes === */
 .book-post-content blockquote,
 .markdown-inner blockquote {
-    margin: 1.5em 0;
-    padding: 16px 24px;
+    margin: 2em 0;
+    padding: 20px 28px;
     background: var(--doc-accent-soft);
     border-left: 4px solid var(--doc-accent);
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 var(--doc-radius-sm) var(--doc-radius-sm) 0;
     color: var(--doc-text-secondary);
     font-style: normal;
+    position: relative;
+}
+
+.book-post-content blockquote::before,
+.markdown-inner blockquote::before {
+    content: '\201C';
+    position: absolute;
+    top: -8px;
+    left: 12px;
+    font-size: 3rem;
+    color: var(--doc-accent-glow);
+    font-family: var(--doc-font-serif);
+    line-height: 1;
+    pointer-events: none;
 }
 
 .book-post-content blockquote p:last-child,
@@ -221,14 +258,14 @@
     border-collapse: collapse;
     margin: 1.5em 0;
     font-size: 0.9375em;
-    border-radius: 8px;
+    border-radius: var(--doc-radius-sm);
     overflow: hidden;
     border: 1px solid var(--doc-border);
 }
 
 .book-post-content thead,
 .markdown-inner thead {
-    background: var(--doc-bg);
+    background: var(--doc-bg-tertiary);
 }
 
 .book-post-content th,
@@ -236,7 +273,7 @@
     font-weight: 600;
     text-align: left;
     padding: 14px 16px;
-    border-bottom: 2px solid var(--doc-border);
+    border-bottom: 2px solid var(--doc-border-strong);
     color: var(--doc-text);
 }
 
@@ -261,8 +298,8 @@
 .book-post-content hr,
 .markdown-inner hr {
     border: none;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--doc-border), transparent);
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--doc-border-strong), transparent);
     margin: 3em 0;
 }
 
@@ -270,7 +307,7 @@
 .architecture-diagram {
     background: var(--doc-bg);
     border: 1px solid var(--doc-border);
-    border-radius: 12px;
+    border-radius: var(--doc-radius-md);
     padding: 24px;
     margin: 24px 0;
     overflow-x: auto;
@@ -307,9 +344,9 @@
 .markdown-inner img {
     max-width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: var(--doc-radius-md);
     margin: 1.5em 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--doc-shadow-md);
 }
 
 /* === Post Meta (date, author, etc.) === */
@@ -332,12 +369,13 @@
 /* === Post Title === */
 .book-post h1,
 .book-post-title {
-    font-family: var(--doc-font-serif);
-    font-size: 2rem;
+    font-family: var(--doc-font-display);
+    font-size: 2.25rem;
     font-weight: 700;
-    margin: 0 0 8px 0;
-    line-height: 1.3;
-    letter-spacing: -0.02em;
+    margin: 0 0 12px 0;
+    line-height: 1.35;
+    letter-spacing: -0.025em;
+    color: var(--doc-text);
 }
 
 /* === Post Meta (date) === */
@@ -345,8 +383,24 @@
     font-size: 0.875rem;
     color: var(--doc-text-muted);
     margin-bottom: 32px;
-    padding-bottom: 20px;
+    padding-bottom: 24px;
     border-bottom: 1px solid var(--doc-border);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.book-post-meta time,
+.book-post-meta .meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    background: var(--doc-accent-soft);
+    border-radius: var(--doc-radius-sm);
+    font-size: 0.8125rem;
+    color: var(--doc-accent);
+    font-weight: 500;
 }
 
 /* === Post Section Card === */
@@ -361,6 +415,59 @@
     margin-top: 0;
 }
 
+/* === Read More Link === */
+.read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--doc-accent);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.read-more:hover {
+    color: var(--doc-accent-hover);
+    gap: 10px;
+}
+
+.read-more::after {
+    content: '\2192';
+    transition: transform 0.2s ease;
+}
+
+.read-more:hover::after {
+    transform: translateX(4px);
+}
+
+/* === Post Meta (unified) === */
+.post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.875rem;
+    color: var(--doc-text-muted);
+}
+
+.meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--doc-text-secondary);
+    font-size: 0.8125rem;
+}
+
+.meta-item svg {
+    opacity: 0.6;
+}
+
+.meta-item.author {
+    font-weight: 500;
+}
+
 /* === Book Header (page title area) === */
 .book-header {
     margin-bottom: 24px;
@@ -369,7 +476,7 @@
 }
 
 .book-header h3 {
-    font-family: var(--doc-font-serif);
+    font-family: var(--doc-font-display);
     font-size: 1.25rem;
     font-weight: 600;
     color: var(--doc-text);
@@ -415,13 +522,13 @@
 
 .book-post-nav a {
     flex: 1;
-    padding: 16px 20px;
-    background: var(--doc-bg);
+    padding: 20px 24px;
+    background: var(--doc-bg-secondary);
     border: 1px solid var(--doc-border);
-    border-radius: 10px;
+    border-radius: var(--doc-radius-md);
     color: var(--doc-text);
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
     font-size: 0.9375rem;
 }
 
@@ -429,6 +536,7 @@
     background: var(--doc-accent-soft);
     border-color: var(--doc-accent);
     transform: translateY(-2px);
+    box-shadow: var(--doc-shadow-md);
 }
 
 .book-post-nav a span {
@@ -440,7 +548,7 @@
 
 /* === Selection === */
 ::selection {
-    background: var(--doc-accent-soft);
+    background: var(--doc-accent-glow);
     color: var(--doc-text);
 }
 
@@ -456,37 +564,14 @@
    Hugo Book Menu & TOC Styles
    ============================================ */
 
-/* === Shared Menu & TOC Variables === */
-:root {
-    --menu-toc-bg: rgba(255, 255, 255, 0.7);
-    --menu-toc-border: rgba(0, 0, 0, 0.06);
-    --menu-toc-hover: rgba(37, 99, 235, 0.08);
-    --menu-toc-active: #2563eb;
-    --menu-toc-text: #64748b;
-    --menu-toc-text-hover: #1a1a2e;
-    --menu-toc-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-}
-
-.dark {
-    --menu-toc-bg: rgba(30, 30, 35, 0.8);
-    --menu-toc-border: rgba(255, 255, 255, 0.08);
-    --menu-toc-hover: rgba(96, 165, 250, 0.1);
-    --menu-toc-active: #60a5fa;
-    --menu-toc-text: #8b8b96;
-    --menu-toc-text-hover: #e8e8ed;
-    --menu-toc-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
-}
-
 /* === Book Menu Content === */
 .book-menu-content {
-    background: var(--menu-toc-bg) !important;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: var(--doc-bg) !important;
     border: none !important;
     box-shadow: none !important;
+    border-right: 1px solid var(--doc-border);
     border-radius: 0;
-    padding: 20px !important;
-    margin: 8px 0;
+    padding: 28px 12px !important;
 }
 
 .book-menu-content nav > ul {
@@ -495,139 +580,146 @@
     margin: 0;
 }
 
+/* Top-level nav items */
 .book-menu-content nav > ul > li > a,
-.book-menu-content nav > ul > li > span {
+.book-menu-content nav > ul > li > span,
+.book-menu-content nav > ul > li > label {
+    font-family: var(--doc-font-sans);
+    font-size: 0.8rem;
     font-weight: 600;
-    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--menu-toc-text);
-    padding: 12px 16px;
-    margin-bottom: 4px;
-    border-radius: 8px;
-    transition: all 0.2s ease;
+    color: var(--doc-text-muted);
+    padding: 6px 12px;
+    margin: 2px 0;
+    border-radius: var(--doc-radius-sm);
+    transition: background 0.15s ease, color 0.15s ease;
     white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
     word-break: break-word;
-    display: block;
-    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    line-height: 1.45;
 }
 
 .book-menu-content nav > ul > li > a:hover {
-    background: var(--menu-toc-hover);
-    color: var(--menu-toc-text-hover);
-    transform: translateX(4px);
+    background: var(--doc-accent-soft);
+    color: var(--doc-accent);
 }
 
 .book-menu-content nav > ul > li > a.active {
-    background: linear-gradient(135deg, var(--menu-toc-active), #1d4ed8);
-    color: white;
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    background: var(--doc-accent-soft);
+    color: var(--doc-accent);
+    font-weight: 700;
+}
+
+/* Second-level nav items */
+.book-menu-content nav ul ul {
+    padding-inline-start: 0;
+    margin: 2px 0;
 }
 
 .book-menu-content nav ul ul a {
+    font-family: var(--doc-font-sans);
     font-size: 0.875rem;
     font-weight: 400;
-    color: var(--menu-toc-text);
-    padding: 8px 16px;
-    border-radius: 8px;
-    transition: all 0.15s ease;
+    color: var(--doc-text-secondary);
+    padding: 7px 12px 7px 20px;
+    border-radius: var(--doc-radius-sm);
+    transition: background 0.15s ease, color 0.15s ease;
     border-left: 2px solid transparent;
     white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
     word-break: break-word;
     display: block;
-    line-height: 1.4;
+    line-height: 1.45;
 }
 
 .book-menu-content nav ul ul a:hover {
-    background: var(--menu-toc-hover);
-    color: var(--menu-toc-text-hover);
-    border-left-color: var(--menu-toc-active);
-    transform: translateX(4px);
+    background: var(--doc-accent-soft);
+    color: var(--doc-accent);
+    border-left-color: var(--doc-accent);
 }
 
 .book-menu-content nav ul ul a.active {
-    color: var(--menu-toc-active);
-    border-left-color: var(--menu-toc-active);
+    color: var(--doc-accent);
+    border-left-color: var(--doc-accent);
+    background: var(--doc-accent-soft);
     font-weight: 500;
 }
 
 /* === Book TOC Content === */
 .book-toc-content {
-    background: var(--menu-toc-bg) !important;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: var(--doc-bg) !important;
     border: none !important;
     box-shadow: none !important;
+    border-left: 1px solid var(--doc-border);
     border-radius: 0;
-    padding: 20px !important;
-    margin: 8px 0;
+    padding: 28px 12px !important;
 }
 
 .book-toc-content nav > ul > li:first-child {
     margin-top: 0;
 }
 
+/* TOC top-level items */
 .book-toc-content nav > ul > li > a {
+    font-family: var(--doc-font-sans);
     font-size: 0.8125rem;
     font-weight: 500;
-    color: var(--menu-toc-text);
-    padding: 6px 12px;
-    border-radius: 6px;
-    transition: all 0.15s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    color: var(--doc-text-secondary);
+    padding: 5px 12px;
+    border-radius: var(--doc-radius-sm);
+    border-left: 2px solid transparent;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    display: block;
     white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
     word-break: break-word;
-    line-height: 1.4;
-}
-
-.book-toc-content nav > ul > li > a::before {
-    content: '';
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--menu-toc-text);
-    opacity: 0.4;
-    transition: all 0.15s ease;
+    line-height: 1.5;
 }
 
 .book-toc-content nav > ul > li > a:hover {
-    background: var(--menu-toc-hover);
-    color: var(--menu-toc-text-hover);
+    background: var(--doc-accent-soft);
+    color: var(--doc-accent);
+    border-left-color: var(--doc-accent);
 }
 
-.book-toc-content nav > ul > li > a:hover::before {
-    background: var(--menu-toc-active);
-    opacity: 1;
+.book-toc-content nav > ul > li > a.active {
+    color: var(--doc-accent);
+    border-left-color: var(--doc-accent);
+    background: var(--doc-accent-soft);
 }
 
+/* TOC nested items */
 .book-toc-content nav ul ul {
-    padding-inline-start: 16px;
+    padding-inline-start: 12px;
 }
 
 .book-toc-content nav ul ul a {
     font-size: 0.75rem;
-    color: var(--menu-toc-text);
-    opacity: 0.8;
+    font-weight: 400;
+    color: var(--doc-text-muted);
     padding: 4px 12px;
+    border-radius: 5px;
+    border-left: 2px solid transparent;
+    transition: background 0.15s ease, color 0.15s ease;
+    display: block;
+    line-height: 1.5;
 }
 
 .book-toc-content nav ul ul a:hover {
-    opacity: 1;
-    color: var(--menu-toc-active);
+    color: var(--doc-accent);
+    border-left-color: var(--doc-accent);
+    background: var(--doc-accent-soft);
+}
+
+.book-toc-content nav ul ul a.active {
+    color: var(--doc-accent);
+    border-left-color: var(--doc-accent);
 }
 
 /* === Scrollbar for Menu & TOC === */
 .book-menu-content::-webkit-scrollbar,
 .book-toc-content::-webkit-scrollbar {
-    width: 4px;
+    width: 3px;
 }
 
 .book-menu-content::-webkit-scrollbar-track,
@@ -637,106 +729,82 @@
 
 .book-menu-content::-webkit-scrollbar-thumb,
 .book-toc-content::-webkit-scrollbar-thumb {
-    background: rgba(100, 116, 139, 0.2);
+    background: var(--doc-border);
     border-radius: 2px;
 }
 
 .book-menu-content::-webkit-scrollbar-thumb:hover,
 .book-toc-content::-webkit-scrollbar-thumb:hover {
-    background: rgba(100, 116, 139, 0.4);
+    background: var(--doc-text-muted);
 }
 
 /* === Brand/Logo Area === */
 .book-brand {
-    padding: 8px 16px 16px !important;
-    margin-bottom: 16px !important;
-    border-bottom: 1px solid var(--menu-toc-border);
+    padding: 4px 12px 16px !important;
+    margin-bottom: 12px !important;
+    border-bottom: 1px solid var(--doc-border);
 }
 
 .book-brand a {
-    font-family: 'Noto Serif SC', Georgia, serif;
+    font-family: var(--doc-font-display);
     font-weight: 700;
-    font-size: 1.125rem;
-    color: var(--menu-toc-text-hover) !important;
+    font-size: 1.0625rem;
+    color: var(--doc-text) !important;
     letter-spacing: -0.01em;
-    transition: all 0.2s ease;
+    transition: color 0.15s ease;
 }
 
 .book-brand a:hover {
-    color: var(--menu-toc-active) !important;
-    transform: scale(1.02);
+    color: var(--doc-accent) !important;
 }
 
 /* === Search Box === */
 .book-search {
-    margin: 12px 0 !important;
+    margin: 8px 0 16px !important;
+    padding: 0 4px;
 }
 
 .book-search input {
-    background: var(--menu-toc-bg) !important;
-    border: 1px solid var(--menu-toc-border) !important;
-    border-radius: 10px !important;
-    padding: 10px 14px !important;
-    font-size: 0.875rem;
-    color: var(--menu-toc-text-hover);
-    transition: all 0.2s ease;
+    background: var(--doc-bg-secondary) !important;
+    border: 1px solid var(--doc-border) !important;
+    border-radius: var(--doc-radius-sm) !important;
+    padding: 8px 12px !important;
+    font-size: 0.8125rem;
+    font-family: var(--doc-font-sans);
+    color: var(--doc-text);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .book-search input:focus {
-    border-color: var(--menu-toc-active) !important;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    border-color: var(--doc-accent) !important;
+    box-shadow: 0 0 0 3px var(--doc-accent-glow);
     outline: none;
 }
 
 .book-search input::placeholder {
-    color: var(--menu-toc-text);
-    opacity: 0.6;
+    color: var(--doc-text-muted);
 }
 
-/* === Section Headers === */
+/* === Section Headers (flat sections) === */
 .book-section-flat {
-    margin: 16px 0 !important;
+    margin: 20px 0 4px !important;
 }
 
 .book-section-flat > a,
-.book-section-flat > span {
-    font-size: 0.75rem !important;
-    font-weight: 600 !important;
+.book-section-flat > span,
+.book-section-flat > label {
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--menu-toc-text) !important;
-    padding: 8px 16px !important;
-    opacity: 0.7;
+    letter-spacing: 0.1em;
+    color: var(--doc-text-muted) !important;
+    padding: 4px 12px !important;
+    display: block;
 }
-
-/* === Animations === */
-.book-menu-content nav > ul > li > a,
-.book-menu-content nav ul ul a {
-    animation: fadeInSlide 0.3s ease forwards;
-    opacity: 0;
-}
-
-@keyframes fadeInSlide {
-    from {
-        opacity: 0;
-        transform: translateX(-8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.book-menu-content nav > ul > li:nth-child(1) a { animation-delay: 0.05s; }
-.book-menu-content nav > ul > li:nth-child(2) a { animation-delay: 0.1s; }
-.book-menu-content nav > ul > li:nth-child(3) a { animation-delay: 0.15s; }
-.book-menu-content nav > ul > li:nth-child(4) a { animation-delay: 0.2s; }
-.book-menu-content nav > ul > li:nth-child(5) a { animation-delay: 0.25s; }
-.book-menu-content nav > ul > li:nth-child(6) a { animation-delay: 0.3s; }
 
 /* ============================================
    Hugo Book Code Block Styles
-   (Preserved from original)
+   (Catppuccin Mocha — preserved)
    ============================================ */
 
 /* === Code Block Container === */
@@ -901,7 +969,7 @@
 /* === Responsive === */
 @media (max-width: 1024px) {
     .book-post {
-        padding: 32px 40px;
+        padding: 36px 44px;
     }
 }
 
@@ -912,7 +980,7 @@
 
     .book-post {
         padding: 24px 20px;
-        border-radius: 12px;
+        border-radius: var(--doc-radius-md);
     }
 
     .book-post h1 {

@@ -5,7 +5,7 @@
       {{ partial "docs/title" . }}
     </h1>
     <div class="book-post-meta">
-      {{ with .Date }}{{ .Format "2006-01-02" }}{{ end }}
+      {{ with .Date }}<time datetime="{{ .Format "2006-01-02" }}">{{ .Format "2006-01-02" }}</time>{{ end }}
     </div>
     <div class="book-post-content markdown-inner">
       {{- .Content -}}

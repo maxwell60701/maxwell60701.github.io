@@ -10,7 +10,8 @@
       "Bash(agent-browser skills:*)",
       "Bash(agent-browser open:*)",
       "Bash(agent-browser screenshot:*)",
-      "Bash(agent-browser close:*)"
+      "Bash(agent-browser close:*)",
+      "Bash(git *)"
     ]
   }
 }
