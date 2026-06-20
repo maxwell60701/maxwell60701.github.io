@@ -1,0 +1,7 @@
+{{- if and .IsPage (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") -}}
+<hr class="book-menu-toc-rule">
+<div class="book-menu-toc">
+  <p class="book-menu-toc-title">本文目录</p>
+  {{ .TableOfContents }}
+</div>
+{{- end -}}

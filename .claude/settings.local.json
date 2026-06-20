@@ -11,7 +11,20 @@
       "Bash(agent-browser open:*)",
       "Bash(agent-browser screenshot:*)",
       "Bash(agent-browser close:*)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(hugo build *)",
+      "Bash(hugo server *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:1313/)",
+      "Bash(npm i *)",
+      "Read(//c/Program Files/Google/Chrome/Application/**)",
+      "Read(//c/Program Files \\(x86\\)/Microsoft/Edge/Application/**)",
+      "Bash(grep -iA3 -- \"--executable\\\\|channel\\\\|chrome-path\\\\|CHROME\\\\|existing\")",
+      "Bash(grep -iA2 -- \"open \\\\|navigate\\\\|screenshot\\\\|snapshot\\\\|--executable\\\\|browser-path\\\\|CHROME_BIN\\\\|env\")",
+      "Bash(grep -iB1 -A2 -- \"executable\\\\|chrome.*path\\\\|CHROME_PATH\\\\|BROWSER_PATH\\\\|--browser\\\\|system chrome\\\\|config set\")",
+      "Bash(cd /tmp)",
+      "Bash(export AGENT_BROWSER_EXECUTABLE_PATH=\"/c/Program Files/Google/Chrome/Application/chrome.exe\")",
+      "Bash(grep -iB1 -A4 -- \"screenshot\")",
+      "Bash(agent-browser eval *)"
     ]
   }
 }

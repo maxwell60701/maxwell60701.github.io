@@ -15,10 +15,14 @@
     --doc-border: #e2e8f0;
     --doc-border-strong: #cbd5e1;
 
-    --doc-accent: #2563eb;
-    --doc-accent-hover: #1d4ed8;
-    --doc-accent-soft: rgba(37, 99, 235, 0.08);
-    --doc-accent-glow: rgba(37, 99, 235, 0.15);
+    --doc-accent: #3b82f6;
+    --doc-accent-hover: #60a5fa;
+    --doc-accent-soft: rgba(59, 130, 246, 0.08);
+    --doc-accent-glow: rgba(59, 130, 246, 0.15);
+
+    /* Deep-blue header / brand block */
+    --doc-header-bg: #0d2137;
+    --doc-header-text: #f8fafc;
 
     /* Shadows — cool slate tints */
     --doc-shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
@@ -29,10 +33,10 @@
     --doc-font-sans: 'Sora', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
     --doc-font-serif: 'Noto Serif SC', 'Source Han Serif SC', Georgia, serif;
     --doc-font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, monospace;
-    --doc-font-display: 'Noto Serif SC', 'Sora', Georgia, serif;
+    --doc-font-display: 'Sora', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
 
     /* Spacing & Layout */
-    --doc-content-max-width: 800px;
+    --doc-content-max-width: 760px;
     --doc-line-height: 1.8;
     --doc-font-size-base: 16px;
     --doc-radius-sm: 8px;
@@ -55,6 +59,9 @@
     --doc-accent-soft: rgba(96, 165, 250, 0.1);
     --doc-accent-glow: rgba(96, 165, 250, 0.18);
 
+    --doc-header-bg: #0d2137;
+    --doc-header-text: #f8fafc;
+
     --doc-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
     --doc-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
     --doc-shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.35);
@@ -65,7 +72,7 @@
     max-width: 100% !important;
 }
 
-/* === Sidebars — slightly narrower for more content width === */
+/* === Sidebars — left menu at 14rem; right TOC column hidden === */
 .book-menu {
     flex: 0 0 14rem !important;
 }
@@ -75,11 +82,7 @@
 }
 
 .book-toc {
-    flex: 0 0 14rem !important;
-}
-
-.book-toc .book-toc-content {
-    width: 14rem !important;
+    display: none !important;
 }
 
 /* === Page Layout === */
@@ -91,11 +94,10 @@
 
 .book-post {
     background: var(--doc-bg-secondary);
-    border-radius: 12px;
+    border-radius: 4px;
     padding: 32px 40px;
     margin-bottom: 40px;
     border: 1px solid var(--doc-border);
-    box-shadow: var(--doc-shadow-sm);
 }
 
 /* === Typography Base === */
@@ -235,26 +237,12 @@
 .book-post-content blockquote,
 .markdown-inner blockquote {
     margin: 2em 0;
-    padding: 20px 28px;
+    padding: 16px 24px;
     background: var(--doc-accent-soft);
-    border-left: 4px solid var(--doc-accent);
-    border-radius: 0 var(--doc-radius-sm) var(--doc-radius-sm) 0;
+    border-left: 3px solid var(--doc-accent);
+    border-radius: 0;
     color: var(--doc-text-secondary);
     font-style: normal;
-    position: relative;
-}
-
-.book-post-content blockquote::before,
-.markdown-inner blockquote::before {
-    content: '\201C';
-    position: absolute;
-    top: -8px;
-    left: 12px;
-    font-size: 3rem;
-    color: var(--doc-accent-glow);
-    font-family: var(--doc-font-serif);
-    line-height: 1;
-    pointer-events: none;
 }
 
 .book-post-content blockquote p:last-child,
@@ -278,14 +266,14 @@
     border-collapse: collapse;
     margin: 1.5em 0;
     font-size: 0.9375em;
-    border-radius: var(--doc-radius-sm);
+    border-radius: 4px;
     overflow: hidden;
     border: 1px solid var(--doc-border);
 }
 
 .book-post-content thead,
 .markdown-inner thead {
-    background: var(--doc-bg-tertiary);
+    background: var(--doc-accent);
 }
 
 .book-post-content th,
@@ -293,8 +281,8 @@
     font-weight: 600;
     text-align: left;
     padding: 14px 16px;
-    border-bottom: 2px solid var(--doc-border-strong);
-    color: var(--doc-text);
+    border-bottom: 1px solid var(--doc-accent);
+    color: #ffffff;
 }
 
 .book-post-content td,
@@ -545,7 +533,7 @@
     padding: 20px 24px;
     background: var(--doc-bg-secondary);
     border: 1px solid var(--doc-border);
-    border-radius: var(--doc-radius-md);
+    border-radius: 4px;
     color: var(--doc-text);
     text-decoration: none;
     transition: all 0.25s ease;
@@ -555,8 +543,6 @@
 .book-post-nav a:hover {
     background: var(--doc-accent-soft);
     border-color: var(--doc-accent);
-    transform: translateY(-2px);
-    box-shadow: var(--doc-shadow-md);
 }
 
 .book-post-nav a span {
@@ -676,12 +662,14 @@
     padding: 20px 16px !important;
 }
 
-.book-toc-content nav > ul > li:first-child {
+.book-toc-content nav > ul > li:first-child,
+.book-menu-toc nav > ul > li:first-child {
     margin-top: 0;
 }
 
 /* TOC top-level items */
-.book-toc-content nav > ul > li > a {
+.book-toc-content nav > ul > li > a,
+.book-menu-toc nav > ul > li > a {
     font-family: var(--doc-font-sans);
     font-size: 0.8125rem;
     font-weight: 500;
@@ -696,24 +684,28 @@
     line-height: 1.5;
 }
 
-.book-toc-content nav > ul > li > a:hover {
+.book-toc-content nav > ul > li > a:hover,
+.book-menu-toc nav > ul > li > a:hover {
     background: var(--doc-accent-soft);
     color: var(--doc-accent);
     border-left-color: var(--doc-accent);
 }
 
-.book-toc-content nav > ul > li > a.active {
+.book-toc-content nav > ul > li > a.active,
+.book-menu-toc nav > ul > li > a.active {
     color: var(--doc-accent);
     border-left-color: var(--doc-accent);
     background: var(--doc-accent-soft);
 }
 
 /* TOC nested items */
-.book-toc-content nav ul ul {
+.book-toc-content nav ul ul,
+.book-menu-toc nav ul ul {
     padding-inline-start: 12px;
 }
 
-.book-toc-content nav ul ul a {
+.book-toc-content nav ul ul a,
+.book-menu-toc nav ul ul a {
     font-size: 0.75rem;
     font-weight: 400;
     color: var(--doc-text-muted);
@@ -725,15 +717,34 @@
     line-height: 1.5;
 }
 
-.book-toc-content nav ul ul a:hover {
+.book-toc-content nav ul ul a:hover,
+.book-menu-toc nav ul ul a:hover {
     color: var(--doc-accent);
     border-left-color: var(--doc-accent);
     background: var(--doc-accent-soft);
 }
 
-.book-toc-content nav ul ul a.active {
+.book-toc-content nav ul ul a.active,
+.book-menu-toc nav ul ul a.active {
     color: var(--doc-accent);
     border-left-color: var(--doc-accent);
+}
+
+/* === Left Sidebar TOC (injected via menu-after partial) === */
+.book-menu-toc-rule {
+    border: none;
+    border-top: 1px solid var(--doc-border);
+    margin: 16px 0 12px;
+}
+
+.book-menu-toc-title {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--doc-text-muted);
+    padding: 0 12px;
+    margin: 0 0 6px;
 }
 
 /* === Scrollbar for Menu & TOC === */
@@ -760,22 +771,29 @@
 
 /* === Brand/Logo Area === */
 .book-brand {
-    padding: 4px 12px 16px !important;
-    margin-bottom: 12px !important;
-    border-bottom: 1px solid var(--doc-border);
+    background: var(--doc-header-bg);
+    margin: -20px -16px 16px !important;
+    padding: 22px 16px !important;
+    border-bottom: none;
 }
 
 .book-brand a {
     font-family: var(--doc-font-display);
     font-weight: 700;
     font-size: 1.0625rem;
-    color: var(--doc-text) !important;
+    color: var(--doc-header-text) !important;
     letter-spacing: -0.01em;
-    transition: color 0.15s ease;
+    transition: opacity 0.15s ease;
 }
 
 .book-brand a:hover {
-    color: var(--doc-accent) !important;
+    color: var(--doc-header-text) !important;
+    opacity: 0.8;
+}
+
+.book-brand img {
+    box-shadow: none;
+    border-radius: 4px;
 }
 
 /* === Search Box === */
