@@ -1,20 +1,49 @@
 {{ define "main" }}
-<article class="markdown book-article">
-  {{ range where .Site.RegularPages "Section" "posts" }}
-  <section class="book-post-section">
-    <h2 class="book-post-title">
-      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-    </h2>
-    <div class="book-post-meta">
-      {{ with .Date }}<time datetime="{{ .Format "2006-01-02" }}">{{ .Format "2006-01-02" }}</time>{{ end }}
-    </div>
-    <div class="book-post-content">
-      {{ .Summary }}
-    </div>
-    <a href="{{ .RelPermalink }}" class="read-more">阅读全文</a>
-  </section>
+{{ $homeImage := resources.Get "img/index.png" }}
+{{ $latestPosts := first 1 (sort (where .Site.RegularPages "Section" "posts") "Date" "desc") }}
+
+{{ if gt (len $latestPosts) 0 }}
+{{ $latestPost := index $latestPosts 0 }}
+<a class="home-landing" href="{{ $latestPost.RelPermalink }}" aria-label="进入最新博客文章">
+  {{ with $homeImage }}
+  <img class="home-landing-image" src="{{ .RelPermalink }}" alt="{{ $.Site.Title }} 首页封面" loading="eager" decoding="async">
   {{ end }}
-</article>
+</a>
+
+<script>
+  document.body.classList.add('homepage-landing');
+
+  var landingLink = document.querySelector('.home-landing');
+
+  if (landingLink) {
+    var redirectTarget = landingLink.href;
+    var hasStartedRedirect = false;
+
+    function fadeAndRedirect() {
+      if (hasStartedRedirect) {
+        return;
+      }
+
+      hasStartedRedirect = true;
+      document.body.classList.add('homepage-landing-fadeout');
+
+      window.setTimeout(function () {
+        window.location.href = redirectTarget;
+      }, 700);
+    }
+
+    var redirectTimer = window.setTimeout(function () {
+      fadeAndRedirect();
+    }, 3000);
+
+    landingLink.addEventListener('click', function (event) {
+      event.preventDefault();
+      window.clearTimeout(redirectTimer);
+      fadeAndRedirect();
+    }, { once: true });
+  }
+</script>
+{{ end }}
 {{ end }}
 
 {{ define "toc-container" }}{{ end }}

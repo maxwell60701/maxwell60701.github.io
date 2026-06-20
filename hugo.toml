@@ -16,4 +16,5 @@ BookSection = 'posts'
 BookTheme = 'light'
 BookSearch = true
 BookComments = true
+description = 'RAG / LLM 技术笔记'
 

@@ -411,43 +411,45 @@
     font-weight: 500;
 }
 
-/* === Post Section Card === */
-.book-post-section {
-    background: transparent;
-    padding: 0;
-    margin-bottom: 32px;
+/* ============================================
+   Homepage — Fullscreen Landing
+   ============================================ */
+
+body.homepage-landing {
+    overflow: hidden;
 }
 
-/* Content spacing after meta */
-.book-post-section .book-post-content {
-    margin-top: 0;
+body.homepage-landing .home-landing {
+    opacity: 1;
+    transition: opacity 700ms ease;
 }
 
-/* === Read More Link === */
-.read-more {
-    display: inline-flex;
+body.homepage-landing.homepage-landing-fadeout .home-landing {
+    opacity: 0;
+}
+
+.home-landing {
+    position: fixed;
+    inset: 0;
+    display: flex;
     align-items: center;
-    gap: 6px;
-    margin-top: 16px;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: var(--doc-accent);
-    text-decoration: none;
-    transition: all 0.2s ease;
+    justify-content: center;
+    width: 100vw;
+    height: 100dvh;
+    background: #05070b;
+    z-index: 9999;
+    cursor: pointer;
+    overflow: hidden;
 }
 
-.read-more:hover {
-    color: var(--doc-accent-hover);
-    gap: 10px;
-}
-
-.read-more::after {
-    content: '\2192';
-    transition: transform 0.2s ease;
-}
-
-.read-more:hover::after {
-    transform: translateX(4px);
+.home-landing-image {
+    display: block;
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    object-fit: cover;
+    object-position: center;
 }
 
 /* === Post Meta (unified) === */
